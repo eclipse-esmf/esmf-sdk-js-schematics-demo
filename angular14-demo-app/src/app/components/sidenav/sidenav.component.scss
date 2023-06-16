@@ -1,0 +1,14 @@
+mat-selection-list {
+  padding-top: 20px;
+
+  .option {
+    display: flex;
+    align-items: center;
+  }
+}
+
+mat-sidenav-content {
+  padding: 20px;
+  height: calc(100vh - 140px);
+  border-bottom: solid 1px rgba(0,0,0,.12);
+}

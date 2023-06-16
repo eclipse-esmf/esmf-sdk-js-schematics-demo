@@ -1,0 +1,30 @@
+{
+  "aspectModelTFiles": [
+    "models/org.eclipse.examples.movement/2.1.0/Movement.ttl"
+  ],
+  "excludedProperties": [],
+  "configFile": "wizard-config.json",
+  "complexProps": [
+    {
+      "prop": "position",
+      "propsToShow": []
+    }
+  ],
+  "selectedModelElementUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#Movement",
+  "jsonAccessPath": "",
+  "defaultSortingCol": "endDate",
+  "customColumns": [],
+  "addRowCheckboxes": true,
+  "customRowActions": [],
+  "addCommandBar": true,
+  "enabledCommandBarFunctions": [
+    "addEnumQuickFilters",
+    "addCustomCommandBarActions",
+    "addDateQuickFilters",
+    "addSearchBar"
+  ],
+  "customCommandBarActions": [],
+  "enableRemoteDataHandling": false,
+  "enableVersionSupport": true,
+  "overwrite": true
+}

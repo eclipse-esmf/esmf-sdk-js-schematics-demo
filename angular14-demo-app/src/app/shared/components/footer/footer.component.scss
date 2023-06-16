@@ -1,0 +1,40 @@
+footer {
+  display: flex;
+  width: 100%;
+  position: fixed;
+  bottom: 6px;
+  right: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+
+  .copyright {
+    display: flex;
+    align-items: center;
+
+    span {
+      margin-right: 5px;
+    }
+  }
+
+  & a {
+    display: flex;
+    align-items: center;
+  }
+
+  a,
+  a:visited,
+  a:hover {
+    color: #3f51b5;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #3f51b5;
+  }
+
+  .star {
+    margin-left: 5px;
+  }
+
+}

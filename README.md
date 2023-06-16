@@ -1,2 +1,3 @@
-# sds-sdk-js-schematics-demo
-This repository is dedicated to SDS Working Group for developing an SDK for Aspect Model in Javascript
+# RBS SDK JS Schematics :: Demo APP ✨
+
+To start the demo application and e2e test select the desired version.

@@ -1,0 +1,44 @@
+{
+  "aspectModelTFiles": [
+    "models\\org.eclipse.examples.movement\\2.1.0\\Movement.ttl"
+  ],
+  "excludedProperties": [
+    {
+      "prop": "",
+      "propToExcludeAspectModelUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#moving"
+    },
+    {
+      "prop": "position",
+      "propToExcludeAspectModelUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#y"
+    },
+    {
+      "prop": "",
+      "propToExcludeAspectModelUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#endDate"
+    }
+  ],
+  "configFile": "wizard-config.json",
+  "complexProps": [
+    {
+      "prop": "position",
+      "propsToShow": [
+        {
+          "name": "x",
+          "aspectModelUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#x"
+        },
+        {
+          "name": "y",
+          "aspectModelUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#y"
+        }
+      ]
+    }
+  ],
+  "selectedModelElementUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#Movement",
+  "jsonAccessPath": "",
+  "defaultSortingCol": "position.x",
+  "customColumns": [],
+  "addRowCheckboxes": false,
+  "customRowActions": [],
+  "addCommandBar": false,
+  "enableRemoteDataHandling": false,
+  "enableVersionSupport": false
+}
