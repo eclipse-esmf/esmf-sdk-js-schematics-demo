@@ -36,7 +36,7 @@ import {CommandBarActionsColumnMenuComponent} from './command-bar-actions-column
 import {CommandBarActionsConfigMenuComponent} from './command-bar-actions-config-menu.component';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {CommandBarActionsService} from './command-bar-actions.service';
+import {CustomCommandBarActionsService} from './custom-command-bar-actions.service';
 import {MovementResponse} from './command-bar-actions.service';
 import {
     AbstractArrayNode,
@@ -219,7 +219,7 @@ export class CommandBarActionsComponent implements OnInit, AfterViewInit, AfterV
         private clipboard: Clipboard,
         private storageService: JSSdkLocalStorageService,
         public filterService: CommandBarActionsFilterService,
-        private commandBarActionsService: CommandBarActionsService,
+        private customcommandBarActionsService: CustomCommandBarActionsService,
         private cd: ChangeDetectorRef
     ) {
         this.dataSource = new CommandBarActionsDataSource();
@@ -412,7 +412,7 @@ export class CommandBarActionsComponent implements OnInit, AfterViewInit, AfterV
         queryFilter?.queryNode.subNodes.push(additionalCondition);
 
         const filterRQLQuery = queryFilter ? QueryStringifier.stringify(queryFilter) : '';
-        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace('&', ',');
+        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace(/&/g, ',');
 
         let rqlStringTemp = '';
         if (filterRQLQuery.length > 0) {
@@ -442,7 +442,7 @@ export class CommandBarActionsComponent implements OnInit, AfterViewInit, AfterV
         this.rqlString = rqlStringTemp;
 
         try {
-            this.commandBarActionsService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
+            this.customcommandBarActionsService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
                 (response: MovementResponse): void => {
                     this.dataSource.setData(response.items);
                     this.filteredData = response.items;
@@ -522,7 +522,7 @@ export class CommandBarActionsComponent implements OnInit, AfterViewInit, AfterV
     downloadCsv(csvArray: any): void {
         this.downloadEvent.emit({error: false, success: false, inProgress: true});
         try {
-            this.commandBarActionsService.downloadCsv(csvArray);
+            this.customcommandBarActionsService.downloadCsv(csvArray);
             this.downloadEvent.emit({error: false, success: true, inProgress: false});
         } catch (error: any) {
             this.downloadEvent.emit({error: true, success: false, inProgress: false});

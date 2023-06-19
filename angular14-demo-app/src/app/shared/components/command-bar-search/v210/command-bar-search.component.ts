@@ -36,7 +36,7 @@ import {CommandBarSearchColumnMenuComponent} from './command-bar-search-column-m
 import {CommandBarSearchConfigMenuComponent} from './command-bar-search-config-menu.component';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {CommandBarSearchService} from './command-bar-search.service';
+import {CustomCommandBarSearchService} from './custom-command-bar-search.service';
 import {MovementResponse} from './command-bar-search.service';
 import {
     AbstractArrayNode,
@@ -217,7 +217,7 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
         private clipboard: Clipboard,
         private storageService: JSSdkLocalStorageService,
         public filterService: CommandBarSearchFilterService,
-        private commandBarSearchService: CommandBarSearchService,
+        private customcommandBarSearchService: CustomCommandBarSearchService,
         private cd: ChangeDetectorRef
     ) {
         this.dataSource = new CommandBarSearchDataSource();
@@ -405,7 +405,7 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
         queryFilter?.queryNode.subNodes.push(additionalCondition);
 
         const filterRQLQuery = queryFilter ? QueryStringifier.stringify(queryFilter) : '';
-        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace('&', ',');
+        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace(/&/g, ',');
 
         let rqlStringTemp = '';
         if (filterRQLQuery.length > 0) {
@@ -435,7 +435,7 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
         this.rqlString = rqlStringTemp;
 
         try {
-            this.commandBarSearchService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
+            this.customcommandBarSearchService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
                 (response: MovementResponse): void => {
                     this.dataSource.setData(response.items);
                     this.filteredData = response.items;
@@ -515,7 +515,7 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
     downloadCsv(csvArray: any): void {
         this.downloadEvent.emit({error: false, success: false, inProgress: true});
         try {
-            this.commandBarSearchService.downloadCsv(csvArray);
+            this.customcommandBarSearchService.downloadCsv(csvArray);
             this.downloadEvent.emit({error: false, success: true, inProgress: false});
         } catch (error: any) {
             this.downloadEvent.emit({error: true, success: false, inProgress: false});

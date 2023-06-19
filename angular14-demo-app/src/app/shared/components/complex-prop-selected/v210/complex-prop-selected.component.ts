@@ -36,7 +36,7 @@ import {ComplexPropSelectedColumnMenuComponent} from './complex-prop-selected-co
 import {ComplexPropSelectedConfigMenuComponent} from './complex-prop-selected-config-menu.component';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {ComplexPropSelectedService} from './complex-prop-selected.service';
+import {CustomComplexPropSelectedService} from './custom-complex-prop-selected.service';
 import {MovementResponse} from './complex-prop-selected.service';
 import {
     AbstractArrayNode,
@@ -217,7 +217,7 @@ export class ComplexPropSelectedComponent implements OnInit, AfterViewInit, Afte
         private clipboard: Clipboard,
         private storageService: JSSdkLocalStorageService,
         public filterService: ComplexPropSelectedFilterService,
-        private complexPropSelectedService: ComplexPropSelectedService,
+        private customcomplexPropSelectedService: CustomComplexPropSelectedService,
         private cd: ChangeDetectorRef
     ) {
         this.dataSource = new ComplexPropSelectedDataSource();
@@ -405,7 +405,7 @@ export class ComplexPropSelectedComponent implements OnInit, AfterViewInit, Afte
         queryFilter?.queryNode.subNodes.push(additionalCondition);
 
         const filterRQLQuery = queryFilter ? QueryStringifier.stringify(queryFilter) : '';
-        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace('&', ',');
+        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace(/&/g, ',');
 
         let rqlStringTemp = '';
         if (filterRQLQuery.length > 0) {
@@ -435,7 +435,7 @@ export class ComplexPropSelectedComponent implements OnInit, AfterViewInit, Afte
         this.rqlString = rqlStringTemp;
 
         try {
-            this.complexPropSelectedService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
+            this.customcomplexPropSelectedService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
                 (response: MovementResponse): void => {
                     this.dataSource.setData(response.items);
                     this.filteredData = response.items;
@@ -515,7 +515,7 @@ export class ComplexPropSelectedComponent implements OnInit, AfterViewInit, Afte
     downloadCsv(csvArray: any): void {
         this.downloadEvent.emit({error: false, success: false, inProgress: true});
         try {
-            this.complexPropSelectedService.downloadCsv(csvArray);
+            this.customcomplexPropSelectedService.downloadCsv(csvArray);
             this.downloadEvent.emit({error: false, success: true, inProgress: false});
         } catch (error: any) {
             this.downloadEvent.emit({error: true, success: false, inProgress: false});

@@ -36,7 +36,7 @@ import {RemoteDataColumnMenuComponent} from './remote-data-column-menu.component
 import {RemoteDataConfigMenuComponent} from './remote-data-config-menu.component';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {RemoteDataService} from './remote-data.service';
+import {CustomRemoteDataService} from './custom-remote-data.service';
 import {MovementResponse} from './remote-data.service';
 import {
     AbstractArrayNode,
@@ -217,7 +217,7 @@ export class RemoteDataComponent implements OnInit, AfterViewInit, AfterViewChec
         private clipboard: Clipboard,
         private storageService: JSSdkLocalStorageService,
         public filterService: RemoteDataFilterService,
-        private remoteDataService: RemoteDataService,
+        private customremoteDataService: CustomRemoteDataService,
         private cd: ChangeDetectorRef
     ) {
         this.dataSource = new RemoteDataDataSource();
@@ -402,7 +402,7 @@ export class RemoteDataComponent implements OnInit, AfterViewInit, AfterViewChec
         queryFilter?.queryNode.subNodes.push(additionalCondition);
 
         const filterRQLQuery = queryFilter ? QueryStringifier.stringify(queryFilter) : '';
-        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace('&', ',');
+        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace(/&/g, ',');
 
         let rqlStringTemp = '';
         if (filterRQLQuery.length > 0) {
@@ -432,7 +432,7 @@ export class RemoteDataComponent implements OnInit, AfterViewInit, AfterViewChec
         this.rqlString = rqlStringTemp;
 
         try {
-            this.remoteDataService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
+            this.customremoteDataService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
                 (response: MovementResponse): void => {
                     this.dataSource.setData(response.items);
                     this.filteredData = response.items;
@@ -512,7 +512,7 @@ export class RemoteDataComponent implements OnInit, AfterViewInit, AfterViewChec
     downloadCsv(csvArray: any): void {
         this.downloadEvent.emit({error: false, success: false, inProgress: true});
         try {
-            this.remoteDataService.downloadCsv(csvArray);
+            this.customremoteDataService.downloadCsv(csvArray);
             this.downloadEvent.emit({error: false, success: true, inProgress: false});
         } catch (error: any) {
             this.downloadEvent.emit({error: true, success: false, inProgress: false});

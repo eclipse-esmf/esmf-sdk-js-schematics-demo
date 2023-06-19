@@ -36,7 +36,7 @@ import {CustomColumnColumnMenuComponent} from './custom-column-column-menu.compo
 import {CustomColumnConfigMenuComponent} from './custom-column-config-menu.component';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {CustomColumnService} from './custom-column.service';
+import {CustomCustomColumnService} from './custom-custom-column.service';
 import {MovementResponse} from './custom-column.service';
 import {
     AbstractArrayNode,
@@ -217,7 +217,7 @@ export class CustomColumnComponent implements OnInit, AfterViewInit, AfterViewCh
         private clipboard: Clipboard,
         private storageService: JSSdkLocalStorageService,
         public filterService: CustomColumnFilterService,
-        private customColumnService: CustomColumnService,
+        private customcustomColumnService: CustomCustomColumnService,
         private cd: ChangeDetectorRef
     ) {
         this.dataSource = new CustomColumnDataSource();
@@ -402,7 +402,7 @@ export class CustomColumnComponent implements OnInit, AfterViewInit, AfterViewCh
         queryFilter?.queryNode.subNodes.push(additionalCondition);
 
         const filterRQLQuery = queryFilter ? QueryStringifier.stringify(queryFilter) : '';
-        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace('&', ',');
+        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace(/&/g, ',');
 
         let rqlStringTemp = '';
         if (filterRQLQuery.length > 0) {
@@ -432,7 +432,7 @@ export class CustomColumnComponent implements OnInit, AfterViewInit, AfterViewCh
         this.rqlString = rqlStringTemp;
 
         try {
-            this.customColumnService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
+            this.customcustomColumnService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
                 (response: MovementResponse): void => {
                     this.dataSource.setData(response.items);
                     this.filteredData = response.items;
@@ -512,7 +512,7 @@ export class CustomColumnComponent implements OnInit, AfterViewInit, AfterViewCh
     downloadCsv(csvArray: any): void {
         this.downloadEvent.emit({error: false, success: false, inProgress: true});
         try {
-            this.customColumnService.downloadCsv(csvArray);
+            this.customcustomColumnService.downloadCsv(csvArray);
             this.downloadEvent.emit({error: false, success: true, inProgress: false});
         } catch (error: any) {
             this.downloadEvent.emit({error: true, success: false, inProgress: false});

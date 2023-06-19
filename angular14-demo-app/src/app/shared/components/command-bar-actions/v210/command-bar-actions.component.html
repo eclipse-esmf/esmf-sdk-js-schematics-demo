@@ -193,23 +193,26 @@
                     <td data-test="table-cell" mat-cell *matCellDef="let row">
                         <ng-container
                             [ngTemplateOutlet]="
-                                highlightConfig?.selected && ((row.moving === null ? '-' : row.moving) | searchString: highlightString)
+                                highlightConfig?.selected &&
+                                ((!(row.moving === null || row.moving === undefined) ? row.moving : '-') | searchString: highlightString)
                                     ? searchedWordExists
                                     : normal
                             "
-                            [ngTemplateOutletContext]="{value: row.moving === null ? '-' : row.moving}"
+                            [ngTemplateOutletContext]="{value: !(row.moving === null || row.moving === undefined) ? row.moving : '-'}"
                         ></ng-container>
 
                         <button
                             data-test="copy-to-clipboard-button"
+                            *ngIf="!(row.moving === null || row.moving === undefined)"
                             mat-icon-button
                             class="copy-to-clipboard"
                             (click)="copyToClipboard(row.moving, $event)"
                         >
                             <mat-icon data-test="copy-to-clipboard-icon" class="material-icons">content_copy</mat-icon>
                         </button>
-                    </td> </ng-container
-                ><!-- speedLimitWarning Column -->
+                    </td>
+                </ng-container>
+                <!-- speedLimitWarning Column -->
                 <ng-container data-test="table-column" matColumnDef="speedLimitWarning">
                     <th
                         data-test="table-header"
@@ -234,23 +237,30 @@
                         <ng-container
                             [ngTemplateOutlet]="
                                 highlightConfig?.selected &&
-                                ((row.speedLimitWarning === null ? '-' : row.speedLimitWarning) | searchString: highlightString)
+                                ((!(row.speedLimitWarning === null || row.speedLimitWarning === undefined) ? row.speedLimitWarning : '-')
+                                    | searchString: highlightString)
                                     ? searchedWordExists
                                     : normal
                             "
-                            [ngTemplateOutletContext]="{value: row.speedLimitWarning === null ? '-' : row.speedLimitWarning}"
+                            [ngTemplateOutletContext]="{
+                                value: !(row.speedLimitWarning === null || row.speedLimitWarning === undefined)
+                                    ? row.speedLimitWarning
+                                    : '-'
+                            }"
                         ></ng-container>
 
                         <button
                             data-test="copy-to-clipboard-button"
+                            *ngIf="!(row.speedLimitWarning === null || row.speedLimitWarning === undefined)"
                             mat-icon-button
                             class="copy-to-clipboard"
                             (click)="copyToClipboard(row.speedLimitWarning, $event)"
                         >
                             <mat-icon data-test="copy-to-clipboard-icon" class="material-icons">content_copy</mat-icon>
                         </button>
-                    </td> </ng-container
-                ><!-- startDate Column -->
+                    </td>
+                </ng-container>
+                <!-- startDate Column -->
                 <ng-container data-test="table-column" matColumnDef="startDate">
                     <th
                         data-test="table-header"
@@ -275,24 +285,32 @@
                         <ng-container
                             [ngTemplateOutlet]="
                                 highlightConfig?.selected &&
-                                ((row.startDate === null ? '-' : (row.startDate | date: tableDateTimeFormat))
-                                    | searchString: highlightString)
+                                ((!(row.startDate === null || row.startDate === undefined)
+                                    ? (row.startDate | date: tableDateTimeFormat)
+                                    : '-'
+                                ) | searchString: highlightString)
                                     ? searchedWordExists
                                     : normal
                             "
-                            [ngTemplateOutletContext]="{value: row.startDate === null ? '-' : (row.startDate | date: tableDateTimeFormat)}"
+                            [ngTemplateOutletContext]="{
+                                value: !(row.startDate === null || row.startDate === undefined)
+                                    ? (row.startDate | date: tableDateTimeFormat)
+                                    : '-'
+                            }"
                         ></ng-container>
 
                         <button
                             data-test="copy-to-clipboard-button"
+                            *ngIf="!(row.startDate === null || row.startDate === undefined)"
                             mat-icon-button
                             class="copy-to-clipboard"
                             (click)="copyToClipboard(row.startDate, $event)"
                         >
                             <mat-icon data-test="copy-to-clipboard-icon" class="material-icons">content_copy</mat-icon>
                         </button>
-                    </td> </ng-container
-                ><!-- endDate Column -->
+                    </td>
+                </ng-container>
+                <!-- endDate Column -->
                 <ng-container data-test="table-column" matColumnDef="endDate">
                     <th data-test="table-header" mat-header-cell *matHeaderCellDef mat-sort-header="endDate">
                         <span
@@ -309,15 +327,21 @@
                         <ng-container
                             [ngTemplateOutlet]="
                                 highlightConfig?.selected &&
-                                ((row.endDate === null ? '-' : (row.endDate | date: tableDateTimeFormat)) | searchString: highlightString)
+                                ((!(row.endDate === null || row.endDate === undefined) ? (row.endDate | date: tableDateTimeFormat) : '-')
+                                    | searchString: highlightString)
                                     ? searchedWordExists
                                     : normal
                             "
-                            [ngTemplateOutletContext]="{value: row.endDate === null ? '-' : (row.endDate | date: tableDateTimeFormat)}"
+                            [ngTemplateOutletContext]="{
+                                value: !(row.endDate === null || row.endDate === undefined)
+                                    ? (row.endDate | date: tableDateTimeFormat)
+                                    : '-'
+                            }"
                         ></ng-container>
 
                         <button
                             data-test="copy-to-clipboard-button"
+                            *ngIf="!(row.endDate === null || row.endDate === undefined)"
                             mat-icon-button
                             class="copy-to-clipboard"
                             (click)="copyToClipboard(row.endDate, $event)"

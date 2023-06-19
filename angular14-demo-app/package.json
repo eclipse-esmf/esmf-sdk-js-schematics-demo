@@ -44,7 +44,7 @@
     "@angular/cli": "~14.2.7",
     "@angular/compiler-cli": "14.2.8",
     "@cypress/schematic": "1.6.0",
-    "@esmf/semantic-ui-schematics": "https://github.com/eclipse-esmf/esmf-sdk-js-schematics/releases/download/v2.2.0/esmf-semantic-ui-schematics-2.2.0.tgz",
+    "@esmf/semantic-ui-schematics": "https://github.com/eclipse-esmf/esmf-sdk-js-schematics/releases/download/v2.2.1/esmf-semantic-ui-schematics-2.2.1.tgz",
     "@types/jasmine": "3.10.3",
     "@types/node": "16.11.24",
     "@types/papaparse": "5.3.1",

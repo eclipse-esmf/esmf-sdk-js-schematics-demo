@@ -36,7 +36,7 @@ import {CommandBarDateFilterColumnMenuComponent} from './command-bar-date-filter
 import {CommandBarDateFilterConfigMenuComponent} from './command-bar-date-filter-config-menu.component';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {CommandBarDateFilterService} from './command-bar-date-filter.service';
+import {CustomCommandBarDateFilterService} from './custom-command-bar-date-filter.service';
 import {MovementResponse} from './command-bar-date-filter.service';
 import {
     AbstractArrayNode,
@@ -217,7 +217,7 @@ export class CommandBarDateFilterComponent implements OnInit, AfterViewInit, Aft
         private clipboard: Clipboard,
         private storageService: JSSdkLocalStorageService,
         public filterService: CommandBarDateFilterFilterService,
-        private commandBarDateFilterService: CommandBarDateFilterService,
+        private customcommandBarDateFilterService: CustomCommandBarDateFilterService,
         private cd: ChangeDetectorRef
     ) {
         this.dataSource = new CommandBarDateFilterDataSource();
@@ -405,7 +405,7 @@ export class CommandBarDateFilterComponent implements OnInit, AfterViewInit, Aft
         queryFilter?.queryNode.subNodes.push(additionalCondition);
 
         const filterRQLQuery = queryFilter ? QueryStringifier.stringify(queryFilter) : '';
-        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace('&', ',');
+        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace(/&/g, ',');
 
         let rqlStringTemp = '';
         if (filterRQLQuery.length > 0) {
@@ -435,7 +435,7 @@ export class CommandBarDateFilterComponent implements OnInit, AfterViewInit, Aft
         this.rqlString = rqlStringTemp;
 
         try {
-            this.commandBarDateFilterService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
+            this.customcommandBarDateFilterService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
                 (response: MovementResponse): void => {
                     this.dataSource.setData(response.items);
                     this.filteredData = response.items;
@@ -515,7 +515,7 @@ export class CommandBarDateFilterComponent implements OnInit, AfterViewInit, Aft
     downloadCsv(csvArray: any): void {
         this.downloadEvent.emit({error: false, success: false, inProgress: true});
         try {
-            this.commandBarDateFilterService.downloadCsv(csvArray);
+            this.customcommandBarDateFilterService.downloadCsv(csvArray);
             this.downloadEvent.emit({error: false, success: true, inProgress: false});
         } catch (error: any) {
             this.downloadEvent.emit({error: true, success: false, inProgress: false});

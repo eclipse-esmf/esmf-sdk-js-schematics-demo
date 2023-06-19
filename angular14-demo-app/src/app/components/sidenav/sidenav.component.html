@@ -172,11 +172,11 @@
                 (rowClickEvent)="rowClick($event)"
         ></rbs-ui-row-action-button>
 
-      <!--        <rbs-ui-version-support-v210-->
-      <!--                *ngIf="currentComponent === 'version-support'"-->
-      <!--                [data]="versionSupportData"-->
-      <!--                (copyToClipboardEvent)="copyToClipboard($event)"-->
-      <!--                (rowClickEvent)="rowClick($event)"-->
-      <!--        ></rbs-ui-version-support-v210>-->
+        <rbs-ui-version-support-v210
+          *ngIf="currentComponent === 'version-support'"
+          [data]="versionSupportData"
+          (copyToClipboardEvent)="copyToClipboard($event)"
+          (rowClickEvent)="rowClick($event)"
+        ></rbs-ui-version-support-v210>
     </mat-sidenav-content>
 </mat-sidenav-container>

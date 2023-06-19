@@ -36,7 +36,7 @@ import {DefaultSortingColumnMenuComponent} from './default-sorting-column-menu.c
 import {DefaultSortingConfigMenuComponent} from './default-sorting-config-menu.component';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {DefaultSortingService} from './default-sorting.service';
+import {CustomDefaultSortingService} from './custom-default-sorting.service';
 import {MovementResponse} from './default-sorting.service';
 import {
     AbstractArrayNode,
@@ -217,7 +217,7 @@ export class DefaultSortingComponent implements OnInit, AfterViewInit, AfterView
         private clipboard: Clipboard,
         private storageService: JSSdkLocalStorageService,
         public filterService: DefaultSortingFilterService,
-        private defaultSortingService: DefaultSortingService,
+        private customdefaultSortingService: CustomDefaultSortingService,
         private cd: ChangeDetectorRef
     ) {
         this.dataSource = new DefaultSortingDataSource();
@@ -402,7 +402,7 @@ export class DefaultSortingComponent implements OnInit, AfterViewInit, AfterView
         queryFilter?.queryNode.subNodes.push(additionalCondition);
 
         const filterRQLQuery = queryFilter ? QueryStringifier.stringify(queryFilter) : '';
-        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace('&', ',');
+        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace(/&/g, ',');
 
         let rqlStringTemp = '';
         if (filterRQLQuery.length > 0) {
@@ -432,7 +432,7 @@ export class DefaultSortingComponent implements OnInit, AfterViewInit, AfterView
         this.rqlString = rqlStringTemp;
 
         try {
-            this.defaultSortingService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
+            this.customdefaultSortingService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
                 (response: MovementResponse): void => {
                     this.dataSource.setData(response.items);
                     this.filteredData = response.items;
@@ -512,7 +512,7 @@ export class DefaultSortingComponent implements OnInit, AfterViewInit, AfterView
     downloadCsv(csvArray: any): void {
         this.downloadEvent.emit({error: false, success: false, inProgress: true});
         try {
-            this.defaultSortingService.downloadCsv(csvArray);
+            this.customdefaultSortingService.downloadCsv(csvArray);
             this.downloadEvent.emit({error: false, success: true, inProgress: false});
         } catch (error: any) {
             this.downloadEvent.emit({error: true, success: false, inProgress: false});

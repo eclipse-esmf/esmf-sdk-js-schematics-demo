@@ -36,7 +36,7 @@ import {CommandBarEnumFilterColumnMenuComponent} from './command-bar-enum-filter
 import {CommandBarEnumFilterConfigMenuComponent} from './command-bar-enum-filter-config-menu.component';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {CommandBarEnumFilterService} from './command-bar-enum-filter.service';
+import {CustomCommandBarEnumFilterService} from './custom-command-bar-enum-filter.service';
 import {MovementResponse} from './command-bar-enum-filter.service';
 import {
     AbstractArrayNode,
@@ -217,7 +217,7 @@ export class CommandBarEnumFilterComponent implements OnInit, AfterViewInit, Aft
         private clipboard: Clipboard,
         private storageService: JSSdkLocalStorageService,
         public filterService: CommandBarEnumFilterFilterService,
-        private commandBarEnumFilterService: CommandBarEnumFilterService,
+        private customcommandBarEnumFilterService: CustomCommandBarEnumFilterService,
         private cd: ChangeDetectorRef
     ) {
         this.dataSource = new CommandBarEnumFilterDataSource();
@@ -405,7 +405,7 @@ export class CommandBarEnumFilterComponent implements OnInit, AfterViewInit, Aft
         queryFilter?.queryNode.subNodes.push(additionalCondition);
 
         const filterRQLQuery = queryFilter ? QueryStringifier.stringify(queryFilter) : '';
-        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace('&', ',');
+        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace(/&/g, ',');
 
         let rqlStringTemp = '';
         if (filterRQLQuery.length > 0) {
@@ -435,7 +435,7 @@ export class CommandBarEnumFilterComponent implements OnInit, AfterViewInit, Aft
         this.rqlString = rqlStringTemp;
 
         try {
-            this.commandBarEnumFilterService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
+            this.customcommandBarEnumFilterService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
                 (response: MovementResponse): void => {
                     this.dataSource.setData(response.items);
                     this.filteredData = response.items;
@@ -515,7 +515,7 @@ export class CommandBarEnumFilterComponent implements OnInit, AfterViewInit, Aft
     downloadCsv(csvArray: any): void {
         this.downloadEvent.emit({error: false, success: false, inProgress: true});
         try {
-            this.commandBarEnumFilterService.downloadCsv(csvArray);
+            this.customcommandBarEnumFilterService.downloadCsv(csvArray);
             this.downloadEvent.emit({error: false, success: true, inProgress: false});
         } catch (error: any) {
             this.downloadEvent.emit({error: true, success: false, inProgress: false});

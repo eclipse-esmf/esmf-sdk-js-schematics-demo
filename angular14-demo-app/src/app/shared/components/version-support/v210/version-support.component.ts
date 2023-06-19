@@ -36,7 +36,7 @@ import {VersionSupportColumnMenuComponent} from './version-support-column-menu.c
 import {VersionSupportConfigMenuComponent} from './version-support-config-menu.component';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {VersionSupportService} from './version-support.service';
+import {CustomVersionSupportService} from './custom-version-support.service';
 import {MovementResponse} from './version-support.service';
 import {
     AbstractArrayNode,
@@ -217,7 +217,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
         private clipboard: Clipboard,
         private storageService: JSSdkLocalStorageService,
         public filterService: VersionSupportFilterService,
-        private versionSupportService: VersionSupportService,
+        private customversionSupportService: CustomVersionSupportService,
         private cd: ChangeDetectorRef
     ) {
         this.dataSource = new VersionSupportDataSource();
@@ -402,7 +402,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
         queryFilter?.queryNode.subNodes.push(additionalCondition);
 
         const filterRQLQuery = queryFilter ? QueryStringifier.stringify(queryFilter) : '';
-        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace('&', ',');
+        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace(/&/g, ',');
 
         let rqlStringTemp = '';
         if (filterRQLQuery.length > 0) {
@@ -432,7 +432,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
         this.rqlString = rqlStringTemp;
 
         try {
-            this.versionSupportService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
+            this.customversionSupportService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
                 (response: MovementResponse): void => {
                     this.dataSource.setData(response.items);
                     this.filteredData = response.items;
@@ -512,7 +512,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     downloadCsv(csvArray: any): void {
         this.downloadEvent.emit({error: false, success: false, inProgress: true});
         try {
-            this.versionSupportService.downloadCsv(csvArray);
+            this.customversionSupportService.downloadCsv(csvArray);
             this.downloadEvent.emit({error: false, success: true, inProgress: false});
         } catch (error: any) {
             this.downloadEvent.emit({error: true, success: false, inProgress: false});

@@ -165,9 +165,9 @@ export class VersionSupportFilterService {
         this.activeFilters
             .filter(af => af.type === FilterEnums.Search)
             .forEach(af => {
-              if (af.prop != null && af.filterValue != null) {
-                query.addNode(new Or(this.addSelectedColumnsQuery(af.prop, af.filterValue)));
-              }
+                if (af.prop !== null && af.filterValue !== undefined) {
+                    query.addNode(new Or(this.addSelectedColumnsQuery(af.prop, af.filterValue)));
+                }
             });
     }
     addSelectedColumnsQuery(selectedStringColumn: string, searchString: string): Like[] {

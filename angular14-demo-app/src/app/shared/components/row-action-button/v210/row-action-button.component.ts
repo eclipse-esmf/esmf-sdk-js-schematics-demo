@@ -36,7 +36,7 @@ import {RowActionButtonColumnMenuComponent} from './row-action-button-column-men
 import {RowActionButtonConfigMenuComponent} from './row-action-button-config-menu.component';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {RowActionButtonService} from './row-action-button.service';
+import {CustomRowActionButtonService} from './custom-row-action-button.service';
 import {MovementResponse} from './row-action-button.service';
 import {
     AbstractArrayNode,
@@ -217,7 +217,7 @@ export class RowActionButtonComponent implements OnInit, AfterViewInit, AfterVie
         private clipboard: Clipboard,
         private storageService: JSSdkLocalStorageService,
         public filterService: RowActionButtonFilterService,
-        private rowActionButtonService: RowActionButtonService,
+        private customrowActionButtonService: CustomRowActionButtonService,
         private cd: ChangeDetectorRef
     ) {
         this.dataSource = new RowActionButtonDataSource();
@@ -402,7 +402,7 @@ export class RowActionButtonComponent implements OnInit, AfterViewInit, AfterVie
         queryFilter?.queryNode.subNodes.push(additionalCondition);
 
         const filterRQLQuery = queryFilter ? QueryStringifier.stringify(queryFilter) : '';
-        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace('&', ',');
+        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace(/&/g, ',');
 
         let rqlStringTemp = '';
         if (filterRQLQuery.length > 0) {
@@ -432,7 +432,7 @@ export class RowActionButtonComponent implements OnInit, AfterViewInit, AfterVie
         this.rqlString = rqlStringTemp;
 
         try {
-            this.rowActionButtonService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
+            this.customrowActionButtonService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
                 (response: MovementResponse): void => {
                     this.dataSource.setData(response.items);
                     this.filteredData = response.items;
@@ -512,7 +512,7 @@ export class RowActionButtonComponent implements OnInit, AfterViewInit, AfterVie
     downloadCsv(csvArray: any): void {
         this.downloadEvent.emit({error: false, success: false, inProgress: true});
         try {
-            this.rowActionButtonService.downloadCsv(csvArray);
+            this.customrowActionButtonService.downloadCsv(csvArray);
             this.downloadEvent.emit({error: false, success: true, inProgress: false});
         } catch (error: any) {
             this.downloadEvent.emit({error: true, success: false, inProgress: false});

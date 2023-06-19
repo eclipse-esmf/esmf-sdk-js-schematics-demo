@@ -36,7 +36,7 @@ import {BaseConfigColumnMenuComponent} from './base-config-column-menu.component
 import {BaseConfigConfigMenuComponent} from './base-config-config-menu.component';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {BaseConfigService} from './base-config.service';
+import {CustomBaseConfigService} from './custom-base-config.service';
 import {MovementResponse} from './base-config.service';
 import {
     AbstractArrayNode,
@@ -217,7 +217,7 @@ export class BaseConfigComponent implements OnInit, AfterViewInit, AfterViewChec
         private clipboard: Clipboard,
         private storageService: JSSdkLocalStorageService,
         public filterService: BaseConfigFilterService,
-        private baseConfigService: BaseConfigService,
+        private custombaseConfigService: CustomBaseConfigService,
         private cd: ChangeDetectorRef
     ) {
         this.dataSource = new BaseConfigDataSource();
@@ -402,7 +402,7 @@ export class BaseConfigComponent implements OnInit, AfterViewInit, AfterViewChec
         queryFilter?.queryNode.subNodes.push(additionalCondition);
 
         const filterRQLQuery = queryFilter ? QueryStringifier.stringify(queryFilter) : '';
-        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace('&', ',');
+        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace(/&/g, ',');
 
         let rqlStringTemp = '';
         if (filterRQLQuery.length > 0) {
@@ -432,7 +432,7 @@ export class BaseConfigComponent implements OnInit, AfterViewInit, AfterViewChec
         this.rqlString = rqlStringTemp;
 
         try {
-            this.baseConfigService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
+            this.custombaseConfigService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
                 (response: MovementResponse): void => {
                     this.dataSource.setData(response.items);
                     this.filteredData = response.items;
@@ -512,7 +512,7 @@ export class BaseConfigComponent implements OnInit, AfterViewInit, AfterViewChec
     downloadCsv(csvArray: any): void {
         this.downloadEvent.emit({error: false, success: false, inProgress: true});
         try {
-            this.baseConfigService.downloadCsv(csvArray);
+            this.custombaseConfigService.downloadCsv(csvArray);
             this.downloadEvent.emit({error: false, success: true, inProgress: false});
         } catch (error: any) {
             this.downloadEvent.emit({error: true, success: false, inProgress: false});

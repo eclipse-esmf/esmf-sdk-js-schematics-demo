@@ -44,6 +44,10 @@ jobs:
         run: npm run update:components
         working-directory: angular14-demo-app
 
+      - name: Build demo application
+        run: npm run build
+        working-directory: angular14-demo-app
+
       - name: Performing cypress tests
         run: npm run e2e
         working-directory: angular14-demo-app

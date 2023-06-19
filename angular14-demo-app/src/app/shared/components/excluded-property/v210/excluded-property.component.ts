@@ -36,7 +36,7 @@ import {ExcludedPropertyColumnMenuComponent} from './excluded-property-column-me
 import {ExcludedPropertyConfigMenuComponent} from './excluded-property-config-menu.component';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {ExcludedPropertyService} from './excluded-property.service';
+import {CustomExcludedPropertyService} from './custom-excluded-property.service';
 import {MovementResponse} from './excluded-property.service';
 import {
     AbstractArrayNode,
@@ -217,7 +217,7 @@ export class ExcludedPropertyComponent implements OnInit, AfterViewInit, AfterVi
         private clipboard: Clipboard,
         private storageService: JSSdkLocalStorageService,
         public filterService: ExcludedPropertyFilterService,
-        private excludedPropertyService: ExcludedPropertyService,
+        private customexcludedPropertyService: CustomExcludedPropertyService,
         private cd: ChangeDetectorRef
     ) {
         this.dataSource = new ExcludedPropertyDataSource();
@@ -405,7 +405,7 @@ export class ExcludedPropertyComponent implements OnInit, AfterViewInit, AfterVi
         queryFilter?.queryNode.subNodes.push(additionalCondition);
 
         const filterRQLQuery = queryFilter ? QueryStringifier.stringify(queryFilter) : '';
-        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace('&', ',');
+        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace(/&/g, ',');
 
         let rqlStringTemp = '';
         if (filterRQLQuery.length > 0) {
@@ -435,7 +435,7 @@ export class ExcludedPropertyComponent implements OnInit, AfterViewInit, AfterVi
         this.rqlString = rqlStringTemp;
 
         try {
-            this.excludedPropertyService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
+            this.customexcludedPropertyService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
                 (response: MovementResponse): void => {
                     this.dataSource.setData(response.items);
                     this.filteredData = response.items;
@@ -515,7 +515,7 @@ export class ExcludedPropertyComponent implements OnInit, AfterViewInit, AfterVi
     downloadCsv(csvArray: any): void {
         this.downloadEvent.emit({error: false, success: false, inProgress: true});
         try {
-            this.excludedPropertyService.downloadCsv(csvArray);
+            this.customexcludedPropertyService.downloadCsv(csvArray);
             this.downloadEvent.emit({error: false, success: true, inProgress: false});
         } catch (error: any) {
             this.downloadEvent.emit({error: true, success: false, inProgress: false});

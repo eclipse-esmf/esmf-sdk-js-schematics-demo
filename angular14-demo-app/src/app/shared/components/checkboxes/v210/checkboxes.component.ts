@@ -36,7 +36,7 @@ import {CheckboxesColumnMenuComponent} from './checkboxes-column-menu.component'
 import {CheckboxesConfigMenuComponent} from './checkboxes-config-menu.component';
 import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {CheckboxesService} from './checkboxes.service';
+import {CustomCheckboxesService} from './custom-checkboxes.service';
 import {MovementResponse} from './checkboxes.service';
 import {
     AbstractArrayNode,
@@ -217,7 +217,7 @@ export class CheckboxesComponent implements OnInit, AfterViewInit, AfterViewChec
         private clipboard: Clipboard,
         private storageService: JSSdkLocalStorageService,
         public filterService: CheckboxesFilterService,
-        private checkboxesService: CheckboxesService,
+        private customcheckboxesService: CustomCheckboxesService,
         private cd: ChangeDetectorRef
     ) {
         this.dataSource = new CheckboxesDataSource();
@@ -402,7 +402,7 @@ export class CheckboxesComponent implements OnInit, AfterViewInit, AfterViewChec
         queryFilter?.queryNode.subNodes.push(additionalCondition);
 
         const filterRQLQuery = queryFilter ? QueryStringifier.stringify(queryFilter) : '';
-        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace('&', ',');
+        const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace(/&/g, ',');
 
         let rqlStringTemp = '';
         if (filterRQLQuery.length > 0) {
@@ -432,7 +432,7 @@ export class CheckboxesComponent implements OnInit, AfterViewInit, AfterViewChec
         this.rqlString = rqlStringTemp;
 
         try {
-            this.checkboxesService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
+            this.customcheckboxesService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
                 (response: MovementResponse): void => {
                     this.dataSource.setData(response.items);
                     this.filteredData = response.items;
@@ -512,7 +512,7 @@ export class CheckboxesComponent implements OnInit, AfterViewInit, AfterViewChec
     downloadCsv(csvArray: any): void {
         this.downloadEvent.emit({error: false, success: false, inProgress: true});
         try {
-            this.checkboxesService.downloadCsv(csvArray);
+            this.customcheckboxesService.downloadCsv(csvArray);
             this.downloadEvent.emit({error: false, success: true, inProgress: false});
         } catch (error: any) {
             this.downloadEvent.emit({error: true, success: false, inProgress: false});
