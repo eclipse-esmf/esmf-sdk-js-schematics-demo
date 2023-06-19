@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated form RBS JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated form ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 
 export interface MultiLanguageText {
     /** key defines the locale. Value is the translated text for that locale. */

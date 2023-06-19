@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from RBS SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {NgModule} from '@angular/core';
 import {CommandBarComponent} from './command-bar.component';
 import {CommandBarColumnMenuComponent} from './command-bar-column-menu.component';

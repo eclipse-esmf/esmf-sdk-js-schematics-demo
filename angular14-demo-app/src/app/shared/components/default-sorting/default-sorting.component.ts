@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from RBS SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
     AfterViewInit,
     Component,
@@ -69,7 +69,7 @@ export enum DefaultSortingColumn {
 }
 
 @Component({
-    selector: 'rbs-ui-default-sorting',
+    selector: 'esmf-ui-default-sorting',
     templateUrl: './default-sorting.component.html',
     styleUrls: ['./default-sorting.component.scss'],
 })

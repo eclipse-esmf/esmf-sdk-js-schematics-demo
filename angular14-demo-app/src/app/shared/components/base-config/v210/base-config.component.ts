@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from RBS JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
     AfterViewInit,
     Component,
@@ -133,7 +133,7 @@ export enum BaseConfigColumn {
 }
 
 @Component({
-    selector: 'rbs-ui-base-config-v210',
+    selector: 'esmf-ui-base-config-v210',
     templateUrl: './base-config.component.html',
     styleUrls: ['./base-config.component.scss'],
 })

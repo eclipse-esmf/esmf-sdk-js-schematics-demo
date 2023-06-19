@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from RBS JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
     AfterViewInit,
     Component,
@@ -133,7 +133,7 @@ export enum ComplexPropSelectedColumn {
 }
 
 @Component({
-    selector: 'rbs-ui-complex-prop-selected-v210',
+    selector: 'esmf-ui-complex-prop-selected-v210',
     templateUrl: './complex-prop-selected.component.html',
     styleUrls: ['./complex-prop-selected.component.scss'],
 })

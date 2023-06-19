@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from RBS SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {NgModule} from '@angular/core';
 import {BaseConfigComponent} from './base-config.component';
 import {BaseConfigColumnMenuComponent} from './base-config-column-menu.component';

@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from RBS SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {Component, EventEmitter, Output} from '@angular/core';
 import {JSSdkLocalStorageService} from '../../../services/storage.service';
 import {Config} from './movement-table.component';

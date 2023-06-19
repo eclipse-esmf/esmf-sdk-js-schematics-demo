@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from RBS SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
     AfterViewInit,
     Component,
@@ -133,7 +133,7 @@ export enum MovementTableColumn {
 }
 
 @Component({
-    selector: 'rbs-ui-movement-table-v210',
+    selector: 'esmf-ui-movement-table-v210',
     templateUrl: './movement-table.component.html',
     styleUrls: ['./movement-table.component.scss'],
 })

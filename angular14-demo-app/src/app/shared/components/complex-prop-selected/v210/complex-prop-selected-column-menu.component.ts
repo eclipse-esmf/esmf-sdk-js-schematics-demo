@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from RBS JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {Component, EventEmitter, Output} from '@angular/core';
 import {Column} from './complex-prop-selected.component';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';

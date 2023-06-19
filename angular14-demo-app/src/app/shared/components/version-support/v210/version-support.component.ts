@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from RBS JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
     AfterViewInit,
     Component,
@@ -133,7 +133,7 @@ export enum VersionSupportColumn {
 }
 
 @Component({
-    selector: 'rbs-ui-version-support-v210',
+    selector: 'esmf-ui-version-support-v210',
     templateUrl: './version-support.component.html',
     styleUrls: ['./version-support.component.scss'],
 })

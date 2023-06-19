@@ -1,4 +1,4 @@
-# RBS SDK JS Schematics :: Demo APP ✨
+# SDK JS Schematics :: Demo APP ✨
 
 ## Quick start
 
@@ -10,7 +10,7 @@ npm run e2e
 
 ---
 
-To update all components to the latest state of the RBS Angular Schematics run the following 
+To update all components to the latest state of the ESMF Angular Schematics run the following 
 
 ```
 npm run update:components

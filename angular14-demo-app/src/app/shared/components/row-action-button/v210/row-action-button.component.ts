@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from RBS JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
     AfterViewInit,
     Component,
@@ -133,7 +133,7 @@ export enum RowActionButtonColumn {
 }
 
 @Component({
-    selector: 'rbs-ui-row-action-button-v210',
+    selector: 'esmf-ui-row-action-button-v210',
     templateUrl: './row-action-button.component.html',
     styleUrls: ['./row-action-button.component.scss'],
 })

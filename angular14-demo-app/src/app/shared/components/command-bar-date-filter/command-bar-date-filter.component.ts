@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from RBS SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
     AfterViewInit,
     Component,
@@ -71,7 +71,7 @@ export enum CommandBarDateFilterColumn {
 }
 
 @Component({
-    selector: 'rbs-ui-command-bar-date-filter',
+    selector: 'esmf-ui-command-bar-date-filter',
     templateUrl: './command-bar-date-filter.component.html',
     styleUrls: ['./command-bar-date-filter.component.scss'],
 })

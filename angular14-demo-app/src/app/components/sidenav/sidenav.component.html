@@ -100,95 +100,95 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <rbs-ui-base-config
+        <esmf-ui-base-config
                 *ngIf="currentComponent === 'base-config'"
                 [data]="basicMovementTableData"
                 (copyToClipboardEvent)="copyToClipboard($event)"
                 (rowClickEvent)="rowClick($event)"
-        ></rbs-ui-base-config>
+        ></esmf-ui-base-config>
 
-        <rbs-ui-checkboxes
+        <esmf-ui-checkboxes
                 *ngIf="currentComponent === 'checkboxes'"
                 [data]="basicMovementTableData"
                 (copyToClipboardEvent)="copyToClipboard($event)"
                 (rowClickEvent)="rowClick($event)"
-        ></rbs-ui-checkboxes>
+        ></esmf-ui-checkboxes>
 
-        <rbs-ui-command-bar-actions
+        <esmf-ui-command-bar-actions
                 *ngIf="currentComponent === 'command-bar-actions'"
                 [data]="basicMovementTableData"
                 (copyToClipboardEvent)="copyToClipboard($event)"
                 (rowClickEvent)="rowClick($event)"
-        ></rbs-ui-command-bar-actions>
+        ></esmf-ui-command-bar-actions>
 
-        <rbs-ui-command-bar
+        <esmf-ui-command-bar
                 *ngIf="currentComponent === 'command-bar'"
                 [data]="basicMovementTableData"
                 (copyToClipboardEvent)="copyToClipboard($event)"
                 (rowClickEvent)="rowClick($event)"
-        ></rbs-ui-command-bar>
+        ></esmf-ui-command-bar>
 
-        <rbs-ui-command-bar-date-filter
+        <esmf-ui-command-bar-date-filter
                 *ngIf="currentComponent === 'command-bar-date-filter'"
                 [data]="basicMovementTableData"
                 (copyToClipboardEvent)="copyToClipboard($event)"
                 (rowClickEvent)="rowClick($event)"
-        ></rbs-ui-command-bar-date-filter>
+        ></esmf-ui-command-bar-date-filter>
 
-        <rbs-ui-command-bar-enum-filter
+        <esmf-ui-command-bar-enum-filter
                 *ngIf="currentComponent === 'command-bar-enum-filter'"
                 [data]="basicMovementTableData"
                 (copyToClipboardEvent)="copyToClipboard($event)"
                 (rowClickEvent)="rowClick($event)"
-        ></rbs-ui-command-bar-enum-filter>
+        ></esmf-ui-command-bar-enum-filter>
 
-        <rbs-ui-command-bar-search
+        <esmf-ui-command-bar-search
                 *ngIf="currentComponent === 'command-bar-search'"
                 [data]="basicMovementTableData"
                 (copyToClipboardEvent)="copyToClipboard($event)"
                 (rowClickEvent)="rowClick($event)"
-        ></rbs-ui-command-bar-search>
+        ></esmf-ui-command-bar-search>
 
-        <rbs-ui-complex-prop-selected
+        <esmf-ui-complex-prop-selected
                 *ngIf="currentComponent === 'complex-prop-selected'"
                 [data]="basicMovementTableData"
                 (copyToClipboardEvent)="copyToClipboard($event)"
                 (rowClickEvent)="rowClick($event)"
-        ></rbs-ui-complex-prop-selected>
+        ></esmf-ui-complex-prop-selected>
 
-        <rbs-ui-custom-column
+        <esmf-ui-custom-column
                 *ngIf="currentComponent === 'custom-column'"
                 [data]="basicMovementTableData"
                 (copyToClipboardEvent)="copyToClipboard($event)"
                 (rowClickEvent)="rowClick($event)"
-        ></rbs-ui-custom-column>
+        ></esmf-ui-custom-column>
 
-        <rbs-ui-default-sorting
+        <esmf-ui-default-sorting
                 *ngIf="currentComponent === 'default-sorting'"
                 [data]="basicMovementTableData"
                 (copyToClipboardEvent)="copyToClipboard($event)"
                 (rowClickEvent)="rowClick($event)"
-        ></rbs-ui-default-sorting>
+        ></esmf-ui-default-sorting>
 
-        <rbs-ui-excluded-property
+        <esmf-ui-excluded-property
                 *ngIf="currentComponent === 'excluded-property'"
                 [data]="basicMovementTableData"
                 (copyToClipboardEvent)="copyToClipboard($event)"
                 (rowClickEvent)="rowClick($event)"
-        ></rbs-ui-excluded-property>
+        ></esmf-ui-excluded-property>
 
-        <rbs-ui-row-action-button
+        <esmf-ui-row-action-button
                 *ngIf="currentComponent === 'row-action-button'"
                 [data]="basicMovementTableData"
                 (copyToClipboardEvent)="copyToClipboard($event)"
                 (rowClickEvent)="rowClick($event)"
-        ></rbs-ui-row-action-button>
+        ></esmf-ui-row-action-button>
 
-        <rbs-ui-version-support-v210
+        <esmf-ui-version-support-v210
           *ngIf="currentComponent === 'version-support'"
           [data]="versionSupportData"
           (copyToClipboardEvent)="copyToClipboard($event)"
           (rowClickEvent)="rowClick($event)"
-        ></rbs-ui-version-support-v210>
+        ></esmf-ui-version-support-v210>
     </mat-sidenav-content>
 </mat-sidenav-container>

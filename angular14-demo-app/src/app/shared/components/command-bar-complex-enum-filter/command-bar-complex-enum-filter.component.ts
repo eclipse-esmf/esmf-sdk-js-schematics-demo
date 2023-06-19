@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from RBS SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
     AfterViewInit,
     Component,
@@ -67,7 +67,7 @@ export enum CommandBarComplexEnumFilterColumn {
 }
 
 @Component({
-    selector: 'rbs-ui-command-bar-complex-enum-filter',
+    selector: 'esmf-ui-command-bar-complex-enum-filter',
     templateUrl: './command-bar-complex-enum-filter.component.html',
     styleUrls: ['./command-bar-complex-enum-filter.component.scss'],
 })

@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from RBS SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
     AfterViewInit,
     Component,
@@ -69,7 +69,7 @@ export enum CommandBarActionsColumn {
 }
 
 @Component({
-    selector: 'rbs-ui-command-bar-actions',
+    selector: 'esmf-ui-command-bar-actions',
     templateUrl: './command-bar-actions.component.html',
     styleUrls: ['./command-bar-actions.component.scss'],
 })

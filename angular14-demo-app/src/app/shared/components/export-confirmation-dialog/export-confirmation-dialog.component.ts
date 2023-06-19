@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from RBS JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';

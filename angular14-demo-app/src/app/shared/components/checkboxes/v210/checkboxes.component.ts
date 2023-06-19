@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from RBS JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
     AfterViewInit,
     Component,
@@ -133,7 +133,7 @@ export enum CheckboxesColumn {
 }
 
 @Component({
-    selector: 'rbs-ui-checkboxes-v210',
+    selector: 'esmf-ui-checkboxes-v210',
     templateUrl: './checkboxes.component.html',
     styleUrls: ['./checkboxes.component.scss'],
 })

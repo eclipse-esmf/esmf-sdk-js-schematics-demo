@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from RBS SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {NgModule} from '@angular/core';
 import {CheckboxesComponent} from './checkboxes.component';
 import {CheckboxesColumnMenuComponent} from './checkboxes-column-menu.component';
