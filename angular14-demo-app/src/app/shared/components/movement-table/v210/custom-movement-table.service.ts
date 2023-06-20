@@ -10,8 +10,8 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import {MovementTableService} from './movement-table.service';
 
 /**
@@ -25,10 +25,10 @@ import {MovementTableService} from './movement-table.service';
  * the cli parameter '--force'.
  */
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class CustomMovementTableService extends MovementTableService {
-    constructor(http: HttpClient) {
-        super(http);
-    }
+  constructor(http: HttpClient) {
+    super(http);
+  }
 }

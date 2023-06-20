@@ -10,8 +10,8 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import {BaseConfigService} from './base-config.service';
 
 /**
@@ -25,10 +25,10 @@ import {BaseConfigService} from './base-config.service';
  * the cli parameter '--force'.
  */
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class CustomBaseConfigService extends BaseConfigService {
-    constructor(http: HttpClient) {
-        super(http);
-    }
+  constructor(http: HttpClient) {
+    super(http);
+  }
 }

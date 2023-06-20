@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import { tableTests } from '../reusable-tests/table';
+import {tableTests} from '../reusable-tests/table';
 
 describe('Base config table', (): void => {
   before((): void => {

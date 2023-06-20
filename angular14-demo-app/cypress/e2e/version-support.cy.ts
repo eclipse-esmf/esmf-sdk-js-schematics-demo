@@ -10,9 +10,9 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import { checkboxTests } from 'cypress/reusable-tests/checkbox';
-import { tableTests } from 'cypress/reusable-tests/table';
-import { commandBarTests } from '../reusable-tests/command-bar';
+import {checkboxTests} from 'cypress/reusable-tests/checkbox';
+import {tableTests} from 'cypress/reusable-tests/table';
+import {commandBarTests} from '../reusable-tests/command-bar';
 
 describe.skip('Version support test', (): void => {
   before((): void => {

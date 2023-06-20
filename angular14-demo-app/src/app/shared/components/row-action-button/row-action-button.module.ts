@@ -11,43 +11,43 @@
  */
 
 /** Generated from SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
+import {ClipboardModule} from '@angular/cdk/clipboard';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
-import {RowActionButtonComponent} from './row-action-button.component';
-import {RowActionButtonColumnMenuComponent} from './row-action-button-column-menu.component';
-import {AppSharedModule} from 'src/app/shared/app-shared.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatTableModule} from '@angular/material/table';
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatListModule} from '@angular/material/list';
+import {MatMenuModule} from '@angular/material/menu';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
-import {MatButtonModule} from '@angular/material/button';
-import {MatMenuModule} from '@angular/material/menu';
-import {HttpClientModule} from '@angular/common/http';
-import {ClipboardModule} from '@angular/cdk/clipboard';
-import {MatIconModule} from '@angular/material/icon';
+import {MatTableModule} from '@angular/material/table';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatListModule} from '@angular/material/list';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {MatMomentDateModule} from '@angular/material-moment-adapter';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AppSharedModule} from 'src/app/shared/app-shared.module';
+import {RowActionButtonColumnMenuComponent} from './row-action-button-column-menu.component';
+import {RowActionButtonComponent} from './row-action-button.component';
 
 @NgModule({
-    declarations: [RowActionButtonComponent, RowActionButtonColumnMenuComponent],
-    imports: [
-        AppSharedModule,
-        BrowserAnimationsModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatButtonModule,
-        MatMenuModule,
-        HttpClientModule,
-        ClipboardModule,
-        MatIconModule,
-        MatTooltipModule,
-        MatListModule,
-        DragDropModule,
-        MatMomentDateModule,
-    ],
-    providers: [],
-    exports: [RowActionButtonComponent],
+  declarations: [RowActionButtonComponent, RowActionButtonColumnMenuComponent],
+  imports: [
+    AppSharedModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatButtonModule,
+    MatMenuModule,
+    HttpClientModule,
+    ClipboardModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatListModule,
+    DragDropModule,
+    MatMomentDateModule,
+  ],
+  providers: [],
+  exports: [RowActionButtonComponent],
 })
 export class RowActionButtonModule {}

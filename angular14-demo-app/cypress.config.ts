@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import { defineConfig } from 'cypress';
+import {defineConfig} from 'cypress';
 
 export default defineConfig({
   videosFolder: 'cypress/videos',

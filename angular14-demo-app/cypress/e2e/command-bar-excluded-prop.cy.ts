@@ -25,11 +25,11 @@ describe('Command bar with excluded properties', (): void => {
     excludedProps.join('');
 
     cy.get('[data-test="table"]').within(() => {
-      excludedProps.forEach((ep) =>
+      excludedProps.forEach(ep =>
         cy
           .get('[data-test="table-header-text"]')
           .contains('span', ep)
-          .should((elem) => {
+          .should(elem => {
             expect(elem.text()).to.not.equal(ep);
           })
       );

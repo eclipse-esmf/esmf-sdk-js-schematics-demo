@@ -21,20 +21,14 @@ export function commandBarTests() {
     });
 
     it('should show the correct number of items', (): void => {
-      cy.get('.mat-paginator-range-actions').then(
-        (element: JQuery): void => {
-          cy.get('[data-test="paginator"] .mat-paginator-range-label').then(
-            (paginatorNumber) => {
-              const totalNumberOfItems = parseInt(
-                paginatorNumber.text().split('of')[1]
-              );
-              const firstGroup = element.text().split('of')[0].split(' ').join('');
-              const currentItems = firstGroup.substring(firstGroup.length -1);
-              expect(parseInt(currentItems)).to.eq(totalNumberOfItems);
-            }
-          );
-        }
-      );
+      cy.get('.mat-paginator-range-actions').then((element: JQuery): void => {
+        cy.get('[data-test="paginator"] .mat-paginator-range-label').then(paginatorNumber => {
+          const totalNumberOfItems = parseInt(paginatorNumber.text().split('of')[1]);
+          const firstGroup = element.text().split('of')[0].split(' ').join('');
+          const currentItems = firstGroup.substring(firstGroup.length - 1);
+          expect(parseInt(currentItems)).to.eq(totalNumberOfItems);
+        });
+      });
     });
 
     it('should load the refresh data button', (): void => {
@@ -43,9 +37,7 @@ export function commandBarTests() {
 
     it('should refresh the table', (): void => {
       cy.get('[data-test="refresh-data-button"]').scrollIntoView().click();
-      cy.get('[data-test="table"]')
-        .find('[data-test="table-row"]')
-        .should('have.length.greaterThan', 0);
+      cy.get('[data-test="table"]').find('[data-test="table-row"]').should('have.length.greaterThan', 0);
     });
 
     it('should load the export data button', (): void => {

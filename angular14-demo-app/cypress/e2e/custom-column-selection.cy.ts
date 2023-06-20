@@ -25,9 +25,7 @@ describe('Command bar with custom column selection and deselection', (): void =>
     // get the list of available columns to hide/show
 
     const tableHeaders = cy.get('[data-test="table-header"]').children();
-    const columnsToDisplay = cy
-      .get('[data-test="column-list-option"]')
-      .children();
+    const columnsToDisplay = cy.get('[data-test="column-list-option"]').children();
 
     columnsToDisplay.each((prop, index, arr) => {
       cy.wrap(prop).click();
@@ -37,11 +35,11 @@ describe('Command bar with custom column selection and deselection', (): void =>
       // check if column was hidden
       if (index + 1 < arr.length) {
         cy.get('[data-test="table"]').within(() => {
-          tableColumnsProcessed.forEach((tcp) =>
+          tableColumnsProcessed.forEach(tcp =>
             cy
               .get('[data-test="table-header-text"]')
               .contains('span', tcp)
-              .should((elem) => {
+              .should(elem => {
                 expect(elem.text()).to.not.equal(tcp);
               })
           );
@@ -55,20 +53,18 @@ describe('Command bar with custom column selection and deselection', (): void =>
   });
 
   it('should reselect all columns and check', (): void => {
-    const columnsToDisplay = cy
-      .get('[data-test="column-list-option"]')
-      .children();
-    columnsToDisplay.each((prop) => {
+    const columnsToDisplay = cy.get('[data-test="column-list-option"]').children();
+    columnsToDisplay.each(prop => {
       cy.wrap(prop).click();
       cy.get('[data-test="column-menu-apply-button"]').click();
       cy.get('[data-test="mat-table-menu-icon"]').click();
     });
     cy.get('[data-test="table"]').within(() => {
-      tableColumnsProcessed.forEach((tcp) =>
+      tableColumnsProcessed.forEach(tcp =>
         cy
           .get('[data-test="table-header-text"]')
           .contains('span', tcp)
-          .should((elem) => {
+          .should(elem => {
             expect(elem.text().trim()).to.equal(tcp);
           })
       );
@@ -76,20 +72,18 @@ describe('Command bar with custom column selection and deselection', (): void =>
   });
 
   it('should deselect all columns and restore default', (): void => {
-    const columnsToDisplay = cy
-      .get('[data-test="column-list-option"]')
-      .children();
-    columnsToDisplay.click({ multiple: true });
-    cy.get('[data-test="column-menu-apply-button"]').click({ multiple: true });
+    const columnsToDisplay = cy.get('[data-test="column-list-option"]').children();
+    columnsToDisplay.click({multiple: true});
+    cy.get('[data-test="column-menu-apply-button"]').click({multiple: true});
     cy.get('[data-test="mat-table-menu-icon"]').click();
     cy.get('[data-test="restore-to-defaults-button"]').click();
     cy.get('[data-test="column-menu-apply-button"]').click();
     cy.get('[data-test="table"]').within(() => {
-      tableColumnsProcessed.forEach((tcp) =>
+      tableColumnsProcessed.forEach(tcp =>
         cy
           .get('[data-test="table-header-text"]')
           .contains('span', tcp)
-          .should((elem) => {
+          .should(elem => {
             expect(elem.text().trim()).to.equal(tcp);
           })
       );

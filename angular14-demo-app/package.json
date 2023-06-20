@@ -11,6 +11,8 @@
     "e2e": "start-server-and-test start http://localhost:4200 cypress:run",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
+    "prettier:check": "prettier --config .prettierrc --check .",
+    "prettier:format": "prettier --config .prettierrc --write .",
     "update:components": "ng generate @esmf/semantic-ui-schematics:table --dry-run=false --overwrite --skip-install --config-file=../config/base-config.json --name=base-config && ng generate @esmf/semantic-ui-schematics:table --dry-run=false --overwrite --skip-install --config-file=../config/checkboxes.json --name=checkboxes && ng generate @esmf/semantic-ui-schematics:table --dry-run=false --overwrite --skip-install --config-file=../config/command-bar.json --name=command-bar && ng generate @esmf/semantic-ui-schematics:table --dry-run=false --overwrite --skip-install --config-file=../config/command-bar-actions.json --name=command-bar-actions && ng generate @esmf/semantic-ui-schematics:table --dry-run=false --overwrite --skip-install --config-file=../config/command-bar-date-filter.json --name=command-bar-date-filter && ng generate @esmf/semantic-ui-schematics:table --dry-run=false --overwrite --skip-install --config-file=../config/command-bar-enum-filter.json --name=command-bar-enum-filter && ng generate @esmf/semantic-ui-schematics:table --dry-run=false --overwrite --skip-install --config-file=../config/command-bar-search.json --name=command-bar-search && ng generate @esmf/semantic-ui-schematics:table --dry-run=false --overwrite --skip-install --config-file=../config/complex-prop-selected.json --name=complex-prop-selected && ng generate @esmf/semantic-ui-schematics:table --dry-run=false --overwrite --skip-install --config-file=../config/custom-column.json --name=custom-column && ng generate @esmf/semantic-ui-schematics:table --dry-run=false --overwrite --skip-install --config-file=../config/default-sorting.json --name=default-sorting && ng generate @esmf/semantic-ui-schematics:table --dry-run=false --overwrite --skip-install --config-file=../config/excluded-property.json --name=excluded-property && ng generate @esmf/semantic-ui-schematics:table --dry-run=false --overwrite --skip-install --config-file=../config/remote-data.json --name=remote-data && ng generate @esmf/semantic-ui-schematics:table --dry-run=false --overwrite --skip-install --config-file=../config/row-action-button.json --name=row-action-button && ng generate @esmf/semantic-ui-schematics:table --dry-run=false --overwrite --skip-install --config-file=../config/version-support.json --name=version-support && npm run combine-i18n"
   },
   "private": true,
@@ -56,7 +58,8 @@
     "karma-coverage": "2.0.3",
     "karma-jasmine": "4.0.1",
     "karma-jasmine-html-reporter": "1.7.0",
-    "prettier": "2.5.1",
+    "prettier": "^2.5.1",
+    "prettier-plugin-organize-imports": "^3.2.2",
     "start-server-and-test": "1.14.0",
     "typescript": "4.8.4"
   },

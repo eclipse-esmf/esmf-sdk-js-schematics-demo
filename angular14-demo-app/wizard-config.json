@@ -1,7 +1,5 @@
 {
-  "aspectModelTFiles": [
-    "models/org.eclipse.examples.movement/2.1.0/Movement.ttl"
-  ],
+  "aspectModelTFiles": ["models/org.eclipse.examples.movement/2.1.0/Movement.ttl"],
   "excludedProperties": [],
   "configFile": "wizard-config.json",
   "complexProps": [
@@ -18,9 +16,7 @@
   "addRowCheckboxes": false,
   "customRowActions": [],
   "addCommandBar": true,
-  "enabledCommandBarFunctions": [
-    "addSearchBar"
-  ],
+  "enabledCommandBarFunctions": ["addSearchBar"],
   "chooseLanguageForSearch": "en",
   "enableRemoteDataHandling": true,
   "customRemoteService": true,

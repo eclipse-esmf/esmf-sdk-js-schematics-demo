@@ -10,21 +10,21 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import {commandBarTests} from "../reusable-tests/command-bar";
-import {tableTests} from "../reusable-tests/table";
+import {commandBarTests} from '../reusable-tests/command-bar';
+import {tableTests} from '../reusable-tests/table';
 
 describe('Command bar with enum filter', (): void => {
-    before((): void => {
-        cy.visit('/');
-        cy.get('[data-test="command-bar-enum"]').click();
-        cy.get('[data-test="table-header"]').first().click();
-    })
+  before((): void => {
+    cy.visit('/');
+    cy.get('[data-test="command-bar-enum"]').click();
+    cy.get('[data-test="table-header"]').first().click();
+  });
 
-    tableTests();
+  tableTests();
 
-    commandBarTests();
+  commandBarTests();
 
-    it('should show at least a dropdown selector', (): void => {
-        cy.get('[data-test="form-field-select"]').its('length').should('be.at.least', 1);
-    })
-})
+  it('should show at least a dropdown selector', (): void => {
+    cy.get('[data-test="form-field-select"]').its('length').should('be.at.least', 1);
+  });
+});

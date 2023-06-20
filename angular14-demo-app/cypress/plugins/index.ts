@@ -18,14 +18,11 @@
  */
 import {read} from 'clipboardy';
 
-export default (
-    on: Cypress.PluginEvents,
-    config: Cypress.PluginConfigOptions,
-) => {
-    on('task', {
-        // Clipboard test plugin
-        getClipboard: () => {
-            return read();
-        }
-    })
-}
+export default (on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) => {
+  on('task', {
+    // Clipboard test plugin
+    getClipboard: () => {
+      return read();
+    },
+  });
+};

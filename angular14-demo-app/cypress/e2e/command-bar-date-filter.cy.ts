@@ -10,8 +10,8 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import { commandBarTests } from '../reusable-tests/command-bar';
-import { tableTests } from '../reusable-tests/table';
+import {commandBarTests} from '../reusable-tests/command-bar';
+import {tableTests} from '../reusable-tests/table';
 
 describe('Command bar with date filter', (): void => {
   before((): void => {
@@ -25,9 +25,6 @@ describe('Command bar with date filter', (): void => {
   commandBarTests();
 
   it('should show at least a date time picker', (): void => {
-    cy.get('[data-test="form-field-date-time"]')
-      .its('length')
-      .should('be.at.least', 1);
+    cy.get('[data-test="form-field-date-time"]').its('length').should('be.at.least', 1);
   });
-
 });

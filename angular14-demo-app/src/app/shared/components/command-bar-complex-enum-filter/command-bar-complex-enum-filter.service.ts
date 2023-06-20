@@ -12,56 +12,55 @@
 
 /** Generated from SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Movement} from '../../types/movement/movement.types';
 import {Injectable} from '@angular/core';
+import {Movement} from '../../types/movement/movement.types';
 
 export interface MovementResponse {
-    items: Movement[];
-    totalItems?: number;
+  items: Movement[];
+  totalItems?: number;
 }
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class CommandBarComplexEnumFilterService {
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-    downloadCsv(csvArray: any): void {
-        if (!csvArray.length) {
-            throw new Error('Empty file. Please try again with data.');
+  downloadCsv(csvArray: any): void {
+    if (!csvArray.length) {
+      throw new Error('Empty file. Please try again with data.');
+    }
+    const a = document.createElement('a');
+    const blob = new Blob([csvArray], {type: 'text/csv'});
+    const url = window.URL.createObjectURL(blob);
+
+    a.href = url;
+    a.download = 'movement.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
+    a.remove();
+  }
+
+  flatten(csvArray: Movement[]): Movement[] {
+    return csvArray.map((item: Movement): Movement => {
+      return this.flattenObj(item);
+    });
+  }
+
+  private flattenObj(obj: any): any {
+    const result: any = {};
+
+    for (let key in obj) {
+      if (typeof obj[key] === 'object') {
+        const childObj = this.flattenObj(obj[key]);
+
+        for (let childObjKey in childObj) {
+          result[`${key}.${childObjKey}`] = childObj[childObjKey];
         }
-        const a = document.createElement('a');
-        const blob = new Blob([csvArray], {type: 'text/csv'});
-        const url = window.URL.createObjectURL(blob);
-
-        a.href = url;
-        a.download = 'movement.csv';
-        a.click();
-        window.URL.revokeObjectURL(url);
-        a.remove();
+      } else {
+        result[key] = obj[key];
+      }
     }
-
-    flatten(csvArray: Movement[]): Movement[] {
-        return csvArray.map((item: Movement): Movement => {
-            return this.flattenObj(item);
-        });
-    }
-
-    private flattenObj(obj: any): any {
-        const result: any = {};
-
-        for (let key in obj) {
-            if (typeof obj[key] === 'object') {
-                const childObj = this.flattenObj(obj[key]);
-
-                for (let childObjKey in childObj) {
-                    result[`${key}.${childObjKey}`] = childObj[childObjKey];
-                }
-            } else {
-                result[key] = obj[key];
-            }
-        }
-        return result;
-    }
+    return result;
+  }
 }
