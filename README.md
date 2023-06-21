@@ -10,7 +10,7 @@
 
 ## Introduction
 
-This project serves as a demonstration of the ESMF Schematics Project in an Angular application.
+This project serves as a demonstration of the [ESMF Schematics Project](https://github.com/eclipse-esmf/esmf-sdk-js-schematics) in an Angular application.
 
 ## About
 
@@ -25,7 +25,7 @@ The ESMF Schematics project is leveraged here to generate a variety of tables in
 git clone https://github.com/eclipse-esmf/esmf-sdk-js-schematics-demo.git
 ```
 
-To start the demo application and e2e test select the desired version, or read [Angular 14 DEMO App](/angular14-demo-app/README.md).
+To launch the demo application and execute the e2e tests, please refer to the detailed guide available in the [Angular 14 DEMO App](/angular14-demo-app/README.md).
 
 ## License
 
