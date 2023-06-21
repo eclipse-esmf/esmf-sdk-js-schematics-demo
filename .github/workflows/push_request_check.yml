@@ -1,0 +1,53 @@
+name: Check New Pull Request
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ '**' ]
+
+# Tests are done in Ubuntu because Mac and Windows random failures, and it is not stable.
+jobs:
+  build:
+    name: Check if passes all requirements
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v3
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Setup NodeJs
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+          working-directory: angular14-demo-app
+
+      - name: Install node modules (Dev)
+        run: npm install
+        working-directory: angular14-demo-app
+
+      - name: Update components from schematics project
+        run: npm run update:components
+        working-directory: angular14-demo-app
+
+      - name: Build demo application
+        run: npm run build
+        working-directory: angular14-demo-app
+
+      - name: Performing cypress tests
+        run: npm run e2e
+        working-directory: angular14-demo-app

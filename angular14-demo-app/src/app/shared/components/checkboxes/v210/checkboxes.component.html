@@ -1,0 +1,403 @@
+<!--
+  ~ Copyright (c) 2023 Robert Bosch Manufacturing Solutions GmbH
+  ~
+  ~ See the AUTHORS file(s) distributed with this work for
+  ~ additional information regarding authorship.
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at https://mozilla.org/MPL/2.0/.
+  ~
+  ~ SPDX-License-Identifier: MPL-2.0
+  -->
+
+<div class="js-sdk-component-container">
+  <mat-toolbar data-test="toolbar" class="toolbar">
+    <div *ngIf="isMultipleSelectionEnabled" data-test="toolbar-number-of-items" class="command-bar-number-of-items">
+      {{ selection.selected.length > 0 ? selection.selected.length + ' / ' : '' }}{{ totalItems }}
+    </div>
+    <mat-form-field data-test="search-form-field" appearance="fill" floatLabel="never" class="search-input">
+      <mat-label data-test="search-label">{{ 'search' | translate }}</mat-label>
+      <input
+        #searchInput
+        data-test="search-input"
+        matInput
+        [formControl]="filterService.searchString"
+        type="text"
+        (keyup.enter)="reloadFilter()"
+        (focus)="searchFocused = true"
+        (blur)="searchFocused = false"
+      />
+      <mat-error *ngIf="filterService.searchString.errors && filterService.searchString.errors['blankSpace']">
+        {{ 'validation.blankSpace' | translate }}
+      </mat-error>
+      <mat-error *ngIf="filterService.searchString.errors && filterService.searchString.errors['invalidInput']">
+        {{ 'validation.invalidInput' | translate }} {{ allowedCharacters }}
+      </mat-error>
+      <mat-error *ngIf="!filterService.stringColumns || !filterService.stringColumns.length">
+        {{ 'validation.empty_string_columns_array' | translate }}
+      </mat-error>
+      <mat-error *ngIf="filterService.searchString.errors && filterService.searchString.errors['minCharNo']">
+        {{ 'validation.min_char_no' | translate }} {{ minNumberCharacters }}
+      </mat-error>
+      <mat-error *ngIf="filterService.searchString.errors && filterService.searchString.errors['maxCharNo']">
+        {{ 'validation.max_char_no' | translate }} {{ maxNumberCharacters }}
+      </mat-error>
+      <mat-hint *ngIf="!searchFocused && !!searchHint">{{ searchHint }}</mat-hint>
+      <button data-test="search-button" mat-icon-button matSuffix aria-label="search" (click)="reloadFilter()">
+        <mat-icon data-test="search-icon" class="material-icons">search</mat-icon>
+      </button>
+    </mat-form-field>
+    <ng-container *ngIf="hasAdvancedSearch">
+      <mat-form-field data-test="form-field-select" appearance="fill" floatLabel="never">
+        <mat-label data-test="select-label">{{ 'advancedSearch' | translate }}</mat-label>
+        <mat-select data-test="select" [formControl]="filterService.selectedStringColumn">
+          <mat-option [value]="filterService.advancedSearchAllValue">{{ 'allTextFields' | translate }}</mat-option>
+          <mat-option *ngFor="let searchField of filterService.stringColumns" [value]="searchField">
+            <span>{{ 'movement.v210.' + searchField + '.preferredName' | translate }}</span>
+            <span class="advanced-search-option-description"> {{ 'movement.v210.' + searchField + '.description' | translate }}</span>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
+
+    <span data-test="spacer" class="spacer"></span>
+
+    <button data-test="refresh-data-button" mat-icon-button aria-label="Refresh table" (click)="applyFilters()">
+      <mat-icon data-test="refresh-data-icon" class="material-icons" [matTooltip]="'tableActions.refreshData' | translate"
+        >autorenew</mat-icon
+      >
+    </button>
+    <button data-test="export-data-button" mat-icon-button aria-label="Download data as CSV" (click)="exportToCsv()">
+      <mat-icon data-test="export-data-icon" class="material-icons" [matTooltip]="'tableActions.exportData' | translate"
+        >file_download</mat-icon
+      >
+    </button>
+
+    <button
+      data-test="open-configuration"
+      mat-icon-button
+      aria-label="Open configuration"
+      [matMenuTriggerFor]="configurationMenu"
+      (menuOpened)="initOpenedConfigurationDialog()"
+    >
+      <mat-icon data-test="open-configuration-icon" class="material-icons" [matTooltip]="'tableActions.openConfig' | translate"
+        >settings
+      </mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <ng-container *ngIf="!!customTemplate && !dataSource.data.length">
+    <ng-container *ngTemplateOutlet="customTemplate"></ng-container>
+  </ng-container>
+
+  <div class="scrollable-chips-container" *ngIf="filterService.activeFilters.length">
+    <button
+      data-test="scroll-left-button"
+      mat-mini-fab
+      class="mat-elevation-z0"
+      [disabled]="chipsScrollEl.disableLeftBtn"
+      (click)="chipsScrollEl.scrollChipList('left')"
+      *ngIf="chipsScrollEl.scrollable"
+    >
+      <mat-icon data-test="scroll-left-icon" class="material-icons" [matTooltip]="'scroll.left' | translate">chevron_left </mat-icon>
+    </button>
+    <div
+      class="chip-list-container"
+      data-test="chip-list-container"
+      horizontalOverflow
+      #chipsScrollEl="horizontalOverflow"
+      #chipList
+      [chipsObj]="chips"
+    >
+      <mat-chip-list data-test="chip-list" #chips>
+        <mat-chip
+          data-test="chip"
+          *ngFor="let filter of filterService.activeFilters"
+          [removable]="filter.removable"
+          (removed)="removeFilter(filter)"
+        >
+          <div data-test="chip-text" class="chip-text" matTooltip="{{ filter.filterValue + filter.label }}">
+            <b>{{ filter.filterValue }}</b
+            >{{ filter.label }}
+          </div>
+          <button *ngIf="filter.removable" matChipRemove data-test="mat-chip-remove">
+            <mat-icon class="material-icons" data-test="remove-chip">cancel</mat-icon>
+          </button>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+    <button
+      data-test="scroll-right-button"
+      mat-mini-fab
+      class="mat-elevation-z0"
+      [disabled]="chipsScrollEl.disableRightBtn"
+      (click)="chipsScrollEl.scrollChipList('right')"
+      *ngIf="chipsScrollEl.scrollable"
+    >
+      <mat-icon data-test="scroll-right-icon" class="material-icons" [matTooltip]="'scroll.right' | translate">chevron_right </mat-icon>
+    </button>
+  </div>
+  <div [hidden]="!!customTemplate && !dataSource.data.length">
+    <div data-test="table-container" class="mat-table-container">
+      <table
+        data-test="table"
+        mat-table
+        class="full-width-table"
+        matSortDisableClear="true"
+        matSort
+        (matSortChange)="sortData()"
+        [matSortActive]="columnToSort.sortColumnName"
+        [matSortDirection]="columnToSort.sortDirection"
+        [ngClass]="customTableClass"
+        [dataSource]="dataSource"
+        [trackBy]="trackBy"
+        aria-label="Elements"
+        [matSortDisabled]="dragging"
+      >
+        <!-- Row shown when there is no matching data that will be provided to the wrapper table. -->
+        <tr data-test="no-data-table-row" class="mat-row" *matNoDataRow>
+          <td data-test="no-data-table-cell" class="mat-cell" [colSpan]="displayedColumns.length" *ngIf="!dataSource.data.length">
+            <span data-test="no-data-message">{{ noDataMessage || 'No data' }}</span>
+          </td>
+        </tr>
+
+        <!-- moving Column -->
+        <ng-container data-test="table-column" matColumnDef="moving">
+          <th
+            data-test="table-header"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="moving"
+            [resizeColumn]="true"
+            [index]="0"
+            (dragging)="dragging = $event"
+          >
+            <span
+              [matTooltip]="'movement.v210.moving.description' | translate"
+              [matTooltipDisabled]="headerTooltipsOff"
+              matTooltipPosition="above"
+              data-test="table-header-text"
+            >
+              {{ 'movement.v210.moving.preferredName' | translate }}
+            </span>
+          </th>
+
+          <td data-test="table-cell" mat-cell *matCellDef="let row">
+            <ng-container
+              [ngTemplateOutlet]="
+                highlightConfig?.selected &&
+                ((!(row.moving === null || row.moving === undefined) ? row.moving : '-') | searchString: highlightString)
+                  ? searchedWordExists
+                  : normal
+              "
+              [ngTemplateOutletContext]="{value: !(row.moving === null || row.moving === undefined) ? row.moving : '-'}"
+            ></ng-container>
+
+            <button
+              data-test="copy-to-clipboard-button"
+              *ngIf="!(row.moving === null || row.moving === undefined)"
+              mat-icon-button
+              class="copy-to-clipboard"
+              (click)="copyToClipboard(row.moving, $event)"
+            >
+              <mat-icon data-test="copy-to-clipboard-icon" class="material-icons">content_copy</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <!-- speedLimitWarning Column -->
+        <ng-container data-test="table-column" matColumnDef="speedLimitWarning">
+          <th
+            data-test="table-header"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="speedLimitWarning"
+            [resizeColumn]="true"
+            [index]="1"
+            (dragging)="dragging = $event"
+          >
+            <span
+              [matTooltip]="'movement.v210.speedLimitWarning.description' | translate"
+              [matTooltipDisabled]="headerTooltipsOff"
+              matTooltipPosition="above"
+              data-test="table-header-text"
+            >
+              {{ 'movement.v210.speedLimitWarning.preferredName' | translate }}
+            </span>
+          </th>
+
+          <td data-test="table-cell" mat-cell *matCellDef="let row">
+            <ng-container
+              [ngTemplateOutlet]="
+                highlightConfig?.selected &&
+                ((!(row.speedLimitWarning === null || row.speedLimitWarning === undefined) ? row.speedLimitWarning : '-')
+                  | searchString: highlightString)
+                  ? searchedWordExists
+                  : normal
+              "
+              [ngTemplateOutletContext]="{
+                value: !(row.speedLimitWarning === null || row.speedLimitWarning === undefined) ? row.speedLimitWarning : '-'
+              }"
+            ></ng-container>
+
+            <button
+              data-test="copy-to-clipboard-button"
+              *ngIf="!(row.speedLimitWarning === null || row.speedLimitWarning === undefined)"
+              mat-icon-button
+              class="copy-to-clipboard"
+              (click)="copyToClipboard(row.speedLimitWarning, $event)"
+            >
+              <mat-icon data-test="copy-to-clipboard-icon" class="material-icons">content_copy</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <!-- startDate Column -->
+        <ng-container data-test="table-column" matColumnDef="startDate">
+          <th
+            data-test="table-header"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="startDate"
+            [resizeColumn]="true"
+            [index]="3"
+            (dragging)="dragging = $event"
+          >
+            <span
+              [matTooltip]="'movement.v210.startDate.description' | translate"
+              [matTooltipDisabled]="headerTooltipsOff"
+              matTooltipPosition="above"
+              data-test="table-header-text"
+            >
+              {{ 'movement.v210.startDate.preferredName' | translate }}
+            </span>
+          </th>
+
+          <td data-test="table-cell" mat-cell *matCellDef="let row">
+            <ng-container
+              [ngTemplateOutlet]="
+                highlightConfig?.selected &&
+                ((!(row.startDate === null || row.startDate === undefined) ? (row.startDate | date: tableDateTimeFormat) : '-')
+                  | searchString: highlightString)
+                  ? searchedWordExists
+                  : normal
+              "
+              [ngTemplateOutletContext]="{
+                value: !(row.startDate === null || row.startDate === undefined) ? (row.startDate | date: tableDateTimeFormat) : '-'
+              }"
+            ></ng-container>
+
+            <button
+              data-test="copy-to-clipboard-button"
+              *ngIf="!(row.startDate === null || row.startDate === undefined)"
+              mat-icon-button
+              class="copy-to-clipboard"
+              (click)="copyToClipboard(row.startDate, $event)"
+            >
+              <mat-icon data-test="copy-to-clipboard-icon" class="material-icons">content_copy</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <!-- endDate Column -->
+        <ng-container data-test="table-column" matColumnDef="endDate">
+          <th data-test="table-header" mat-header-cell *matHeaderCellDef mat-sort-header="endDate">
+            <span
+              [matTooltip]="'movement.v210.endDate.description' | translate"
+              [matTooltipDisabled]="headerTooltipsOff"
+              matTooltipPosition="above"
+              data-test="table-header-text"
+            >
+              {{ 'movement.v210.endDate.preferredName' | translate }}
+            </span>
+          </th>
+
+          <td data-test="table-cell" mat-cell *matCellDef="let row">
+            <ng-container
+              [ngTemplateOutlet]="
+                highlightConfig?.selected &&
+                ((!(row.endDate === null || row.endDate === undefined) ? (row.endDate | date: tableDateTimeFormat) : '-')
+                  | searchString: highlightString)
+                  ? searchedWordExists
+                  : normal
+              "
+              [ngTemplateOutletContext]="{
+                value: !(row.endDate === null || row.endDate === undefined) ? (row.endDate | date: tableDateTimeFormat) : '-'
+              }"
+            ></ng-container>
+
+            <button
+              data-test="copy-to-clipboard-button"
+              *ngIf="!(row.endDate === null || row.endDate === undefined)"
+              mat-icon-button
+              class="copy-to-clipboard"
+              (click)="copyToClipboard(row.endDate, $event)"
+            >
+              <mat-icon data-test="copy-to-clipboard-icon" class="material-icons">content_copy</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <ng-container data-test="columns-menu-button-header" matColumnDef="columnsMenu" stickyEnd>
+          <th data-test="columns-menu-button-header" mat-header-cell *matHeaderCellDef>
+            <button
+              data-test="mat-table-menu-button"
+              mat-icon-button
+              [matMenuTriggerFor]="columnMenu"
+              (menuOpened)="initOpenedColumnMenuDialog()"
+              aria-label="Menu for the table"
+              class="mat-table-menu-button"
+            >
+              <mat-icon data-test="mat-table-menu-icon" [matTooltip]="'tableActions.openColumnsMenu' | translate" class="material-icons"
+                >settings</mat-icon
+              >
+            </button>
+          </th>
+          <td data-test="columns-menu-button-cell" mat-cell *matCellDef="let row" [class.bg-transparent]="!setStickRowActions"></td>
+        </ng-container>
+
+        <tr data-test="table-header-row" mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr
+          data-test="table-row"
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          [class.selected-row]="selection.isSelected(row) && highlightSelectedRow"
+          (click)="rowClicked(row, $event)"
+          (contextmenu)="rowClicked(row, $event)"
+          (dblclick)="rowDblClicked(row, $event)"
+        ></tr>
+      </table>
+
+      <mat-menu data-test="column-menu" #columnMenu="matMenu" class="column-menu">
+        <checkboxes-column-menu #columMenuComponent (columnsChangedEvent)="setDisplayedColumns($event)"></checkboxes-column-menu>
+      </mat-menu>
+
+      <mat-menu data-test="column-menu" #configurationMenu="matMenu" class="column-menu">
+        <checkboxes-config-menu #configurationMenuComponent (configChangedEvent)="setConfiguration($event)"></checkboxes-config-menu>
+      </mat-menu>
+    </div>
+    <mat-paginator
+      data-test="paginator"
+      #paginator
+      [length]="totalItems"
+      [pageIndex]="0"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      [showFirstLastButtons]="showFirstLastButtons"
+      (page)="pageChange()"
+    >
+    </mat-paginator>
+  </div>
+</div>
+
+<!-- Highlighting search values -->
+<ng-template #normal let-value="value">{{ value === null ? '-' : value }}</ng-template>
+<ng-template #searchedWordExists let-value="value">
+  <ng-container *ngFor="let letter of value.toString().split(''); let i = index">
+    <ng-container
+      [ngTemplateOutlet]="shouldHighlight(value, letter) ? highlight : notHighlighted"
+      [ngTemplateOutletContext]="{$implicit: letter}"
+    ></ng-container>
+  </ng-container>
+</ng-template>
+<ng-template #highlight let-letter>
+  <mark [style.background-color]="highlightConfig?.color">{{ letter }}</mark>
+</ng-template>
+<ng-template #notHighlighted let-letter>{{ letter }}</ng-template>

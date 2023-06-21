@@ -1,0 +1,25 @@
+{
+  "aspectModelTFiles": [
+    "models/org.eclipse.examples.movement/2.1.0/Movement.ttl"
+  ],
+  "excludedProperties": [],
+  "configFile": "wizard-config.json",
+  "complexProps": [
+    {
+      "prop": "position",
+      "propsToShow": []
+    }
+  ],
+  "selectedModelElementUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#Movement",
+  "jsonAccessPath": "",
+  "defaultSortingCol": "speedLimitWarning",
+  "customColumns": [],
+  "addRowCheckboxes": false,
+  "customRowActions": [],
+  "addCommandBar": true,
+  "enabledCommandBarFunctions": [],
+  "customCommandBarActions": [],
+  "enableRemoteDataHandling": false,
+  "enableVersionSupport": false,
+  "overwrite": true
+}

@@ -1,0 +1,26 @@
+{
+  "aspectModelTFiles": ["models/org.eclipse.examples.movement/2.1.0/Movement.ttl"],
+  "excludedProperties": [],
+  "configFile": "wizard-config.json",
+  "complexProps": [
+    {
+      "prop": "position",
+      "entityUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#SpatialPosition",
+      "propsToShow": []
+    }
+  ],
+  "selectedModelElementUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#Movement",
+  "jsonAccessPath": "",
+  "defaultSortingCol": "endDate",
+  "customColumns": [],
+  "addRowCheckboxes": false,
+  "customRowActions": [],
+  "addCommandBar": true,
+  "enabledCommandBarFunctions": ["addSearchBar"],
+  "chooseLanguageForSearch": "en",
+  "enableRemoteDataHandling": true,
+  "customRemoteService": true,
+  "enableVersionSupport": true,
+  "customStyleImports": [],
+  "overwrite": true
+}
