@@ -1,7 +1,7 @@
 {
   "aspectModelTFiles": ["models/org.eclipse.examples.movement/2.1.0/Movement.ttl"],
   "excludedProperties": [],
-  "configFile": "wizard-config.json",
+  "configFile": "wizard.config.json",
   "complexProps": [
     {
       "prop": "position",

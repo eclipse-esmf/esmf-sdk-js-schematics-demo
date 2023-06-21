@@ -16,7 +16,7 @@
       "propToExcludeAspectModelUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#endDate"
     }
   ],
-  "configFile": "wizard-config.json",
+  "configFile": "wizard.config.json",
   "complexProps": [
     {
       "prop": "position",

@@ -3,7 +3,7 @@
     "models/org.eclipse.examples.movement/2.1.0/Movement.ttl"
   ],
   "excludedProperties": [],
-  "configFile": "wizard-config.json",
+  "configFile": "wizard.config.json",
   "complexProps": [
     {
       "prop": "position",
@@ -16,8 +16,15 @@
   "customColumns": [],
   "addRowCheckboxes": true,
   "customRowActions": [],
-  "addCommandBar": false,
+  "addCommandBar": true,
+  "enabledCommandBarFunctions": [
+    "addEnumQuickFilters",
+    "addCustomCommandBarActions",
+    "addDateQuickFilters",
+    "addSearchBar"
+  ],
+  "customCommandBarActions": [],
   "enableRemoteDataHandling": false,
-  "enableVersionSupport": false,
+  "enableVersionSupport": true,
   "overwrite": true
 }

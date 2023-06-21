@@ -3,7 +3,7 @@
     "models/org.eclipse.examples.movement/2.1.0/Movement.ttl"
   ],
   "excludedProperties": [],
-  "configFile": "wizard-config.json",
+  "configFile": "wizard.config.json",
   "complexProps": [
     {
       "prop": "position",
@@ -14,14 +14,9 @@
   "jsonAccessPath": "",
   "defaultSortingCol": "endDate",
   "customColumns": [],
-  "addRowCheckboxes": false,
+  "addRowCheckboxes": true,
   "customRowActions": [],
-  "addCommandBar": true,
-  "enabledCommandBarFunctions": [
-    "addSearchBar"
-  ],
-  "chooseLanguageForSearch": "en",
-  "customCommandBarActions": [],
+  "addCommandBar": false,
   "enableRemoteDataHandling": false,
   "enableVersionSupport": false,
   "overwrite": true
