@@ -3,6 +3,7 @@
  *
  * See the AUTHORS file(s) distributed with this work for
  * additional information regarding authorship.
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -32,15 +33,14 @@ import {ComplexPropSelectedModule} from 'src/app/shared/components/complex-prop-
 import {CustomColumnModule} from 'src/app/shared/components/custom-column/custom-column.module';
 import {DefaultSortingModule} from 'src/app/shared/components/default-sorting/default-sorting.module';
 import {ExcludedPropertyModule} from 'src/app/shared/components/excluded-property/excluded-property.module';
-import {MovementTableModule} from 'src/app/shared/components/movement-table/v210/movement-table.module';
 import {RemoteDataModule} from 'src/app/shared/components/remote-data/remote-data.module';
 import {RowActionButtonModule} from 'src/app/shared/components/row-action-button/row-action-button.module';
 import {VersionSupportModule} from 'src/app/shared/components/version-support/v210/version-support.module';
 import {AppComponent} from './app.component';
+import {FooterComponent} from './components/footer/footer.component';
+import {HeaderComponent} from './components/header/header.component';
 import {SidenavComponent} from './components/sidenav/sidenav.component';
 import {AppSharedModule} from './shared/app-shared.module';
-import {FooterComponent} from './shared/components/footer/footer.component';
-import {HeaderComponent} from './shared/components/header/header.component';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent, SidenavComponent],
@@ -70,7 +70,7 @@ import {HeaderComponent} from './shared/components/header/header.component';
     RemoteDataModule,
     RowActionButtonModule,
     VersionSupportModule,
-    MovementTableModule,
+    BaseConfigModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

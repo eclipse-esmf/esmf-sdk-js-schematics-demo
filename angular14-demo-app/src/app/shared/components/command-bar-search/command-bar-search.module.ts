@@ -3,6 +3,7 @@
  *
  * See the AUTHORS file(s) distributed with this work for
  * additional information regarding authorship.
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -10,9 +11,10 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {DatePipe, NgClass, NgFor, NgIf, NgTemplateOutlet} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -31,7 +33,6 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppSharedModule} from 'src/app/shared/app-shared.module';
 import {CommandBarSearchConfigMenuComponent} from 'src/app/shared/components/command-bar-search/command-bar-search-config-menu.component';
 import {CommandBarSearchColumnMenuComponent} from './command-bar-search-column-menu.component';
@@ -41,7 +42,6 @@ import {CommandBarSearchComponent} from './command-bar-search.component';
   declarations: [CommandBarSearchComponent, CommandBarSearchColumnMenuComponent, CommandBarSearchConfigMenuComponent],
   imports: [
     AppSharedModule,
-    BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -53,6 +53,11 @@ import {CommandBarSearchComponent} from './command-bar-search.component';
     MatTooltipModule,
     MatListModule,
     DragDropModule,
+    NgTemplateOutlet,
+    DatePipe,
+    NgIf,
+    NgFor,
+    NgClass,
     MatToolbarModule,
     MatFormFieldModule,
     FormsModule,

@@ -3,6 +3,7 @@
   ~
   ~ See the AUTHORS file(s) distributed with this work for
   ~ additional information regarding authorship.
+  ~
   ~ This Source Code Form is subject to the terms of the Mozilla Public
   ~ License, v. 2.0. If a copy of the MPL was not distributed with this
   ~ file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -21,12 +22,12 @@
   <section>
     <div class="export-dialog-checkbox-wrapper">
       <mat-checkbox data-test="exportAllPages" #exportAllPages (change)="setDialogDescription()">
-        {{ 'exportData.exportAllPages' | translate: {maxExportRows: data.maxExportRows} }}
+        {{ 'exportData.exportAllPages' | translate : {maxExportRows: data.maxExportRows} }}
       </mat-checkbox>
     </div>
     <div class="export-dialog-checkbox-wrapper">
       <mat-checkbox *ngIf="!showAllColumnsBox" data-test="exportAllColumns" #exportAllColumns (change)="setDialogDescription()">
-        {{ 'exportData.exportAllColumns' | translate: {allColumns: data.allColumns} }}
+        {{ 'exportData.exportAllColumns' | translate : {allColumns: data.allColumns} }}
       </mat-checkbox>
     </div>
   </section>

@@ -3,6 +3,7 @@
  *
  * See the AUTHORS file(s) distributed with this work for
  * additional information regarding authorship.
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -10,9 +11,10 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {DatePipe, NgClass, NgFor, NgIf, NgTemplateOutlet} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -31,7 +33,6 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppSharedModule} from 'src/app/shared/app-shared.module';
 import {CommandBarColumnMenuComponent} from './command-bar-column-menu.component';
 import {CommandBarComponent} from './command-bar.component';
@@ -40,7 +41,6 @@ import {CommandBarComponent} from './command-bar.component';
   declarations: [CommandBarComponent, CommandBarColumnMenuComponent],
   imports: [
     AppSharedModule,
-    BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -52,6 +52,11 @@ import {CommandBarComponent} from './command-bar.component';
     MatTooltipModule,
     MatListModule,
     DragDropModule,
+    NgTemplateOutlet,
+    DatePipe,
+    NgIf,
+    NgFor,
+    NgClass,
     MatToolbarModule,
     MatFormFieldModule,
     FormsModule,

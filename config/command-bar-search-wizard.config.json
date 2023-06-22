@@ -20,9 +20,9 @@
   "enabledCommandBarFunctions": [
     "addSearchBar"
   ],
-  "chooseLanguageForSearch": "en",
   "customCommandBarActions": [],
   "enableRemoteDataHandling": false,
+  "customRemoteService": false,
   "enableVersionSupport": false,
   "overwrite": true
 }

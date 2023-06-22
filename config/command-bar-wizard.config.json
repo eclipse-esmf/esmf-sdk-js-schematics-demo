@@ -20,6 +20,7 @@
   "enabledCommandBarFunctions": [],
   "customCommandBarActions": [],
   "enableRemoteDataHandling": false,
+  "customRemoteService": false,
   "enableVersionSupport": false,
   "overwrite": true
 }

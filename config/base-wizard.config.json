@@ -10,6 +10,7 @@
       "propsToShow": []
     }
   ],
+  "enabledCommandBarFunctions": [],
   "selectedModelElementUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#Movement",
   "jsonAccessPath": "",
   "defaultSortingCol": "speedLimitWarning",
@@ -18,6 +19,7 @@
   "customRowActions": [],
   "addCommandBar": false,
   "enableRemoteDataHandling": false,
+  "customRemoteService": false,
   "enableVersionSupport": false,
   "overwrite": true
 }

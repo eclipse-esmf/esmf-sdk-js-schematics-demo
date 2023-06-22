@@ -3,6 +3,7 @@
  *
  * See the AUTHORS file(s) distributed with this work for
  * additional information regarding authorship.
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -15,15 +16,17 @@ import {Clipboard} from '@angular/cdk/clipboard';
 import {
   AfterViewChecked,
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
   HostBinding,
+  Inject,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
@@ -37,52 +40,17 @@ import {ExportConfirmationDialog} from '../../export-confirmation-dialog/export-
 import {VersionSupportDataSource} from './version-support-datasource';
 import {FilterEnums, VersionSupportFilterService} from './version-support.filter.service';
 
+import {DateAdapter, MatDateFormats, MAT_DATE_FORMATS} from '@angular/material/core';
+
 import {SelectionModel} from '@angular/cdk/collections';
 import {DomSanitizer} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
-import {AbstractArrayNode, AbstractNode, And, Eq, Limit, Query, QueryStringifier, Sort} from 'rollun-ts-rql';
 import {Subject} from 'rxjs';
 import {debounceTime, filter, takeUntil} from 'rxjs/operators';
 import {JSSdkLocalStorageService} from '../../../services/storage.service';
-import {CustomVersionSupportService} from './custom-version-support.service';
 import {VersionSupportColumnMenuComponent} from './version-support-column-menu.component';
 import {VersionSupportConfigMenuComponent} from './version-support-config-menu.component';
-import {MovementResponse} from './version-support.service';
-
-/**
- * Interface of a CustomRQLFilterExtension which will be used to
- * modify the RQL query before the API service will be called to query
- * the backend.
- */
-export interface CustomRQLFilterExtension {
-  /**
-   * Apply modification to the given RQL query
-   */
-  apply(query: And): void;
-}
-
-/**
- * Interface of a CustomRQLOptionExtension which will be used to
- * modify the RQL query before the API service will be called to query
- * the backend.
- */
-export interface CustomRQLOptionExtension {
-  /**
-   * Apply modification to the given RQL query
-   */
-  apply(query: Query): void;
-}
-
-/**
- * Interface of ExtendedCsvExporter which will used to export data
- * from a remote backend.
- */
-export interface ExtendedCsvExporter {
-  /**
-   * Exports the all data
-   */
-  export(displayedColumns: string[], rqlQuery: string): void;
-}
+import {VersionSupportService} from './version-support.service';
 
 export interface Column {
   /** Column name **/
@@ -106,6 +74,7 @@ export interface Config {
  * Enumeration of all available columns which can be shown/hide in the table.
  */
 export enum VersionSupportColumn {
+  CHECKBOX = 'checkboxes',
   MOVING = 'moving',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
   START_DATE = 'startDate',
@@ -119,7 +88,7 @@ export enum VersionSupportColumn {
   templateUrl: './version-support.component.html',
   styleUrls: ['./version-support.component.scss'],
 })
-export class VersionSupportComponent implements OnInit, AfterViewInit, AfterViewChecked, OnDestroy {
+export class VersionSupportComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges, OnDestroy {
   @Input() initialSearchString = '';
 
   @Input() tableDateTimeFormat = 'short';
@@ -146,12 +115,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
   @Input() allowedCharacters: string = '';
   @Input() regexValidator: string = '';
   @Input() hasAdvancedSearch: boolean = this.filterService.stringColumns.length > 1;
-
-  @Input() maxExportRows: number = 5000;
-  @Input() customFilterExtension: CustomRQLFilterExtension | undefined;
-  @Input() customOptionsExtension: CustomRQLOptionExtension | undefined;
-  @Input() extendedCsvExporter: ExtendedCsvExporter | undefined;
-  @Input() remoteAPI: string = '';
+  @Input() maxExportRows: number = 0;
 
   @Output() rowClickEvent = new EventEmitter<any>();
   @Output() rowDblClickEvent = new EventEmitter<any>();
@@ -211,10 +175,11 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     private clipboard: Clipboard,
     private storageService: JSSdkLocalStorageService,
     public filterService: VersionSupportFilterService,
-    private customversionSupportService: CustomVersionSupportService,
-    private cd: ChangeDetectorRef
+    private dateAdapter: DateAdapter<any>,
+    @Inject(MAT_DATE_FORMATS) private dateFormats: MatDateFormats,
+    private versionSupportService: VersionSupportService
   ) {
-    this.dataSource = new VersionSupportDataSource();
+    this.dataSource = new VersionSupportDataSource(this.translateService);
 
     this.currentLanguage = this.translateService.currentLang;
   }
@@ -228,15 +193,19 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     });
 
     this.initializeColumns();
+    this.maxExportRows = this.data.length;
   }
-
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.table) {
+      this.applyFilters();
+    }
+  }
   ngOnDestroy(): void {
     this.filterService.searchString.setValue('');
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
   ngAfterViewInit(): void {
-    this.applyFilters();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.pageChange();
@@ -264,7 +233,11 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     }
 
     this.displayedColumns.forEach((displayedColumn: string): void => {
-      if (displayedColumn === VersionSupportColumn['COLUMNS_MENU'] || this.columns.find(column => column.name === displayedColumn)) {
+      if (
+        displayedColumn === VersionSupportColumn['CHECKBOX'] ||
+        displayedColumn === VersionSupportColumn['COLUMNS_MENU'] ||
+        this.columns.find(column => column.name === displayedColumn)
+      ) {
         return;
       }
 
@@ -295,6 +268,8 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
 
   pageChange(): void {
     this.applyFilters();
+    this.selection.clear();
+    this.rowSelectionEvent.emit(this.selection.selected);
   }
 
   sortData(): void {
@@ -339,6 +314,31 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     this.rowSelectionEvent.emit(this.selection.selected);
   }
 
+  isAllSelected(): boolean {
+    return this.selection.selected.length == this.dataSource.displayedData.length;
+  }
+
+  toggleSelectAll(): void {
+    this.isAllSelected() ? this.selection.clear() : this.dataSource.displayedData.forEach(item => this.selection.select(item));
+    this.rowSelectionEvent.emit(this.selection.selected);
+  }
+
+  trimSelectionToCurrentPage(): void {
+    const indexOfLastItemOnPreviousPage = this.paginator.pageSize * this.paginator.pageIndex - 1;
+    const indexOfFirstItemOnNextPage = this.paginator.pageSize * (this.paginator.pageIndex + 1);
+    this.selection.selected.forEach((u): void => {
+      if (!this.filteredData.includes(u)) {
+        this.selection.deselect(u);
+      }
+    });
+    this.filteredData.forEach((u, i): void => {
+      if (i >= indexOfFirstItemOnNextPage || i <= indexOfLastItemOnPreviousPage) {
+        this.selection.deselect(this.filteredData[i]);
+      }
+    });
+    this.rowSelectionEvent.emit(this.selection.selected);
+  }
+
   reloadFilter(): void {
     this.paginator.firstPage();
     this.applyFilters();
@@ -348,95 +348,21 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     if (this.filterService.searchString.errors) {
       return;
     }
-
     this.tableUpdateStartEvent.emit();
-
-    const query = new And();
-
-    this.filterService.applyStringSearchFilter(query);
+    let dataTemp = [...this.data];
+    dataTemp = this.filterService.applyEnumFilter(dataTemp);
+    dataTemp = this.filterService.applyStringSearchFilter(dataTemp);
     this.highlightString = this.filterService.activeFilters
       .filter(elem => elem.type === FilterEnums.Search && elem.filterValue !== undefined)
       .map(elem => elem.filterValue as string);
-
-    if (this.customFilterExtension) {
-      this.customFilterExtension.apply(query);
-    }
-
-    const queryFilter = new Query({query: query});
-
-    const queryOption = new Query();
-    if (this.sort.active) {
-      queryOption.setSort(
-        new Sort(<any>{
-          [this.sort.active]: this.sort.direction === 'asc' ? 1 : -1,
-        })
-      );
-    }
-
-    queryOption.setLimit(new Limit(this.paginator.pageIndex * this.paginator.pageSize, this.paginator.pageSize));
-
-    if (this.customOptionsExtension) {
-      this.customOptionsExtension.apply(queryOption);
-    }
-
-    // override function to ensure to create supported RQL
-    QueryStringifier['withType'] = (value: any) => {
-      return typeof value === 'string' && value !== 'null()' && value !== '' ? '"' + value + '"' : value;
-    };
-    QueryStringifier['encodeRql'] = (value: any) => {
-      return value;
-    };
-
-    const additionalCondition = new Eq('local', 'EN');
-    queryFilter?.queryNode.subNodes.push(additionalCondition);
-
-    const filterRQLQuery = queryFilter ? QueryStringifier.stringify(queryFilter) : '';
-    const optionsRQLQuery = QueryStringifier.stringify(queryOption).replace(/&/g, ',');
-
-    let rqlStringTemp = '';
-    if (filterRQLQuery.length > 0) {
-      rqlStringTemp = `filter=${filterRQLQuery}`;
-    }
-    if (optionsRQLQuery.length > 0) {
-      rqlStringTemp = `${rqlStringTemp}${rqlStringTemp !== '' ? '&' : ''}option=${optionsRQLQuery}`;
-    }
-    if (!(QueryStringifier as any)['superParseQueryNode']) {
-      (QueryStringifier as any)['superParseQueryNode'] = QueryStringifier['parseQueryNode'];
-    }
-    QueryStringifier['parseQueryNode'] = (node?: AbstractNode): string => {
-      let result = (QueryStringifier as any)['superParseQueryNode'](node);
-      if (node instanceof AbstractArrayNode) {
-        const arrayNode = <AbstractArrayNode>node;
-        const encodedValues = arrayNode.values.map(value => QueryStringifier['withType'](QueryStringifier['withEncoding'](value)));
-
-        // ensure outer brackets are not used. valid query ..in(<name>, "value1", "value2", ...)..
-        result = `${QueryStringifier['withEncoding'](arrayNode.name, {isField: true})}(${QueryStringifier['withEncoding'](arrayNode.field, {
-          isField: true,
-        })},${encodedValues.join(',')})`;
-      }
-      return result;
-    };
-
-    this.rqlString = rqlStringTemp;
-
-    try {
-      this.customversionSupportService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
-        (response: MovementResponse): void => {
-          this.dataSource.setData(response.items);
-          this.filteredData = response.items;
-          this.totalItems = this.data.length;
-          this.maxExportRows = this.totalItems;
-          this.cd.detectChanges();
-          this.totalItems = response.totalItems !== null && response.totalItems !== undefined ? response.totalItems : response.items.length;
-          this.tableUpdateFinishedEvent.emit();
-        },
-        error => {
-          this.tableUpdateFinishedEvent.emit(error);
-        }
-      );
-    } catch (error) {
-      this.tableUpdateFinishedEvent.emit(error);
-    }
+    dataTemp = this.filterService.applyDateFilter(dataTemp);
+    this.dataSource.setData(dataTemp);
+    this.filteredData = dataTemp;
+    this.totalItems = this.data.length;
+    this.maxExportRows = this.totalItems;
+    this.checkIfOnValidPage();
+    this.trimSelectionToCurrentPage();
+    this.tableUpdateFinishedEvent.emit();
   }
 
   removeFilter(filterData: any): void {
@@ -455,7 +381,6 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
 
     const dialogRef = this.dialog.open(ExportConfirmationDialog, {
       data: {
-        extendedCsvExporter: this.extendedCsvExporter,
         allColumns: this.columns.length,
         displayedColumns: this.displayedColumns.length - reduce,
         maxExportRows: this.maxExportRows,
@@ -472,8 +397,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
         if (exportAllPages && this.data.length > this.maxExportRows) {
           this.data.length = this.maxExportRows;
         }
-        const columns = exportAllColumns ? this.columns.map(c => c.name) : this.displayedColumns;
-        this.extendedCsvExporter?.export(columns, this.rqlString);
+        this.prepareCsv(this.versionSupportService.flatten(this.data), exportAllColumns, exportAllPages, this.paginator.pageSize);
       });
   }
 
@@ -483,7 +407,9 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     }
 
     const columns = exportAllColumns ? this.columns.map(c => c.name) : this.displayedColumns;
-    const headersToExport = columns.filter(columnName => columnName !== VersionSupportColumn.COLUMNS_MENU);
+    const headersToExport = columns
+      .filter(columnName => columnName !== VersionSupportColumn.COLUMNS_MENU)
+      .filter(columnName => columnName !== VersionSupportColumn.CHECKBOX);
 
     const headersCSV = unparse({
       fields: headersToExport.map(columnName => {
@@ -499,7 +425,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
   downloadCsv(csvArray: any): void {
     this.downloadEvent.emit({error: false, success: false, inProgress: true});
     try {
-      this.customversionSupportService.downloadCsv(csvArray);
+      this.versionSupportService.downloadCsv(csvArray);
       this.downloadEvent.emit({error: false, success: true, inProgress: false});
     } catch (error: any) {
       this.downloadEvent.emit({error: true, success: false, inProgress: false});
@@ -510,6 +436,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     this.columMenuComponent.keyLocalStorage = this.KEY_LOCAL_STORAGE_VERSION_SUPPORT_V210_COLUMNS;
     this.columMenuComponent.columnsDefault = [
       ...Object.values(VersionSupportColumn)
+        .filter(columnName => columnName !== VersionSupportColumn['CHECKBOX'])
 
         .filter(columnName => columnName !== VersionSupportColumn['COLUMNS_MENU'])
         .map(columnName => {
@@ -539,6 +466,10 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
   setDisplayedColumns(columns: Array<Column>): void {
     let displayedColumnsTmp: Array<Column> = [];
 
+    if (columns[0].name !== VersionSupportColumn['CHECKBOX']) {
+      displayedColumnsTmp.push({name: VersionSupportColumn['CHECKBOX'], selected: true});
+    }
+
     displayedColumnsTmp.push(...columns);
 
     if (VersionSupportColumn['COLUMNS_MENU'] && columns[columns.length - 1].name !== VersionSupportColumn['COLUMNS_MENU']) {
@@ -547,5 +478,15 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
 
     this.columns = [...columns];
     this.displayedColumns = displayedColumnsTmp.filter(column => column.selected).map(column => column.name);
+  }
+
+  loadCustomTemplate(): TemplateRef<any> | null {
+    return this.customTemplate ? (this.customTemplate as TemplateRef<any>) : null;
+  }
+
+  checkIfOnValidPage(): void {
+    if (this.paginator.length > this.filteredData.length) {
+      this.paginator.firstPage();
+    }
   }
 }

@@ -3,6 +3,7 @@
   ~
   ~ See the AUTHORS file(s) distributed with this work for
   ~ additional information regarding authorship.
+  ~
   ~ This Source Code Form is subject to the terms of the Mozilla Public
   ~ License, v. 2.0. If a copy of the MPL was not distributed with this
   ~ file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -12,7 +13,7 @@
 
 <div class="js-sdk-component-container">
   <ng-container *ngIf="!!customTemplate && !dataSource.data.length">
-    <ng-container *ngTemplateOutlet="customTemplate"></ng-container>
+    <ng-container *ngTemplateOutlet="loadCustomTemplate()"></ng-container>
   </ng-container>
 
   <div [hidden]="!!customTemplate && !dataSource.data.length">
@@ -61,18 +62,20 @@
           </th>
 
           <td data-test="table-cell" mat-cell *matCellDef="let row">
-            {{ row.speedLimitWarning === null ? '-' : row.speedLimitWarning }}
+            {{ !(row.speedLimitWarning === null || row.speedLimitWarning === undefined) ? row.speedLimitWarning : '-' }}
 
             <button
               data-test="copy-to-clipboard-button"
+              *ngIf="!(row.speedLimitWarning === null || row.speedLimitWarning === undefined)"
               mat-icon-button
               class="copy-to-clipboard"
               (click)="copyToClipboard(row.speedLimitWarning, $event)"
             >
               <mat-icon data-test="copy-to-clipboard-icon" class="material-icons">content_copy</mat-icon>
             </button>
-          </td> </ng-container
-        ><!-- position.x Column -->
+          </td>
+        </ng-container>
+        <!-- position.x Column -->
         <ng-container data-test="table-column" matColumnDef="position.x">
           <th
             data-test="table-header"
@@ -95,18 +98,20 @@
           </th>
 
           <td data-test="table-cell" mat-cell *matCellDef="let row" class="table-cell-number">
-            {{ row.position.x === null ? '-' : row.position.x }}
+            {{ !(row.position.x === null || row.position.x === undefined) ? row.position.x : '-' }}
 
             <button
               data-test="copy-to-clipboard-button"
+              *ngIf="!(row.position.x === null || row.position.x === undefined)"
               mat-icon-button
               class="copy-to-clipboard"
               (click)="copyToClipboard(row.position.x, $event)"
             >
               <mat-icon data-test="copy-to-clipboard-icon" class="material-icons">content_copy</mat-icon>
             </button>
-          </td> </ng-container
-        ><!-- startDate Column -->
+          </td>
+        </ng-container>
+        <!-- startDate Column -->
         <ng-container data-test="table-column" matColumnDef="startDate">
           <th data-test="table-header" mat-header-cell *matHeaderCellDef mat-sort-header="startDate">
             <span
@@ -120,10 +125,11 @@
           </th>
 
           <td data-test="table-cell" mat-cell *matCellDef="let row">
-            {{ row.startDate === null ? '-' : (row.startDate | date: tableDateTimeFormat) }}
+            {{ !(row.startDate === null || row.startDate === undefined) ? (row.startDate | date : tableDateTimeFormat) : '-' }}
 
             <button
               data-test="copy-to-clipboard-button"
+              *ngIf="!(row.startDate === null || row.startDate === undefined)"
               mat-icon-button
               class="copy-to-clipboard"
               (click)="copyToClipboard(row.startDate, $event)"

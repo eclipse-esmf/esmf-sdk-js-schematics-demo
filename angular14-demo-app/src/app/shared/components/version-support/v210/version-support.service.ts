@@ -3,6 +3,7 @@
  *
  * See the AUTHORS file(s) distributed with this work for
  * additional information regarding authorship.
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -13,7 +14,6 @@
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
 import {Movement} from '../../../types/movement/v210/movement.types';
 
 export interface MovementResponse {
@@ -34,17 +34,6 @@ export type MovementPayload<T extends GenericMovementPayload = GenericMovementPa
 })
 export class VersionSupportService {
   constructor(protected http: HttpClient) {}
-
-  requestData(remoteAPI: string, body: MovementPayload): Observable<MovementResponse> {
-    const strippedUrlParts: string[] = remoteAPI.split('?');
-    if (strippedUrlParts && strippedUrlParts.length === 2) {
-      const queryParams = new URLSearchParams(strippedUrlParts[1]);
-      queryParams.forEach((value, key) => {
-        body[key] = value;
-      });
-    }
-    return this.http.post<MovementResponse>(strippedUrlParts[0], body);
-  }
 
   downloadCsv(csvArray: any): void {
     if (!csvArray.length) {
