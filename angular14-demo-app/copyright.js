@@ -81,7 +81,7 @@ files.forEach(file => {
       }
 
       // Check if the copyright notice is already in the file
-      if (!content.includes('Copyright (c) 2023 Robert Bosch Manufacturing Solutions GmbH')) {
+      if (!content.includes(`Copyright (c) ${newDate} Robert Bosch Manufacturing Solutions GmbH`)) {
         // Prepend copyright notice
         const newContent = copyrightHeader + content;
 
