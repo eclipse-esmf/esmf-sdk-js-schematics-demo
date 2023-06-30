@@ -3,6 +3,7 @@
  *
  * See the AUTHORS file(s) distributed with this work for
  * additional information regarding authorship.
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -14,8 +15,10 @@
 import {DataSource} from '@angular/cdk/collections';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
+import {TranslateService} from '@ngx-translate/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Movement} from '../../../types/movement/v210/movement.types';
+
 /**
  * Data source for the VersionSupport view. This class should
  * encapsulate all logic for fetching and manipulating the displayed
@@ -25,12 +28,10 @@ export class VersionSupportDataSource extends DataSource<Movement> {
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
 
-  remoteAPI: string | undefined;
-
   private _data: Array<Movement> = new Array<Movement>();
   private _dataSubject = new BehaviorSubject<Array<Movement>>([]);
 
-  constructor() {
+  constructor(private translateService: TranslateService) {
     super();
   }
 
@@ -70,10 +71,58 @@ export class VersionSupportDataSource extends DataSource<Movement> {
 
   addData(data: Array<Movement>) {
     this._data.push(...data);
-    this.setDataSubject(this._data);
+    this.setDataSubject(this.getPagedData(this.sortData(this._data)));
   }
 
   get length(): number {
     return this._data.length;
+  }
+
+  private getPagedData(data: Array<Movement>): Array<Movement> {
+    if (this.paginator) {
+      const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+      return data.slice(startIndex, startIndex + this.paginator.pageSize);
+    } else {
+      return data;
+    }
+  }
+
+  sortData(data = this._data): Movement[] {
+    if (!this.sort || !this.sort.active || this.sort.direction === '') {
+      return data;
+    }
+
+    return data.sort((a: Movement, b: Movement): number => {
+      const isSortingAsc = this.sort?.direction === 'asc';
+      switch (this.sort?.active.trim()) {
+        case 'moving':
+          return this.compare(a.moving, b.moving, isSortingAsc);
+        case 'speedLimitWarning':
+          return this.compare(a.speedLimitWarning.toString(), b.speedLimitWarning.toString(), isSortingAsc);
+        case 'startDate':
+          return this.compare(a.startDate, b.startDate, isSortingAsc);
+        case 'endDate':
+          return this.compare(a.endDate, b.endDate, isSortingAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+
+  private compare(
+    a: string | number | boolean | Date | undefined,
+    b: string | number | boolean | Date | undefined,
+    isSortingAsc: boolean
+  ): number {
+    if (a === undefined) {
+      return -1 * (isSortingAsc ? 1 : -1);
+    }
+    if (b === undefined) {
+      return 1 * (isSortingAsc ? 1 : -1);
+    }
+    if (typeof a == 'boolean') {
+      return (a === b ? 0 : a ? -1 : 1) * (isSortingAsc ? 1 : -1);
+    }
+    return (a < b ? -1 : 1) * (isSortingAsc ? 1 : -1);
   }
 }

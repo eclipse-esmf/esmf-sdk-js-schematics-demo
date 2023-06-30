@@ -1,14 +1,15 @@
 <!--
-  ~ Copyright (c) 2023 Robert Bosch Manufacturing Solutions GmbH
-  ~
-  ~ See the AUTHORS file(s) distributed with this work for
-  ~ additional information regarding authorship.
-  ~ This Source Code Form is subject to the terms of the Mozilla Public
-  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
-  ~ file, You can obtain one at https://mozilla.org/MPL/2.0/.
-  ~
-  ~ SPDX-License-Identifier: MPL-2.0
-  -->
+ * Copyright (c) 2023 Robert Bosch Manufacturing Solutions GmbH
+ *
+ * See the AUTHORS file(s) distributed with this work for
+ * additional information regarding authorship.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ -->
 
 <div class="js-sdk-component-container">
   <mat-toolbar data-test="toolbar" class="toolbar">
@@ -60,6 +61,80 @@
       </mat-form-field>
     </ng-container>
 
+    <mat-form-field data-test="form-field-select" appearance="fill" floatLabel="never">
+      <mat-label data-test="select-label">{{ 'movement.v210.speedLimitWarning.preferredName' | translate }}</mat-label>
+      <mat-select data-test="select" [(value)]="filterService.speedLimitWarningSelected" #speedLimitWarningSelect multiple>
+        <div class="filter-options-container">
+          <mat-option
+            data-test="select-option"
+            *ngFor="let speedLimitWarningOption of filterService.speedLimitWarningOptions"
+            [value]="speedLimitWarningOption"
+          >
+            {{ speedLimitWarningOption }}
+          </mat-option>
+        </div>
+        <div data-test="filter-actions-container" class="filter-actions-container">
+          <button data-test="filter-cancel-button" mat-button (click)="speedLimitWarningSelect.close()">
+            <span data-test="filter-cancel-text">{{ 'cancel' | translate }}</span>
+          </button>
+
+          <button
+            data-test="filter-apply-button"
+            mat-raised-button
+            color="primary"
+            class="filter-apply-btn"
+            (click)="reloadFilter(); speedLimitWarningSelect.close()"
+          >
+            <span data-test="filter-apply-text">{{ 'apply' | translate }}</span>
+          </button>
+        </div>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field data-test="form-field-date-time" appearance="fill" floatLabel="never">
+      <mat-label data-test="date-time-label">{{ 'movement.v210.startDate.preferredName' | translate }}</mat-label>
+      <mat-date-range-input data-test="date-range-input" [rangePicker]="startDatePicker" [formGroup]="filterService.startDateGroup">
+        <input data-test="start-date-input" matStartDate [placeholder]="'date.start' | translate" formControlName="start" />
+        <input
+          data-test="end-date-input"
+          matEndDate
+          [placeholder]="'date.end' | translate"
+          formControlName="end"
+          (dateChange)="reloadFilter()"
+        />
+      </mat-date-range-input>
+      <mat-datepicker-toggle data-test="datepicker-toggle" matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-date-range-picker data-test="date-range-picker" #startDatePicker>
+        <mat-date-range-picker-actions data-test="date-range-picker-actions">
+          <button data-test="date-picker-cancel-button" mat-button matDateRangePickerCancel>{{ 'cancel' | translate }}</button>
+          <button data-test="date-picker-apply-button" mat-raised-button color="primary" matDateRangePickerApply>
+            {{ 'apply' | translate }}
+          </button>
+        </mat-date-range-picker-actions>
+      </mat-date-range-picker>
+    </mat-form-field>
+    <mat-form-field data-test="form-field-date-time" appearance="fill" floatLabel="never">
+      <mat-label data-test="date-time-label">{{ 'movement.v210.endDate.preferredName' | translate }}</mat-label>
+      <mat-date-range-input data-test="date-range-input" [rangePicker]="endDatePicker" [formGroup]="filterService.endDateGroup">
+        <input data-test="start-date-input" matStartDate [placeholder]="'date.start' | translate" formControlName="start" />
+        <input
+          data-test="end-date-input"
+          matEndDate
+          [placeholder]="'date.end' | translate"
+          formControlName="end"
+          (dateChange)="reloadFilter()"
+        />
+      </mat-date-range-input>
+      <mat-datepicker-toggle data-test="datepicker-toggle" matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+      <mat-date-range-picker data-test="date-range-picker" #endDatePicker>
+        <mat-date-range-picker-actions data-test="date-range-picker-actions">
+          <button data-test="date-picker-cancel-button" mat-button matDateRangePickerCancel>{{ 'cancel' | translate }}</button>
+          <button data-test="date-picker-apply-button" mat-raised-button color="primary" matDateRangePickerApply>
+            {{ 'apply' | translate }}
+          </button>
+        </mat-date-range-picker-actions>
+      </mat-date-range-picker>
+    </mat-form-field>
+
     <span data-test="spacer" class="spacer"></span>
 
     <button data-test="refresh-data-button" mat-icon-button aria-label="Refresh table" (click)="applyFilters()">
@@ -87,7 +162,7 @@
   </mat-toolbar>
 
   <ng-container *ngIf="!!customTemplate && !dataSource.data.length">
-    <ng-container *ngTemplateOutlet="customTemplate"></ng-container>
+    <ng-container *ngTemplateOutlet="loadCustomTemplate()"></ng-container>
   </ng-container>
 
   <div class="scrollable-chips-container" *ngIf="filterService.activeFilters.length">
@@ -116,9 +191,9 @@
           [removable]="filter.removable"
           (removed)="removeFilter(filter)"
         >
-          <div data-test="chip-text" class="chip-text" matTooltip="{{ filter.filterValue + filter.label }}">
-            <b>{{ filter.filterValue }}</b
-            >{{ filter.label }}
+          <div data-test="chip-text" class="chip-text" matTooltip="{{ filter.prop }}: {{ filter.label }}">
+            <b>{{ filter.prop }}</b
+            >: {{ filter.label }}
           </div>
           <button *ngIf="filter.removable" matChipRemove data-test="mat-chip-remove">
             <mat-icon class="material-icons" data-test="remove-chip">cancel</mat-icon>
@@ -161,6 +236,24 @@
           </td>
         </tr>
 
+        <ng-container matColumnDef="checkboxes" data-test="checkboxes-container">
+          <th mat-header-cell *matHeaderCellDef data-test="table-header-checkbox">
+            <mat-checkbox
+              data-test="header-checkbox"
+              (change)="$event ? toggleSelectAll() : null"
+              [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+            ></mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row" data-test="table-cell-checkbox">
+            <mat-checkbox
+              data-test="cell-checkbox"
+              (click)="$event.stopPropagation()"
+              (change)="$event ? checkboxClicked(row) : null"
+              [checked]="selection.isSelected(row)"
+            ></mat-checkbox>
+          </td>
+        </ng-container>
         <!-- moving Column -->
         <ng-container data-test="table-column" matColumnDef="moving">
           <th
@@ -186,7 +279,7 @@
             <ng-container
               [ngTemplateOutlet]="
                 highlightConfig?.selected &&
-                ((!(row.moving === null || row.moving === undefined) ? row.moving : '-') | searchString: highlightString)
+                ((!(row.moving === null || row.moving === undefined) ? row.moving : '-') | searchString : highlightString)
                   ? searchedWordExists
                   : normal
               "
@@ -230,7 +323,7 @@
               [ngTemplateOutlet]="
                 highlightConfig?.selected &&
                 ((!(row.speedLimitWarning === null || row.speedLimitWarning === undefined) ? row.speedLimitWarning : '-')
-                  | searchString: highlightString)
+                  | searchString : highlightString)
                   ? searchedWordExists
                   : normal
               "
@@ -275,13 +368,13 @@
             <ng-container
               [ngTemplateOutlet]="
                 highlightConfig?.selected &&
-                ((!(row.startDate === null || row.startDate === undefined) ? (row.startDate | date: tableDateTimeFormat) : '-')
-                  | searchString: highlightString)
+                ((!(row.startDate === null || row.startDate === undefined) ? (row.startDate | date : tableDateTimeFormat) : '-')
+                  | searchString : highlightString)
                   ? searchedWordExists
                   : normal
               "
               [ngTemplateOutletContext]="{
-                value: !(row.startDate === null || row.startDate === undefined) ? (row.startDate | date: tableDateTimeFormat) : '-'
+                value: !(row.startDate === null || row.startDate === undefined) ? (row.startDate | date : tableDateTimeFormat) : '-'
               }"
             ></ng-container>
 
@@ -313,13 +406,13 @@
             <ng-container
               [ngTemplateOutlet]="
                 highlightConfig?.selected &&
-                ((!(row.endDate === null || row.endDate === undefined) ? (row.endDate | date: tableDateTimeFormat) : '-')
-                  | searchString: highlightString)
+                ((!(row.endDate === null || row.endDate === undefined) ? (row.endDate | date : tableDateTimeFormat) : '-')
+                  | searchString : highlightString)
                   ? searchedWordExists
                   : normal
               "
               [ngTemplateOutletContext]="{
-                value: !(row.endDate === null || row.endDate === undefined) ? (row.endDate | date: tableDateTimeFormat) : '-'
+                value: !(row.endDate === null || row.endDate === undefined) ? (row.endDate | date : tableDateTimeFormat) : '-'
               }"
             ></ng-container>
 
@@ -379,7 +472,7 @@
     <mat-paginator
       data-test="paginator"
       #paginator
-      [length]="totalItems"
+      [length]="dataSource.length"
       [pageIndex]="0"
       [pageSize]="pageSize"
       [pageSizeOptions]="pageSizeOptions"

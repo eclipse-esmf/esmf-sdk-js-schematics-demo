@@ -3,6 +3,7 @@
  *
  * See the AUTHORS file(s) distributed with this work for
  * additional information regarding authorship.
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -11,11 +12,13 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
-import {AbstractLogicalNode, Like, Or} from 'rollun-ts-rql';
 
-import {Injectable} from '@angular/core';
-import {AbstractControl, FormControl, ValidationErrors, ValidatorFn} from '@angular/forms';
+import {Inject, Injectable} from '@angular/core';
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
+import {DateAdapter, MatDateFormats, MAT_DATE_FORMATS} from '@angular/material/core';
 import {TranslateService} from '@ngx-translate/core';
+import moment from 'moment';
+import {Movement, WarningLevel} from '../../../types/movement/v210/movement.types';
 
 export enum FilterEnums {
   Date,
@@ -103,7 +106,22 @@ export class VersionSupportFilterService {
   readonly advancedSearchAllValue = 'allTextFields';
   selectedStringColumn: FormControl<string | null> = new FormControl(this.advancedSearchAllValue);
 
-  constructor(private translateService: TranslateService) {}
+  speedLimitWarningSelected: Array<WarningLevel> = [];
+  speedLimitWarningOptions: Array<any> = Object.values(WarningLevel);
+  startDateGroup = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl(),
+  });
+  endDateGroup = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl(),
+  });
+
+  constructor(
+    private translateService: TranslateService,
+    @Inject(MAT_DATE_FORMATS) private dateFormats: MatDateFormats,
+    private dateAdapter: DateAdapter<any>
+  ) {}
 
   searchStringInit(initialValue: string, regexValidator: string, minCharNo: number, maxCharNo: number) {
     this.searchString = new FormControl<string | null>(initialValue, [
@@ -119,6 +137,23 @@ export class VersionSupportFilterService {
         const removedFilter = this.activeFilters.findIndex(elem => elem.filterValue === filter.filterValue && elem.prop === filter.prop);
         this.activeFilters.splice(removedFilter, 1);
         this.searchString.setValue('');
+        break;
+      case FilterEnums.Enum:
+        if (filter.prop === 'speedLimitWarning') {
+          this.speedLimitWarningSelected = this.speedLimitWarningSelected.filter(sel => sel !== filter.filterValue);
+        }
+        this.activeFilters = this.activeFilters.filter(af => af.filterValue !== filter.filterValue && af.label !== filter.label);
+        break;
+      case FilterEnums.Date:
+        if (filter.prop === 'startDate') {
+          this.startDateGroup.reset();
+          this.startDateGroup.reset();
+        }
+        if (filter.prop === 'endDate') {
+          this.endDateGroup.reset();
+          this.endDateGroup.reset();
+        }
+        this.activeFilters = this.activeFilters.filter(af => af.filterValue !== filter.filterValue && af.label !== filter.label);
         break;
     }
   }
@@ -136,7 +171,7 @@ export class VersionSupportFilterService {
     }
   }
 
-  applyStringSearchFilter(query: AbstractLogicalNode): void {
+  applyStringSearchFilter(data: Array<Movement>): Array<Movement> {
     if (
       this.searchString.value &&
       this.searchString.value !== '' &&
@@ -155,21 +190,179 @@ export class VersionSupportFilterService {
         filterValue: this.searchString.value,
       });
     }
+    const searchFilters = this.activeFilters.filter(elem => elem.type === FilterEnums.Search);
+    return searchFilters.length === 0
+      ? data
+      : data.filter((item: any): boolean => {
+          let foundSearchStringInProperty = false;
+          searchFilters.forEach((filter: any): void => {
+            if (filter.prop === this.advancedSearchAllValue) {
+              this.stringColumns.forEach(elem => {
+                if (this.getValueByAccessPath(elem, item).toLocaleLowerCase().includes(filter.filterValue.toLocaleLowerCase())) {
+                  foundSearchStringInProperty = true;
+                }
+              });
+            } else {
+              if (this.getValueByAccessPath(filter.prop, item).toLocaleLowerCase().includes(filter.filterValue.toLocaleLowerCase())) {
+                foundSearchStringInProperty = true;
+              }
+            }
+          });
+          return foundSearchStringInProperty;
+        });
+  }
+
+  applyEnumFilter(data: Array<Movement>) {
+    let filteredData = data;
+    filteredData =
+      this.speedLimitWarningSelected.length === 0
+        ? filteredData
+        : filteredData.filter((item: Movement): boolean => this.speedLimitWarningSelected.includes(item.speedLimitWarning));
+    this.speedLimitWarningSelected.forEach(selected => {
+      const filterProp = 'speedLimitWarning';
+      const filterVal = selected;
+      if (
+        !this.activeFilters
+          .filter(af => af.type === FilterEnums.Enum && af.prop === filterProp)
+          .map(af => af.filterValue)
+          .includes(filterVal)
+      ) {
+        this.activeFilters.push(<FilterType>{
+          removable: true,
+          type: FilterEnums.Enum,
+          label: `${selected}`,
+          prop: filterProp,
+          filterValue: filterVal,
+        });
+      }
+    });
+
     this.activeFilters
-      .filter(af => af.type === FilterEnums.Search)
-      .forEach(af => {
-        if (af.prop !== null && af.filterValue !== undefined) {
-          query.addNode(new Or(this.addSelectedColumnsQuery(af.prop, af.filterValue)));
+      .filter(af => af.type === FilterEnums.Enum && af.prop === 'speedLimitWarning')
+      .forEach(filter => {
+        if (!this.speedLimitWarningSelected.includes(filter.filterValue as any)) {
+          this.removeFilter(filter);
         }
       });
+
+    return filteredData;
   }
-  addSelectedColumnsQuery(selectedStringColumn: string, searchString: string): Like[] {
-    if (selectedStringColumn !== this.advancedSearchAllValue) {
-      return [new Like(selectedStringColumn, `*${searchString}*`)];
-    } else {
-      return this.stringColumns.map((column: string) => {
-        return new Like(column, `*${searchString}*`);
-      });
+  applyDateFilter(data: Array<any>): Array<any> {
+    let filteredData = data;
+    if (this.startDateGroup.value.start !== null && this.startDateGroup.value.end !== null) {
+      const startDate = this.createDateAsUTC(new Date(this.startDateGroup.value.start));
+      const beginningOfDay = new Date(this.startDateGroup.value.end).setHours(23, 59, 59, 999);
+      const endDate = this.createDateAsUTC(new Date(beginningOfDay));
+      filteredData = filteredData.filter(
+        item => new Date(endDate) >= new Date(item.startDate) && new Date(item.startDate) >= new Date(startDate)
+      );
+      const filter = this.activeFilters.find(af => af.prop === 'startDate');
+      const newLabel = `startDate: from ${this.getFormattedDate(startDate)} to ${this.getFormattedDate(endDate)}`;
+      if (!filter) {
+        this.activeFilters.push(<FilterType>{
+          removable: true,
+          type: FilterEnums.Date,
+          label: newLabel,
+          prop: 'startDate',
+        });
+      } else {
+        filter.label = newLabel;
+      }
+    } else if (this.startDateGroup.value.end !== null) {
+      const beginningOfDay = new Date(this.startDateGroup.value.end).setHours(23, 59, 59, 999);
+      const endDate = this.createDateAsUTC(new Date(beginningOfDay));
+      filteredData = filteredData.filter(item => new Date(item.startDate) <= new Date(endDate));
+      const filter = this.activeFilters.find(af => af.prop === 'startDate');
+      const newLabel = `startDate: until ${this.getFormattedDate(endDate)}`;
+      if (!filter) {
+        this.activeFilters.push(<FilterType>{
+          removable: true,
+          type: FilterEnums.Date,
+          label: newLabel,
+          prop: 'startDate',
+        });
+      } else {
+        filter.label = newLabel;
+      }
+    } else if (this.startDateGroup.value.start !== null) {
+      const startDate = this.createDateAsUTC(new Date(this.startDateGroup.value.start));
+      filteredData = filteredData.filter(item => new Date(item.startDate) >= new Date(startDate));
+      const filter = this.activeFilters.find(af => af.prop === 'startDate');
+      const newLabel = `startDate: from ${this.getFormattedDate(startDate)}`;
+      if (!filter) {
+        this.activeFilters.push(<FilterType>{
+          removable: true,
+          type: FilterEnums.Date,
+          label: newLabel,
+          prop: 'startDate',
+        });
+      } else {
+        filter.label = newLabel;
+      }
     }
+    if (this.endDateGroup.value.start !== null && this.endDateGroup.value.end !== null) {
+      const startDate = this.createDateAsUTC(new Date(this.endDateGroup.value.start));
+      const beginningOfDay = new Date(this.endDateGroup.value.end).setHours(23, 59, 59, 999);
+      const endDate = this.createDateAsUTC(new Date(beginningOfDay));
+      filteredData = filteredData.filter(
+        item => new Date(endDate) >= new Date(item.endDate) && new Date(item.endDate) >= new Date(startDate)
+      );
+      const filter = this.activeFilters.find(af => af.prop === 'endDate');
+      const newLabel = `endDate: from ${this.getFormattedDate(startDate)} to ${this.getFormattedDate(endDate)}`;
+      if (!filter) {
+        this.activeFilters.push(<FilterType>{
+          removable: true,
+          type: FilterEnums.Date,
+          label: newLabel,
+          prop: 'endDate',
+        });
+      } else {
+        filter.label = newLabel;
+      }
+    } else if (this.endDateGroup.value.end !== null) {
+      const beginningOfDay = new Date(this.endDateGroup.value.end).setHours(23, 59, 59, 999);
+      const endDate = this.createDateAsUTC(new Date(beginningOfDay));
+      filteredData = filteredData.filter(item => new Date(item.endDate) <= new Date(endDate));
+      const filter = this.activeFilters.find(af => af.prop === 'endDate');
+      const newLabel = `endDate: until ${this.getFormattedDate(endDate)}`;
+      if (!filter) {
+        this.activeFilters.push(<FilterType>{
+          removable: true,
+          type: FilterEnums.Date,
+          label: newLabel,
+          prop: 'endDate',
+        });
+      } else {
+        filter.label = newLabel;
+      }
+    } else if (this.endDateGroup.value.start !== null) {
+      const startDate = this.createDateAsUTC(new Date(this.endDateGroup.value.start));
+      filteredData = filteredData.filter(item => new Date(item.endDate) >= new Date(startDate));
+      const filter = this.activeFilters.find(af => af.prop === 'endDate');
+      const newLabel = `endDate: from ${this.getFormattedDate(startDate)}`;
+      if (!filter) {
+        this.activeFilters.push(<FilterType>{
+          removable: true,
+          type: FilterEnums.Date,
+          label: newLabel,
+          prop: 'endDate',
+        });
+      } else {
+        filter.label = newLabel;
+      }
+    }
+    return filteredData;
+  }
+  private createDateAsUTC(date: Date) {
+    return new Date(
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds())
+    ).toISOString();
+  }
+  private getFormattedDate(theDate: string) {
+    return this.dateFormats.display.dateInput !== 'L'
+      ? this.dateAdapter.format(moment(theDate), this.dateFormats.display.dateInput)
+      : new Date(theDate).toLocaleDateString(this.translateService.currentLang, {
+          timeZone: 'UTC',
+        });
   }
 }

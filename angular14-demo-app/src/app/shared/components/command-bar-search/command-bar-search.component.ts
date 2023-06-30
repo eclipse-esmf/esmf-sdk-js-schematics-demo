@@ -3,6 +3,7 @@
  *
  * See the AUTHORS file(s) distributed with this work for
  * additional information regarding authorship.
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -10,7 +11,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {Clipboard} from '@angular/cdk/clipboard';
 import {
   AfterViewChecked,
@@ -27,6 +28,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
@@ -82,6 +84,8 @@ export enum CommandBarSearchColumn {
   selector: 'esmf-ui-command-bar-search',
   templateUrl: './command-bar-search.component.html',
   styleUrls: ['./command-bar-search.component.scss'],
+
+  encapsulation: ViewEncapsulation.None,
 })
 export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges, OnDestroy {
   @Input() initialSearchString = '';
@@ -433,6 +437,10 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
 
     this.columns = [...columns];
     this.displayedColumns = displayedColumnsTmp.filter(column => column.selected).map(column => column.name);
+  }
+
+  loadCustomTemplate(): TemplateRef<any> | null {
+    return this.customTemplate ? (this.customTemplate as TemplateRef<any>) : null;
   }
 
   checkIfOnValidPage(): void {

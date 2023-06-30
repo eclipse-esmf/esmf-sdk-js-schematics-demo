@@ -1,14 +1,15 @@
 <!--
-  ~ Copyright (c) 2023 Robert Bosch Manufacturing Solutions GmbH
-  ~
-  ~ See the AUTHORS file(s) distributed with this work for
-  ~ additional information regarding authorship.
-  ~ This Source Code Form is subject to the terms of the Mozilla Public
-  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
-  ~ file, You can obtain one at https://mozilla.org/MPL/2.0/.
-  ~
-  ~ SPDX-License-Identifier: MPL-2.0
-  -->
+ * Copyright (c) 2023 Robert Bosch Manufacturing Solutions GmbH
+ *
+ * See the AUTHORS file(s) distributed with this work for
+ * additional information regarding authorship.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ -->
 
 <div class="js-sdk-component-container">
   <mat-toolbar data-test="toolbar" class="toolbar">
@@ -76,7 +77,7 @@
   </mat-toolbar>
 
   <ng-container *ngIf="!!customTemplate && !dataSource.data.length">
-    <ng-container *ngTemplateOutlet="customTemplate"></ng-container>
+    <ng-container *ngTemplateOutlet="loadCustomTemplate()"></ng-container>
   </ng-container>
 
   <div class="scrollable-chips-container" *ngIf="filterService.activeFilters.length">
@@ -105,9 +106,9 @@
           [removable]="filter.removable"
           (removed)="removeFilter(filter)"
         >
-          <div data-test="chip-text" class="chip-text" matTooltip="{{ filter.filterValue + filter.label }}">
-            <b>{{ filter.filterValue }}</b
-            >{{ filter.label }}
+          <div data-test="chip-text" class="chip-text" matTooltip="{{ filter.prop }}: {{ filter.label }}">
+            <b>{{ filter.prop }}</b
+            >: {{ filter.label }}
           </div>
           <button *ngIf="filter.removable" matChipRemove data-test="mat-chip-remove">
             <mat-icon class="material-icons" data-test="remove-chip">cancel</mat-icon>
@@ -172,18 +173,20 @@
           </th>
 
           <td data-test="table-cell" mat-cell *matCellDef="let row">
-            {{ row.moving === null ? '-' : row.moving }}
+            {{ !(row.moving === null || row.moving === undefined) ? row.moving : '-' }}
 
             <button
               data-test="copy-to-clipboard-button"
+              *ngIf="!(row.moving === null || row.moving === undefined)"
               mat-icon-button
               class="copy-to-clipboard"
               (click)="copyToClipboard(row.moving, $event)"
             >
               <mat-icon data-test="copy-to-clipboard-icon" class="material-icons">content_copy</mat-icon>
             </button>
-          </td> </ng-container
-        ><!-- speedLimitWarning Column -->
+          </td>
+        </ng-container>
+        <!-- speedLimitWarning Column -->
         <ng-container data-test="table-column" matColumnDef="speedLimitWarning">
           <th
             data-test="table-header"
@@ -205,18 +208,20 @@
           </th>
 
           <td data-test="table-cell" mat-cell *matCellDef="let row">
-            {{ row.speedLimitWarning === null ? '-' : row.speedLimitWarning }}
+            {{ !(row.speedLimitWarning === null || row.speedLimitWarning === undefined) ? row.speedLimitWarning : '-' }}
 
             <button
               data-test="copy-to-clipboard-button"
+              *ngIf="!(row.speedLimitWarning === null || row.speedLimitWarning === undefined)"
               mat-icon-button
               class="copy-to-clipboard"
               (click)="copyToClipboard(row.speedLimitWarning, $event)"
             >
               <mat-icon data-test="copy-to-clipboard-icon" class="material-icons">content_copy</mat-icon>
             </button>
-          </td> </ng-container
-        ><!-- startDate Column -->
+          </td>
+        </ng-container>
+        <!-- startDate Column -->
         <ng-container data-test="table-column" matColumnDef="startDate">
           <th
             data-test="table-header"
@@ -238,18 +243,20 @@
           </th>
 
           <td data-test="table-cell" mat-cell *matCellDef="let row">
-            {{ row.startDate === null ? '-' : (row.startDate | date: tableDateTimeFormat) }}
+            {{ !(row.startDate === null || row.startDate === undefined) ? (row.startDate | date : tableDateTimeFormat) : '-' }}
 
             <button
               data-test="copy-to-clipboard-button"
+              *ngIf="!(row.startDate === null || row.startDate === undefined)"
               mat-icon-button
               class="copy-to-clipboard"
               (click)="copyToClipboard(row.startDate, $event)"
             >
               <mat-icon data-test="copy-to-clipboard-icon" class="material-icons">content_copy</mat-icon>
             </button>
-          </td> </ng-container
-        ><!-- endDate Column -->
+          </td>
+        </ng-container>
+        <!-- endDate Column -->
         <ng-container data-test="table-column" matColumnDef="endDate">
           <th data-test="table-header" mat-header-cell *matHeaderCellDef mat-sort-header="endDate">
             <span
@@ -263,10 +270,11 @@
           </th>
 
           <td data-test="table-cell" mat-cell *matCellDef="let row">
-            {{ row.endDate === null ? '-' : (row.endDate | date: tableDateTimeFormat) }}
+            {{ !(row.endDate === null || row.endDate === undefined) ? (row.endDate | date : tableDateTimeFormat) : '-' }}
 
             <button
               data-test="copy-to-clipboard-button"
+              *ngIf="!(row.endDate === null || row.endDate === undefined)"
               mat-icon-button
               class="copy-to-clipboard"
               (click)="copyToClipboard(row.endDate, $event)"

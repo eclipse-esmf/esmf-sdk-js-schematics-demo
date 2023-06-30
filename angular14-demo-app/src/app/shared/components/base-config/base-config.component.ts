@@ -3,6 +3,7 @@
  *
  * See the AUTHORS file(s) distributed with this work for
  * additional information regarding authorship.
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -10,7 +11,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from SDK JS Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
   AfterViewChecked,
   AfterViewInit,
@@ -25,6 +26,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
@@ -69,6 +71,8 @@ export enum BaseConfigColumn {
   selector: 'esmf-ui-base-config',
   templateUrl: './base-config.component.html',
   styleUrls: ['./base-config.component.scss'],
+
+  encapsulation: ViewEncapsulation.None,
 })
 export class BaseConfigComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges {
   @Input() tableDateTimeFormat = 'short';
@@ -365,6 +369,10 @@ export class BaseConfigComponent implements OnInit, AfterViewInit, AfterViewChec
 
     this.columns = [...columns];
     this.displayedColumns = displayedColumnsTmp.filter(column => column.selected).map(column => column.name);
+  }
+
+  loadCustomTemplate(): TemplateRef<any> | null {
+    return this.customTemplate ? (this.customTemplate as TemplateRef<any>) : null;
   }
 
   checkIfOnValidPage(): void {

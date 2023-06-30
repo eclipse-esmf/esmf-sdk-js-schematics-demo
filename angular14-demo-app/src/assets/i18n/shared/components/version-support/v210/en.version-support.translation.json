@@ -34,6 +34,10 @@
   "advancedSearch": "Advanced Search",
   "allTextFields": "All Text Fields",
 
+  "date": {
+    "start": "Start date",
+    "end": "End date"
+  },
   "exportData": {
     "title": "Export data",
     "description": {
