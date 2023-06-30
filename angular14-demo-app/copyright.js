@@ -15,7 +15,7 @@ const glob = require('glob');
 const fs = require('fs-extra');
 
 const copyrightHeaderTS = `/*
- * Copyright (c) 2023 Robert Bosch Manufacturing Solutions GmbH
+ * Copyright (c) ${new Date().getFullYear()} Robert Bosch Manufacturing Solutions GmbH
  *
  * See the AUTHORS file(s) distributed with this work for
  * additional information regarding authorship.
