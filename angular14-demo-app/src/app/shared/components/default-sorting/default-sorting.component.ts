@@ -26,6 +26,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
@@ -70,6 +71,8 @@ export enum DefaultSortingColumn {
   selector: 'esmf-ui-default-sorting',
   templateUrl: './default-sorting.component.html',
   styleUrls: ['./default-sorting.component.scss'],
+
+  encapsulation: ViewEncapsulation.None,
 })
 export class DefaultSortingComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges {
   @Input() tableDateTimeFormat = 'short';

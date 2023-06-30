@@ -26,6 +26,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
@@ -69,6 +70,8 @@ export enum ExcludedPropertyColumn {
   selector: 'esmf-ui-excluded-property',
   templateUrl: './excluded-property.component.html',
   styleUrls: ['./excluded-property.component.scss'],
+
+  encapsulation: ViewEncapsulation.None,
 })
 export class ExcludedPropertyComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges {
   @Input() tableDateTimeFormat = 'short';

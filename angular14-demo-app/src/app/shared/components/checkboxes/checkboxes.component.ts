@@ -26,6 +26,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
@@ -71,6 +72,8 @@ export enum CheckboxesColumn {
   selector: 'esmf-ui-checkboxes',
   templateUrl: './checkboxes.component.html',
   styleUrls: ['./checkboxes.component.scss'],
+
+  encapsulation: ViewEncapsulation.None,
 })
 export class CheckboxesComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges {
   @Input() tableDateTimeFormat = 'short';

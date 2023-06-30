@@ -26,6 +26,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
@@ -70,6 +71,8 @@ export enum CommandBarActionsColumn {
   selector: 'esmf-ui-command-bar-actions',
   templateUrl: './command-bar-actions.component.html',
   styleUrls: ['./command-bar-actions.component.scss'],
+
+  encapsulation: ViewEncapsulation.None,
 })
 export class CommandBarActionsComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges {
   @Input() tableDateTimeFormat = 'short';

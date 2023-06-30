@@ -26,6 +26,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
@@ -70,6 +71,8 @@ export enum BaseConfigColumn {
   selector: 'esmf-ui-base-config',
   templateUrl: './base-config.component.html',
   styleUrls: ['./base-config.component.scss'],
+
+  encapsulation: ViewEncapsulation.None,
 })
 export class BaseConfigComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges {
   @Input() tableDateTimeFormat = 'short';

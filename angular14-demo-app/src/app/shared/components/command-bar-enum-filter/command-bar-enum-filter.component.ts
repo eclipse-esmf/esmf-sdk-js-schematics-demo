@@ -27,6 +27,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
@@ -70,6 +71,8 @@ export enum CommandBarEnumFilterColumn {
   selector: 'esmf-ui-command-bar-enum-filter',
   templateUrl: './command-bar-enum-filter.component.html',
   styleUrls: ['./command-bar-enum-filter.component.scss'],
+
+  encapsulation: ViewEncapsulation.None,
 })
 export class CommandBarEnumFilterComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges {
   @Input() tableDateTimeFormat = 'short';

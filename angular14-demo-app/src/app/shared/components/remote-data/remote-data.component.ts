@@ -26,6 +26,7 @@ import {
   Output,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
@@ -108,6 +109,8 @@ export enum RemoteDataColumn {
   selector: 'esmf-ui-remote-data',
   templateUrl: './remote-data.component.html',
   styleUrls: ['./remote-data.component.scss'],
+
+  encapsulation: ViewEncapsulation.None,
 })
 export class RemoteDataComponent implements OnInit, AfterViewInit, AfterViewChecked, OnDestroy {
   @Input() tableDateTimeFormat = 'short';

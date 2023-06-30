@@ -26,6 +26,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
@@ -71,6 +72,8 @@ export enum CustomColumnColumn {
   selector: 'esmf-ui-custom-column',
   templateUrl: './custom-column.component.html',
   styleUrls: ['./custom-column.component.scss'],
+
+  encapsulation: ViewEncapsulation.None,
 })
 export class CustomColumnComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges {
   @Input() tableDateTimeFormat = 'short';

@@ -26,6 +26,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
@@ -71,6 +72,8 @@ export enum ComplexPropSelectedColumn {
   selector: 'esmf-ui-complex-prop-selected',
   templateUrl: './complex-prop-selected.component.html',
   styleUrls: ['./complex-prop-selected.component.scss'],
+
+  encapsulation: ViewEncapsulation.None,
 })
 export class ComplexPropSelectedComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges {
   @Input() tableDateTimeFormat = 'short';

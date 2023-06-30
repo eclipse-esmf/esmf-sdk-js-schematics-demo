@@ -26,6 +26,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
@@ -71,6 +72,8 @@ export enum RowActionButtonColumn {
   selector: 'esmf-ui-row-action-button',
   templateUrl: './row-action-button.component.html',
   styleUrls: ['./row-action-button.component.scss'],
+
+  encapsulation: ViewEncapsulation.None,
 })
 export class RowActionButtonComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges {
   @Input() isScheduleVisible = true;

@@ -28,6 +28,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
@@ -83,6 +84,8 @@ export enum CommandBarSearchColumn {
   selector: 'esmf-ui-command-bar-search',
   templateUrl: './command-bar-search.component.html',
   styleUrls: ['./command-bar-search.component.scss'],
+
+  encapsulation: ViewEncapsulation.None,
 })
 export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges, OnDestroy {
   @Input() initialSearchString = '';

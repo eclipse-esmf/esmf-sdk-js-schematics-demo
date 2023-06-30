@@ -29,6 +29,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
@@ -87,6 +88,8 @@ export enum VersionSupportColumn {
   selector: 'esmf-ui-version-support-v210',
   templateUrl: './version-support.component.html',
   styleUrls: ['./version-support.component.scss'],
+
+  encapsulation: ViewEncapsulation.None,
 })
 export class VersionSupportComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges, OnDestroy {
   @Input() initialSearchString = '';
