@@ -3,16 +3,11 @@
     "models/org.eclipse.examples.movement/2.1.0/Movement.ttl"
   ],
   "excludedProperties": [],
-  "configFile": "wizard-config.json",
+  "configFile": "wizard.config.json",
   "complexProps": [
     {
       "prop": "position",
-      "propsToShow": [
-        {
-          "name": "x",
-          "aspectModelUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#x"
-        }
-      ]
+      "propsToShow": []
     }
   ],
   "selectedModelElementUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#Movement",
@@ -21,7 +16,13 @@
   "customColumns": [],
   "addRowCheckboxes": false,
   "customRowActions": [],
-  "addCommandBar": false,
+  "addCommandBar": true,
+  "enabledCommandBarFunctions": [
+    "addSearchBar"
+  ],
+  "chooseLanguageForSearch": "en",
+  "customCommandBarActions": [],
   "enableRemoteDataHandling": false,
-  "enableVersionSupport": false
+  "enableVersionSupport": false,
+  "overwrite": true
 }

@@ -3,7 +3,7 @@
     "models/org.eclipse.examples.movement/2.1.0/Movement.ttl"
   ],
   "excludedProperties": [],
-  "configFile": "wizard-config.json",
+  "configFile": "wizard.config.json",
   "complexProps": [
     {
       "prop": "position",
@@ -12,8 +12,10 @@
   ],
   "selectedModelElementUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#Movement",
   "jsonAccessPath": "",
-  "defaultSortingCol": "moving",
-  "customColumns": [],
+  "defaultSortingCol": "endDate",
+  "customColumns": [
+    "test"
+  ],
   "addRowCheckboxes": false,
   "customRowActions": [],
   "addCommandBar": false,
