@@ -12,7 +12,6 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
-import {Clipboard} from '@angular/cdk/clipboard';
 import {
   AfterViewChecked,
   AfterViewInit,
@@ -30,32 +29,34 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
+
+import {CommandBarSearchFilterService, FilterEnums} from './command-bar-search-filter.service';
+
+import {Clipboard} from '@angular/cdk/clipboard';
 import {unparse} from 'papaparse';
+
+import {ExportConfirmationDialogComponent} from '../export-confirmation-dialog/export-confirmation-dialog.component';
+
+import {MatDialog} from '@angular/material/dialog';
 import {Movement} from '../../types/movement/movement.types';
-import {ExportConfirmationDialog} from '../export-confirmation-dialog/export-confirmation-dialog.component';
 import {CommandBarSearchDataSource} from './command-bar-search-datasource';
-import {CommandBarSearchFilterService, FilterEnums} from './command-bar-search.filter.service';
 
 import {SelectionModel} from '@angular/cdk/collections';
 import {DomSanitizer} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
-import {Subject} from 'rxjs';
-import {debounceTime, filter, takeUntil} from 'rxjs/operators';
 import {JSSdkLocalStorageService} from '../../services/storage.service';
 import {CommandBarSearchColumnMenuComponent} from './command-bar-search-column-menu.component';
-import {CommandBarSearchConfigMenuComponent} from './command-bar-search-config-menu.component';
-import {CommandBarSearchService} from './command-bar-search.service';
 
-export interface Column {
-  /** Column name **/
-  name: string;
-  /** State if the column is selected **/
-  selected: boolean;
-}
+import {CommandBarSearchConfigMenuComponent} from './command-bar-search-config-menu.component';
+
+import {debounceTime, filter, takeUntil} from 'rxjs/operators';
+
+import {Subject} from 'rxjs';
+
+import {CommandBarSearchService} from './command-bar-search.service';
 
 export interface Config {
   /** Column name **/
@@ -66,6 +67,13 @@ export interface Config {
   selected: boolean;
   /** Color for the highlighted configuration **/
   color?: string;
+}
+
+export interface Column {
+  /** Column name **/
+  name: string;
+  /** State if the column is selected **/
+  selected: boolean;
 }
 
 /**
@@ -90,7 +98,9 @@ export enum CommandBarSearchColumn {
 export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges, OnDestroy {
   @Input() initialSearchString = '';
 
+  @Input() tableDateFormat = 'short';
   @Input() tableDateTimeFormat = 'short';
+  @Input() tableTimeFormat = 'shortTime';
 
   @Input() data: Array<Movement> = [];
   @Input() customTemplate?: TemplateRef<any>;
@@ -113,7 +123,9 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
   @Input() maxNumberCharacters: number = 50;
   @Input() allowedCharacters: string = '';
   @Input() regexValidator: string = '';
+
   @Input() hasAdvancedSearch: boolean = this.filterService.stringColumns.length > 1;
+
   @Input() maxExportRows: number = 0;
 
   @Output() rowClickEvent = new EventEmitter<any>();
@@ -129,7 +141,9 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
   @ViewChild(MatPaginator) private paginator!: MatPaginator;
   @ViewChild(MatTable) private table!: MatTable<Movement>;
   @ViewChild(CommandBarSearchColumnMenuComponent) private columMenuComponent!: CommandBarSearchColumnMenuComponent;
+
   @ViewChild(CommandBarSearchConfigMenuComponent) private configurationComponent!: CommandBarSearchConfigMenuComponent;
+
   @ViewChild('searchInput') searchInput!: ElementRef;
 
   @HostBinding('attr.style')
@@ -147,10 +161,13 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
   totalItems: number = 0;
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: CommandBarSearchDataSource;
+
   columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'endDate', sortDirection: 'asc'};
   displayedColumns: Array<string> = Object.values(CommandBarSearchColumn);
   columns: Array<Column> = [];
+
   configs: Array<Config> = [];
+
   currentLanguage: string;
   filteredData: Array<Movement> = [];
   dragging: boolean = false;
@@ -177,7 +194,6 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
     private commandBarSearchService: CommandBarSearchService
   ) {
     this.dataSource = new CommandBarSearchDataSource(this.translateService);
-
     this.currentLanguage = this.translateService.currentLang;
   }
 
@@ -190,23 +206,28 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
     });
 
     this.initializeColumns();
+
     this.maxExportRows = this.data.length;
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (this.table) {
       this.applyFilters();
     }
   }
+
   ngOnDestroy(): void {
     this.filterService.searchString.setValue('');
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
+
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.pageChange();
   }
+
   ngAfterViewChecked(): void {
     if (this.table) {
       this.table.updateStickyColumnStyles();
@@ -215,6 +236,7 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
 
   initializeColumns(): void {
     const configStorage = this.storageService.getItem(this.KEY_LOCAL_STORAGE_COMMAND_BAR_SEARCH_CONFIG);
+
     const columnStorage = this.storageService.getItem(this.KEY_LOCAL_STORAGE_COMMAND_BAR_SEARCH_COLUMNS);
 
     if (configStorage?.length > 0) {
@@ -275,14 +297,17 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
     if (this.highlightSelectedRow) {
       this.checkboxClicked(row);
     }
+
     if ($event.type === 'contextmenu') {
       $event.preventDefault();
       let mousePositionOnClick = {x: $event.clientX + 'px', y: $event.clientY + 'px'};
       this.rowRightClickEvent.emit({data: row, mousePosition: mousePositionOnClick});
     }
+
     if ($event.type === 'click') {
       this.rowClickEvent.emit({data: row});
     }
+
     return false;
   }
 
@@ -301,6 +326,7 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
     if (!this.isMultipleSelectionEnabled) {
       this.selection.clear();
     }
+
     this.selection.toggle(row);
     this.rowSelectionEvent.emit(this.selection.selected);
   }
@@ -314,6 +340,7 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
     if (this.filterService.searchString.errors) {
       return;
     }
+
     this.tableUpdateStartEvent.emit();
     let dataTemp = [...this.data];
 
@@ -330,7 +357,6 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
 
     this.tableUpdateFinishedEvent.emit();
   }
-
   removeFilter(filterData: any): void {
     this.filterService.removeFilter(filterData);
     this.paginator.firstPage();
@@ -345,7 +371,7 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
   openExportConfirmationDialog() {
     const reduce = this.displayedColumns.filter(col => col === 'checkboxes' || col === 'columnsMenu').length;
 
-    const dialogRef = this.dialog.open(ExportConfirmationDialog, {
+    const dialogRef = this.dialog.open(ExportConfirmationDialogComponent, {
       data: {
         allColumns: this.columns.length,
         displayedColumns: this.displayedColumns.length - reduce,
@@ -363,6 +389,7 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
         if (exportAllPages && this.data.length > this.maxExportRows) {
           this.data.length = this.maxExportRows;
         }
+
         this.prepareCsv(this.commandBarSearchService.flatten(this.data), exportAllColumns, exportAllPages, this.paginator.pageSize);
       });
   }
@@ -373,6 +400,7 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
     }
 
     const columns = exportAllColumns ? this.columns.map(c => c.name) : this.displayedColumns;
+
     const headersToExport = columns.filter(columnName => columnName !== CommandBarSearchColumn.COLUMNS_MENU);
 
     const headersCSV = unparse({
@@ -402,18 +430,10 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
       ...Object.values(CommandBarSearchColumn)
 
         .filter(columnName => columnName !== CommandBarSearchColumn['COLUMNS_MENU'])
-        .map(columnName => {
-          return {name: columnName, selected: true};
-        }),
+        .map(columnName => ({name: columnName, selected: true})),
     ];
     this.columMenuComponent.columns.splice(0, this.columMenuComponent.columns.length);
     this.columMenuComponent.columns.push(...this.columns);
-  }
-
-  initOpenedConfigurationDialog(): void {
-    this.configurationComponent.keyLocalStorage = this.KEY_LOCAL_STORAGE_COMMAND_BAR_SEARCH_CONFIG;
-    this.configurationComponent.configs.splice(0, this.configurationComponent.configs.length);
-    this.configurationComponent.configs.push(...this.configs.map(config => ({...config})));
   }
 
   setConfiguration(configs: Array<Config>): void {
@@ -423,6 +443,7 @@ export class CommandBarSearchComponent implements OnInit, AfterViewInit, AfterVi
   shouldHighlight(name: string, letter: string): boolean {
     const highlightLetters = [...new Set(this.highlightString.join().split(''))].join();
     const index = name.toString().indexOf(letter);
+
     return index !== -1 && highlightLetters.includes(name.toString()[index]);
   }
 

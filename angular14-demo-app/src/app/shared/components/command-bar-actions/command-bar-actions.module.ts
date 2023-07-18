@@ -12,11 +12,17 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
+import {NgModule} from '@angular/core';
+import {CommandBarActionsComponent} from './command-bar-actions.component';
+
+import {CommandBarActionsCommandBarComponent} from './command-bar-actions-command-bar.component';
+
+import {CommandBarActionsColumnMenuComponent} from './command-bar-actions-column-menu.component';
+
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {DatePipe, NgClass, NgFor, NgIf, NgTemplateOutlet} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
-import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatButtonModule} from '@angular/material/button';
@@ -34,11 +40,9 @@ import {MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {AppSharedModule} from 'src/app/shared/app-shared.module';
-import {CommandBarActionsColumnMenuComponent} from './command-bar-actions-column-menu.component';
-import {CommandBarActionsComponent} from './command-bar-actions.component';
 
 @NgModule({
-  declarations: [CommandBarActionsComponent, CommandBarActionsColumnMenuComponent],
+  declarations: [CommandBarActionsComponent, CommandBarActionsColumnMenuComponent, CommandBarActionsCommandBarComponent],
   imports: [
     AppSharedModule,
     MatTableModule,
@@ -68,6 +72,6 @@ import {CommandBarActionsComponent} from './command-bar-actions.component';
     MatMomentDateModule,
   ],
   providers: [],
-  exports: [CommandBarActionsComponent],
+  exports: [CommandBarActionsComponent, CommandBarActionsCommandBarComponent],
 })
 export class CommandBarActionsModule {}

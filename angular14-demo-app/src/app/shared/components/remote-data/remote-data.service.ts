@@ -14,6 +14,7 @@
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 import {Observable} from 'rxjs';
 import {Movement} from '../../types/movement/movement.types';
 
@@ -34,7 +35,13 @@ export type MovementPayload<T extends GenericMovementPayload = GenericMovementPa
   providedIn: 'root',
 })
 export class RemoteDataService {
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient, private translateService: TranslateService) {
+    this.http
+      .get(`assets/i18n/shared/components/remote-data/${this.translateService.currentLang}.remote-data.translation.json`)
+      .subscribe(translations => {
+        this.translateService.setTranslation(this.translateService.currentLang, translations, true);
+      });
+  }
 
   requestData(remoteAPI: string, body: MovementPayload): Observable<MovementResponse> {
     const strippedUrlParts: string[] = remoteAPI.split('?');
@@ -45,47 +52,5 @@ export class RemoteDataService {
       });
     }
     return this.http.post<MovementResponse>(strippedUrlParts[0], body);
-  }
-
-  downloadCsv(csvArray: any): void {
-    if (!csvArray.length) {
-      throw new Error('Empty file. Please try again with data.');
-    }
-    const a = document.createElement('a');
-    const blob = new Blob([csvArray], {type: 'text/csv'});
-    const url = window.URL.createObjectURL(blob);
-
-    a.href = url;
-    a.download = 'movement.csv';
-    a.click();
-    window.URL.revokeObjectURL(url);
-    a.remove();
-  }
-
-  flatten(csvArray: Movement[]): Movement[] {
-    return csvArray.map((item: Movement): Movement => {
-      return this.flattenObj(item);
-    });
-  }
-
-  private flattenObj(obj: any): any {
-    const result: any = {};
-
-    for (let key in obj) {
-      if (typeof obj[key].constructor.isEnumeration === 'function' && obj[key]?.constructor?.isEnumeration()) {
-        const enumerationValues = obj[key].constructor.values().find((v: any) => Object.keys(v).every(k => v[k] === obj[key][k]));
-
-        result[key] = Object.values(enumerationValues).join('-');
-      } else if (typeof obj[key] === 'object' && !(obj[key] instanceof Date)) {
-        const childObj = this.flattenObj(obj[key]);
-
-        for (let childObjKey in childObj) {
-          result[`${key}.${childObjKey}`] = childObj[childObjKey];
-        }
-      } else {
-        result[key] = obj[key];
-      }
-    }
-    return result;
   }
 }

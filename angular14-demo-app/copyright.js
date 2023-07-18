@@ -14,7 +14,7 @@
 const glob = require('glob');
 const fs = require('fs-extra');
 
-const newDate= new Date().getFullYear();
+const newDate = new Date().getFullYear();
 
 const copyrightHeaderTS = `/*
  * Copyright (c) ${newDate} Robert Bosch Manufacturing Solutions GmbH

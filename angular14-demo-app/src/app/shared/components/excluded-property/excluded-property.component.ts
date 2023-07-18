@@ -33,10 +33,9 @@ import {MatSort, SortDirection} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 
 import {Clipboard} from '@angular/cdk/clipboard';
+
 import {MatDialog} from '@angular/material/dialog';
-import {unparse} from 'papaparse';
 import {Movement} from '../../types/movement/movement.types';
-import {ExportConfirmationDialog} from '../export-confirmation-dialog/export-confirmation-dialog.component';
 import {ExcludedPropertyDataSource} from './excluded-property-datasource';
 
 import {SelectionModel} from '@angular/cdk/collections';
@@ -45,7 +44,6 @@ import {TranslateService} from '@ngx-translate/core';
 import {JSSdkLocalStorageService} from '../../services/storage.service';
 import {ExcludedPropertyColumnMenuComponent} from './excluded-property-column-menu.component';
 
-import {filter} from 'rxjs/operators';
 import {ExcludedPropertyService} from './excluded-property.service';
 
 export interface Column {
@@ -74,7 +72,9 @@ export enum ExcludedPropertyColumn {
   encapsulation: ViewEncapsulation.None,
 })
 export class ExcludedPropertyComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges {
+  @Input() tableDateFormat = 'short';
   @Input() tableDateTimeFormat = 'short';
+  @Input() tableTimeFormat = 'shortTime';
 
   @Input() data: Array<Movement> = [];
   @Input() customTemplate?: TemplateRef<any>;
@@ -129,6 +129,7 @@ export class ExcludedPropertyComponent implements OnInit, AfterViewInit, AfterVi
   totalItems: number = 0;
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: ExcludedPropertyDataSource;
+
   columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'position.x', sortDirection: 'asc'};
   displayedColumns: Array<string> = Object.values(ExcludedPropertyColumn);
   columns: Array<Column> = [];
@@ -151,14 +152,15 @@ export class ExcludedPropertyComponent implements OnInit, AfterViewInit, AfterVi
     private excludedPropertyService: ExcludedPropertyService
   ) {
     this.dataSource = new ExcludedPropertyDataSource(this.translateService);
-
     this.currentLanguage = this.translateService.currentLang;
   }
 
   ngOnInit(): void {
     this.initializeColumns();
+
     this.maxExportRows = this.data.length;
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (this.table) {
       this.applyFilters();
@@ -170,6 +172,7 @@ export class ExcludedPropertyComponent implements OnInit, AfterViewInit, AfterVi
     this.dataSource.sort = this.sort;
     this.pageChange();
   }
+
   ngAfterViewChecked(): void {
     if (this.table) {
       this.table.updateStickyColumnStyles();
@@ -231,14 +234,17 @@ export class ExcludedPropertyComponent implements OnInit, AfterViewInit, AfterVi
     if (this.highlightSelectedRow) {
       this.checkboxClicked(row);
     }
+
     if ($event.type === 'contextmenu') {
       $event.preventDefault();
       let mousePositionOnClick = {x: $event.clientX + 'px', y: $event.clientY + 'px'};
       this.rowRightClickEvent.emit({data: row, mousePosition: mousePositionOnClick});
     }
+
     if ($event.type === 'click') {
       this.rowClickEvent.emit({data: row});
     }
+
     return false;
   }
 
@@ -257,6 +263,7 @@ export class ExcludedPropertyComponent implements OnInit, AfterViewInit, AfterVi
     if (!this.isMultipleSelectionEnabled) {
       this.selection.clear();
     }
+
     this.selection.toggle(row);
     this.rowSelectionEvent.emit(this.selection.selected);
   }
@@ -278,69 +285,10 @@ export class ExcludedPropertyComponent implements OnInit, AfterViewInit, AfterVi
 
     this.tableUpdateFinishedEvent.emit();
   }
-
   removeFilter(filterData: any): void {
     this.paginator.firstPage();
 
     this.applyFilters();
-  }
-
-  exportToCsv() {
-    this.openExportConfirmationDialog();
-  }
-
-  openExportConfirmationDialog() {
-    const reduce = this.displayedColumns.filter(col => col === 'checkboxes' || col === 'columnsMenu').length;
-
-    const dialogRef = this.dialog.open(ExportConfirmationDialog, {
-      data: {
-        allColumns: this.columns.length,
-        displayedColumns: this.displayedColumns.length - reduce,
-        maxExportRows: this.maxExportRows,
-      },
-      maxWidth: 478,
-    });
-
-    dialogRef
-      .afterClosed()
-      .pipe(filter(e => !!e))
-      .subscribe((exportEvent: {exportAllPages: boolean; exportAllColumns: boolean}): void => {
-        const {exportAllPages, exportAllColumns} = exportEvent;
-
-        if (exportAllPages && this.data.length > this.maxExportRows) {
-          this.data.length = this.maxExportRows;
-        }
-        this.prepareCsv(this.excludedPropertyService.flatten(this.data), exportAllColumns, exportAllPages, this.paginator.pageSize);
-      });
-  }
-
-  prepareCsv(data: any, exportAllColumns: boolean, exportAllPages: boolean, currentPageSize: number): void {
-    if (!exportAllPages && data.length > currentPageSize) {
-      data.length = currentPageSize;
-    }
-
-    const columns = exportAllColumns ? this.columns.map(c => c.name) : this.displayedColumns;
-    const headersToExport = columns.filter(columnName => columnName !== ExcludedPropertyColumn.COLUMNS_MENU);
-
-    const headersCSV = unparse({
-      fields: headersToExport.map(columnName => {
-        const translatedHeader = this.translateService.instant(`${columnName}.preferredName`);
-        return translatedHeader !== `${columnName}.preferredName` ? translatedHeader : columnName;
-      }),
-      data: [],
-    });
-
-    this.downloadCsv(`${headersCSV}${unparse(data, {header: false, columns: headersToExport})}`);
-  }
-
-  downloadCsv(csvArray: any): void {
-    this.downloadEvent.emit({error: false, success: false, inProgress: true});
-    try {
-      this.excludedPropertyService.downloadCsv(csvArray);
-      this.downloadEvent.emit({error: false, success: true, inProgress: false});
-    } catch (error: any) {
-      this.downloadEvent.emit({error: true, success: false, inProgress: false});
-    }
   }
 
   initOpenedColumnMenuDialog(): void {
@@ -349,9 +297,7 @@ export class ExcludedPropertyComponent implements OnInit, AfterViewInit, AfterVi
       ...Object.values(ExcludedPropertyColumn)
 
         .filter(columnName => columnName !== ExcludedPropertyColumn['COLUMNS_MENU'])
-        .map(columnName => {
-          return {name: columnName, selected: true};
-        }),
+        .map(columnName => ({name: columnName, selected: true})),
     ];
     this.columMenuComponent.columns.splice(0, this.columMenuComponent.columns.length);
     this.columMenuComponent.columns.push(...this.columns);

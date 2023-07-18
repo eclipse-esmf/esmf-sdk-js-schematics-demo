@@ -28,7 +28,7 @@ export abstract class BrowserStorage {
 })
 export class JSSdkLocalStorageService implements BrowserStorage {
   /**
-   * Prefix for keys to avoid overwriting of values of a app having the same key.
+   * Prefix for keys to avoid overwriting of values of an app having the same key.
    */
   readonly KEY_PREFIX = 'JSSDK_';
 

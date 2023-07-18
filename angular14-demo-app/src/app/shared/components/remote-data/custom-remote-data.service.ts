@@ -11,13 +11,15 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
+/** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 import {RemoteDataService} from './remote-data.service';
 
 /**
  * Custom service which extend the original API service for fetching
- * Movement data from the configured
+ * ${this.options.selectedModelElement.name} data from the configured
  * remote API.
  *
  * If you need to override or to extend the current functionality,
@@ -29,7 +31,7 @@ import {RemoteDataService} from './remote-data.service';
   providedIn: 'root',
 })
 export class CustomRemoteDataService extends RemoteDataService {
-  constructor(http: HttpClient) {
-    super(http);
+  constructor(http: HttpClient, translationService: TranslateService) {
+    super(http, translationService);
   }
 }

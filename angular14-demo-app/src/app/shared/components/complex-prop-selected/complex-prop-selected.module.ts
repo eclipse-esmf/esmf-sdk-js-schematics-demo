@@ -12,11 +12,15 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
+import {NgModule} from '@angular/core';
+import {ComplexPropSelectedComponent} from './complex-prop-selected.component';
+
+import {ComplexPropSelectedColumnMenuComponent} from './complex-prop-selected-column-menu.component';
+
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {DatePipe, NgClass, NgFor, NgIf, NgTemplateOutlet} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
-import {NgModule} from '@angular/core';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -27,8 +31,6 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {AppSharedModule} from 'src/app/shared/app-shared.module';
-import {ComplexPropSelectedColumnMenuComponent} from './complex-prop-selected-column-menu.component';
-import {ComplexPropSelectedComponent} from './complex-prop-selected.component';
 
 @NgModule({
   declarations: [ComplexPropSelectedComponent, ComplexPropSelectedColumnMenuComponent],

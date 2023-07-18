@@ -40,7 +40,6 @@ import {AppComponent} from './app.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {HeaderComponent} from './components/header/header.component';
 import {SidenavComponent} from './components/sidenav/sidenav.component';
-import {AppSharedModule} from './shared/app-shared.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent, SidenavComponent],
@@ -55,7 +54,6 @@ import {AppSharedModule} from './shared/app-shared.module';
     MatListModule,
     FormsModule,
     RouterModule,
-    AppSharedModule,
     BaseConfigModule,
     CheckboxesModule,
     CommandBarModule,
@@ -70,7 +68,6 @@ import {AppSharedModule} from './shared/app-shared.module';
     RemoteDataModule,
     RowActionButtonModule,
     VersionSupportModule,
-    BaseConfigModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

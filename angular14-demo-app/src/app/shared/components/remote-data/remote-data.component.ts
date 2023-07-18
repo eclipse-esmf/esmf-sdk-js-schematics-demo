@@ -33,10 +33,9 @@ import {MatSort, SortDirection} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 
 import {Clipboard} from '@angular/cdk/clipboard';
+
 import {MatDialog} from '@angular/material/dialog';
-import {unparse} from 'papaparse';
 import {Movement} from '../../types/movement/movement.types';
-import {ExportConfirmationDialog} from '../export-confirmation-dialog/export-confirmation-dialog.component';
 import {RemoteDataDataSource} from './remote-data-datasource';
 
 import {SelectionModel} from '@angular/cdk/collections';
@@ -45,9 +44,9 @@ import {TranslateService} from '@ngx-translate/core';
 import {JSSdkLocalStorageService} from '../../services/storage.service';
 import {RemoteDataColumnMenuComponent} from './remote-data-column-menu.component';
 
-import {AbstractArrayNode, AbstractNode, And, Eq, Limit, Query, QueryStringifier, Sort} from 'rollun-ts-rql';
 import {Subject} from 'rxjs';
-import {filter} from 'rxjs/operators';
+
+import {AbstractArrayNode, AbstractNode, And, Eq, Limit, Query, QueryStringifier, Sort} from 'rollun-ts-rql';
 import {CustomRemoteDataService} from './custom-remote-data.service';
 import {MovementResponse} from './remote-data.service';
 
@@ -113,7 +112,9 @@ export enum RemoteDataColumn {
   encapsulation: ViewEncapsulation.None,
 })
 export class RemoteDataComponent implements OnInit, AfterViewInit, AfterViewChecked, OnDestroy {
+  @Input() tableDateFormat = 'short';
   @Input() tableDateTimeFormat = 'short';
+  @Input() tableTimeFormat = 'shortTime';
 
   @Input() data: Array<Movement> = [];
   @Input() customTemplate?: TemplateRef<any>;
@@ -172,6 +173,7 @@ export class RemoteDataComponent implements OnInit, AfterViewInit, AfterViewChec
   totalItems: number = 0;
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: RemoteDataDataSource;
+
   columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'endDate', sortDirection: 'asc'};
   displayedColumns: Array<string> = Object.values(RemoteDataColumn);
   columns: Array<Column> = [];
@@ -193,11 +195,10 @@ export class RemoteDataComponent implements OnInit, AfterViewInit, AfterViewChec
     private clipboard: Clipboard,
     private storageService: JSSdkLocalStorageService,
 
-    private customremoteDataService: CustomRemoteDataService,
+    private customRemoteDataService: CustomRemoteDataService,
     private cd: ChangeDetectorRef
   ) {
     this.dataSource = new RemoteDataDataSource();
-
     this.currentLanguage = this.translateService.currentLang;
   }
 
@@ -209,12 +210,14 @@ export class RemoteDataComponent implements OnInit, AfterViewInit, AfterViewChec
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
+
   ngAfterViewInit(): void {
     this.applyFilters();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.pageChange();
   }
+
   ngAfterViewChecked(): void {
     if (this.table) {
       this.table.updateStickyColumnStyles();
@@ -276,14 +279,17 @@ export class RemoteDataComponent implements OnInit, AfterViewInit, AfterViewChec
     if (this.highlightSelectedRow) {
       this.checkboxClicked(row);
     }
+
     if ($event.type === 'contextmenu') {
       $event.preventDefault();
       let mousePositionOnClick = {x: $event.clientX + 'px', y: $event.clientY + 'px'};
       this.rowRightClickEvent.emit({data: row, mousePosition: mousePositionOnClick});
     }
+
     if ($event.type === 'click') {
       this.rowClickEvent.emit({data: row});
     }
+
     return false;
   }
 
@@ -302,6 +308,7 @@ export class RemoteDataComponent implements OnInit, AfterViewInit, AfterViewChec
     if (!this.isMultipleSelectionEnabled) {
       this.selection.clear();
     }
+
     this.selection.toggle(row);
     this.rowSelectionEvent.emit(this.selection.selected);
   }
@@ -378,7 +385,7 @@ export class RemoteDataComponent implements OnInit, AfterViewInit, AfterViewChec
     this.rqlString = rqlStringTemp;
 
     try {
-      this.customremoteDataService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
+      this.customRemoteDataService.requestData(this.remoteAPI, {query: rqlStringTemp}).subscribe(
         (response: MovementResponse): void => {
           this.dataSource.setData(response.items);
           this.filteredData = response.items;
@@ -403,75 +410,13 @@ export class RemoteDataComponent implements OnInit, AfterViewInit, AfterViewChec
     this.applyFilters();
   }
 
-  exportToCsv() {
-    this.openExportConfirmationDialog();
-  }
-
-  openExportConfirmationDialog() {
-    const reduce = this.displayedColumns.filter(col => col === 'checkboxes' || col === 'columnsMenu').length;
-
-    const dialogRef = this.dialog.open(ExportConfirmationDialog, {
-      data: {
-        extendedCsvExporter: this.extendedCsvExporter,
-        allColumns: this.columns.length,
-        displayedColumns: this.displayedColumns.length - reduce,
-        maxExportRows: this.maxExportRows,
-      },
-      maxWidth: 478,
-    });
-
-    dialogRef
-      .afterClosed()
-      .pipe(filter(e => !!e))
-      .subscribe((exportEvent: {exportAllPages: boolean; exportAllColumns: boolean}): void => {
-        const {exportAllPages, exportAllColumns} = exportEvent;
-
-        if (exportAllPages && this.data.length > this.maxExportRows) {
-          this.data.length = this.maxExportRows;
-        }
-        const columns = exportAllColumns ? this.columns.map(c => c.name) : this.displayedColumns;
-        this.extendedCsvExporter?.export(columns, this.rqlString);
-      });
-  }
-
-  prepareCsv(data: any, exportAllColumns: boolean, exportAllPages: boolean, currentPageSize: number): void {
-    if (!exportAllPages && data.length > currentPageSize) {
-      data.length = currentPageSize;
-    }
-
-    const columns = exportAllColumns ? this.columns.map(c => c.name) : this.displayedColumns;
-    const headersToExport = columns.filter(columnName => columnName !== RemoteDataColumn.COLUMNS_MENU);
-
-    const headersCSV = unparse({
-      fields: headersToExport.map(columnName => {
-        const translatedHeader = this.translateService.instant(`${columnName}.preferredName`);
-        return translatedHeader !== `${columnName}.preferredName` ? translatedHeader : columnName;
-      }),
-      data: [],
-    });
-
-    this.downloadCsv(`${headersCSV}${unparse(data, {header: false, columns: headersToExport})}`);
-  }
-
-  downloadCsv(csvArray: any): void {
-    this.downloadEvent.emit({error: false, success: false, inProgress: true});
-    try {
-      this.customremoteDataService.downloadCsv(csvArray);
-      this.downloadEvent.emit({error: false, success: true, inProgress: false});
-    } catch (error: any) {
-      this.downloadEvent.emit({error: true, success: false, inProgress: false});
-    }
-  }
-
   initOpenedColumnMenuDialog(): void {
     this.columMenuComponent.keyLocalStorage = this.KEY_LOCAL_STORAGE_REMOTE_DATA_COLUMNS;
     this.columMenuComponent.columnsDefault = [
       ...Object.values(RemoteDataColumn)
 
         .filter(columnName => columnName !== RemoteDataColumn['COLUMNS_MENU'])
-        .map(columnName => {
-          return {name: columnName, selected: true};
-        }),
+        .map(columnName => ({name: columnName, selected: true})),
     ];
     this.columMenuComponent.columns.splice(0, this.columMenuComponent.columns.length);
     this.columMenuComponent.columns.push(...this.columns);

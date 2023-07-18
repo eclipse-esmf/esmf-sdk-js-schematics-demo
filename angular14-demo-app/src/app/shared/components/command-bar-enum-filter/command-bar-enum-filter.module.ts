@@ -12,11 +12,19 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
+import {NgModule} from '@angular/core';
+import {CommandBarEnumFilterComponent} from './command-bar-enum-filter.component';
+
+import {CommandBarEnumFilterCommandBarComponent} from './command-bar-enum-filter-command-bar.component';
+
+import {CommandBarEnumFilterChipListComponent} from './command-bar-enum-filter-chip-list.component';
+
+import {CommandBarEnumFilterColumnMenuComponent} from './command-bar-enum-filter-column-menu.component';
+
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {DatePipe, NgClass, NgFor, NgIf, NgTemplateOutlet} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
-import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatButtonModule} from '@angular/material/button';
@@ -35,11 +43,16 @@ import {MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {AppSharedModule} from 'src/app/shared/app-shared.module';
-import {CommandBarEnumFilterColumnMenuComponent} from './command-bar-enum-filter-column-menu.component';
-import {CommandBarEnumFilterComponent} from './command-bar-enum-filter.component';
 
 @NgModule({
-  declarations: [CommandBarEnumFilterComponent, CommandBarEnumFilterColumnMenuComponent],
+  declarations: [
+    CommandBarEnumFilterComponent,
+    CommandBarEnumFilterColumnMenuComponent,
+
+    CommandBarEnumFilterCommandBarComponent,
+
+    CommandBarEnumFilterChipListComponent,
+  ],
   imports: [
     AppSharedModule,
     MatTableModule,
@@ -70,6 +83,6 @@ import {CommandBarEnumFilterComponent} from './command-bar-enum-filter.component
     MatOptionModule,
   ],
   providers: [],
-  exports: [CommandBarEnumFilterComponent],
+  exports: [CommandBarEnumFilterComponent, CommandBarEnumFilterCommandBarComponent, CommandBarEnumFilterChipListComponent],
 })
 export class CommandBarEnumFilterModule {}

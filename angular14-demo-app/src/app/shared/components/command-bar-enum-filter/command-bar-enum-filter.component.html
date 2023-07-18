@@ -12,106 +12,23 @@
  -->
 
 <div class="js-sdk-component-container">
-  <mat-toolbar data-test="toolbar" class="toolbar">
-    <div *ngIf="isMultipleSelectionEnabled" data-test="toolbar-number-of-items" class="command-bar-number-of-items">
-      {{ selection.selected.length > 0 ? selection.selected.length + ' / ' : '' }}{{ totalItems }}
-    </div>
-
-    <mat-form-field data-test="form-field-select" appearance="fill" floatLabel="never">
-      <mat-label data-test="select-label">{{ 'speedLimitWarning.preferredName' | translate }}</mat-label>
-      <mat-select data-test="select" [(value)]="filterService.speedLimitWarningSelected" #speedLimitWarningSelect multiple>
-        <div class="filter-options-container">
-          <mat-option
-            data-test="select-option"
-            *ngFor="let speedLimitWarningOption of filterService.speedLimitWarningOptions"
-            [value]="speedLimitWarningOption"
-          >
-            {{ speedLimitWarningOption }}
-          </mat-option>
-        </div>
-        <div data-test="filter-actions-container" class="filter-actions-container">
-          <button data-test="filter-cancel-button" mat-button (click)="speedLimitWarningSelect.close()">
-            <span data-test="filter-cancel-text">{{ 'cancel' | translate }}</span>
-          </button>
-
-          <button
-            data-test="filter-apply-button"
-            mat-raised-button
-            color="primary"
-            class="filter-apply-btn"
-            (click)="reloadFilter(); speedLimitWarningSelect.close()"
-          >
-            <span data-test="filter-apply-text">{{ 'apply' | translate }}</span>
-          </button>
-        </div>
-      </mat-select>
-    </mat-form-field>
-
-    <span data-test="spacer" class="spacer"></span>
-
-    <button data-test="refresh-data-button" mat-icon-button aria-label="Refresh table" (click)="applyFilters()">
-      <mat-icon data-test="refresh-data-icon" class="material-icons" [matTooltip]="'tableActions.refreshData' | translate"
-        >autorenew</mat-icon
-      >
-    </button>
-    <button data-test="export-data-button" mat-icon-button aria-label="Download data as CSV" (click)="exportToCsv()">
-      <mat-icon data-test="export-data-icon" class="material-icons" [matTooltip]="'tableActions.exportData' | translate"
-        >file_download</mat-icon
-      >
-    </button>
-  </mat-toolbar>
+  <command-bar
+    [isMultipleSelectionEnabled]="isMultipleSelectionEnabled"
+    [allowedCharacters]="allowedCharacters"
+    [minNumberCharacters]="minNumberCharacters"
+    [maxNumberCharacters]="maxNumberCharacters"
+    [searchHint]="searchHint"
+    (applyFilters)="applyFilters()"
+    (reloadFilter)="reloadFilter()"
+    (exportToCsv)="exportToCsv()"
+  ></command-bar>
 
   <ng-container *ngIf="!!customTemplate && !dataSource.data.length">
     <ng-container *ngTemplateOutlet="loadCustomTemplate()"></ng-container>
   </ng-container>
 
-  <div class="scrollable-chips-container" *ngIf="filterService.activeFilters.length">
-    <button
-      data-test="scroll-left-button"
-      mat-mini-fab
-      class="mat-elevation-z0"
-      [disabled]="chipsScrollEl.disableLeftBtn"
-      (click)="chipsScrollEl.scrollChipList('left')"
-      *ngIf="chipsScrollEl.scrollable"
-    >
-      <mat-icon data-test="scroll-left-icon" class="material-icons" [matTooltip]="'scroll.left' | translate">chevron_left </mat-icon>
-    </button>
-    <div
-      class="chip-list-container"
-      data-test="chip-list-container"
-      horizontalOverflow
-      #chipsScrollEl="horizontalOverflow"
-      #chipList
-      [chipsObj]="chips"
-    >
-      <mat-chip-list data-test="chip-list" #chips>
-        <mat-chip
-          data-test="chip"
-          *ngFor="let filter of filterService.activeFilters"
-          [removable]="filter.removable"
-          (removed)="removeFilter(filter)"
-        >
-          <div data-test="chip-text" class="chip-text" matTooltip="{{ filter.prop }}: {{ filter.label }}">
-            <b>{{ filter.prop }}</b
-            >: {{ filter.label }}
-          </div>
-          <button *ngIf="filter.removable" matChipRemove data-test="mat-chip-remove">
-            <mat-icon class="material-icons" data-test="remove-chip">cancel</mat-icon>
-          </button>
-        </mat-chip>
-      </mat-chip-list>
-    </div>
-    <button
-      data-test="scroll-right-button"
-      mat-mini-fab
-      class="mat-elevation-z0"
-      [disabled]="chipsScrollEl.disableRightBtn"
-      (click)="chipsScrollEl.scrollChipList('right')"
-      *ngIf="chipsScrollEl.scrollable"
-    >
-      <mat-icon data-test="scroll-right-icon" class="material-icons" [matTooltip]="'scroll.right' | translate">chevron_right </mat-icon>
-    </button>
-  </div>
+  <chip-list (removeFilter)="removeFilter($event)"></chip-list>
+
   <div [hidden]="!!customTemplate && !dataSource.data.length">
     <div data-test="table-container" class="mat-table-container">
       <table
@@ -171,6 +88,7 @@
             </button>
           </td>
         </ng-container>
+
         <!-- speedLimitWarning Column -->
         <ng-container data-test="table-column" matColumnDef="speedLimitWarning">
           <th
@@ -206,17 +124,10 @@
             </button>
           </td>
         </ng-container>
+
         <!-- startDate Column -->
         <ng-container data-test="table-column" matColumnDef="startDate">
-          <th
-            data-test="table-header"
-            mat-header-cell
-            *matHeaderCellDef
-            mat-sort-header="startDate"
-            [resizeColumn]="true"
-            [index]="3"
-            (dragging)="dragging = $event"
-          >
+          <th data-test="table-header" mat-header-cell *matHeaderCellDef mat-sort-header="startDate">
             <span
               [matTooltip]="'startDate.description' | translate"
               [matTooltipDisabled]="headerTooltipsOff"
@@ -241,6 +152,7 @@
             </button>
           </td>
         </ng-container>
+
         <!-- endDate Column -->
         <ng-container data-test="table-column" matColumnDef="endDate">
           <th data-test="table-header" mat-header-cell *matHeaderCellDef mat-sort-header="endDate">

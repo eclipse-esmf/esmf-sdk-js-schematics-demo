@@ -75,6 +75,7 @@
             </button>
           </td>
         </ng-container>
+
         <!-- speedLimitWarning Column -->
         <ng-container data-test="table-column" matColumnDef="speedLimitWarning">
           <th
@@ -110,17 +111,10 @@
             </button>
           </td>
         </ng-container>
+
         <!-- startDate Column -->
         <ng-container data-test="table-column" matColumnDef="startDate">
-          <th
-            data-test="table-header"
-            mat-header-cell
-            *matHeaderCellDef
-            mat-sort-header="startDate"
-            [resizeColumn]="true"
-            [index]="3"
-            (dragging)="dragging = $event"
-          >
+          <th data-test="table-header" mat-header-cell *matHeaderCellDef mat-sort-header="startDate">
             <span
               [matTooltip]="'startDate.description' | translate"
               [matTooltipDisabled]="headerTooltipsOff"
@@ -145,6 +139,7 @@
             </button>
           </td>
         </ng-container>
+
         <!-- endDate Column -->
         <ng-container data-test="table-column" matColumnDef="endDate">
           <th data-test="table-header" mat-header-cell *matHeaderCellDef mat-sort-header="endDate">

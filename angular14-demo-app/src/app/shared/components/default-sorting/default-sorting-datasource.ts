@@ -114,15 +114,14 @@ export class DefaultSortingDataSource extends DataSource<Movement> {
     b: string | number | boolean | Date | undefined,
     isSortingAsc: boolean
   ): number {
-    if (a === undefined) {
-      return -1 * (isSortingAsc ? 1 : -1);
+    if (a === undefined || b === undefined) {
+      return (a === undefined ? -1 : 1) * (isSortingAsc ? 1 : -1);
     }
-    if (b === undefined) {
-      return 1 * (isSortingAsc ? 1 : -1);
-    }
-    if (typeof a == 'boolean') {
+
+    if (typeof a === 'boolean') {
       return (a === b ? 0 : a ? -1 : 1) * (isSortingAsc ? 1 : -1);
     }
+
     return (a < b ? -1 : 1) * (isSortingAsc ? 1 : -1);
   }
 }

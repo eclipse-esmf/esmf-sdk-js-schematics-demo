@@ -14,6 +14,7 @@
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 import {Movement} from '../../types/movement/movement.types';
 
 export interface MovementResponse {
@@ -33,7 +34,13 @@ export type MovementPayload<T extends GenericMovementPayload = GenericMovementPa
   providedIn: 'root',
 })
 export class CommandBarService {
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient, private translateService: TranslateService) {
+    this.http
+      .get(`assets/i18n/shared/components/command-bar/${this.translateService.currentLang}.command-bar.translation.json`)
+      .subscribe(translations => {
+        this.translateService.setTranslation(this.translateService.currentLang, translations, true);
+      });
+  }
 
   downloadCsv(csvArray: any): void {
     if (!csvArray.length) {
@@ -44,7 +51,7 @@ export class CommandBarService {
     const url = window.URL.createObjectURL(blob);
 
     a.href = url;
-    a.download = 'movement.csv';
+    a.download = 'Movement.csv';
     a.click();
     window.URL.revokeObjectURL(url);
     a.remove();

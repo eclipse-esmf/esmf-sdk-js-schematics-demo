@@ -12,11 +12,21 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
+import {NgModule} from '@angular/core';
+import {VersionSupportComponent} from './version-support.component';
+
+import {VersionSupportCommandBarComponent} from './version-support-command-bar.component';
+
+import {VersionSupportChipListComponent} from './version-support-chip-list.component';
+
+import {VersionSupportConfigMenuComponent} from './version-support-config-menu.component';
+
+import {VersionSupportColumnMenuComponent} from './version-support-column-menu.component';
+
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {DatePipe, NgClass, NgFor, NgIf, NgTemplateOutlet} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
-import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatButtonModule} from '@angular/material/button';
@@ -37,12 +47,18 @@ import {MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {AppSharedModule} from 'src/app/shared/app-shared.module';
-import {VersionSupportConfigMenuComponent} from 'src/app/shared/components/version-support/v210/version-support-config-menu.component';
-import {VersionSupportColumnMenuComponent} from './version-support-column-menu.component';
-import {VersionSupportComponent} from './version-support.component';
 
 @NgModule({
-  declarations: [VersionSupportComponent, VersionSupportColumnMenuComponent, VersionSupportConfigMenuComponent],
+  declarations: [
+    VersionSupportComponent,
+    VersionSupportColumnMenuComponent,
+
+    VersionSupportCommandBarComponent,
+
+    VersionSupportChipListComponent,
+
+    VersionSupportConfigMenuComponent,
+  ],
   imports: [
     AppSharedModule,
     MatTableModule,
@@ -75,6 +91,6 @@ import {VersionSupportComponent} from './version-support.component';
     MatOptionModule,
   ],
   providers: [],
-  exports: [VersionSupportComponent],
+  exports: [VersionSupportComponent, VersionSupportCommandBarComponent, VersionSupportChipListComponent],
 })
 export class VersionSupportModule {}

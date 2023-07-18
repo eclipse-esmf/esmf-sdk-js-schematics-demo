@@ -12,7 +12,6 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
-import {Clipboard} from '@angular/cdk/clipboard';
 import {
   AfterViewChecked,
   AfterViewInit,
@@ -30,15 +29,20 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
+
+import {CommandBarDateFilterFilterService} from './command-bar-date-filter-filter.service';
+
+import {Clipboard} from '@angular/cdk/clipboard';
 import {unparse} from 'papaparse';
+
+import {ExportConfirmationDialogComponent} from '../export-confirmation-dialog/export-confirmation-dialog.component';
+
+import {MatDialog} from '@angular/material/dialog';
 import {Movement} from '../../types/movement/movement.types';
-import {ExportConfirmationDialog} from '../export-confirmation-dialog/export-confirmation-dialog.component';
 import {CommandBarDateFilterDataSource} from './command-bar-date-filter-datasource';
-import {CommandBarDateFilterFilterService} from './command-bar-date-filter.filter.service';
 
 import {DateAdapter, MatDateFormats, MAT_DATE_FORMATS} from '@angular/material/core';
 
@@ -49,6 +53,7 @@ import {JSSdkLocalStorageService} from '../../services/storage.service';
 import {CommandBarDateFilterColumnMenuComponent} from './command-bar-date-filter-column-menu.component';
 
 import {filter} from 'rxjs/operators';
+
 import {CommandBarDateFilterService} from './command-bar-date-filter.service';
 
 export interface Column {
@@ -78,7 +83,9 @@ export enum CommandBarDateFilterColumn {
   encapsulation: ViewEncapsulation.None,
 })
 export class CommandBarDateFilterComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges {
+  @Input() tableDateFormat = 'short';
   @Input() tableDateTimeFormat = 'short';
+  @Input() tableTimeFormat = 'shortTime';
 
   @Input() data: Array<Movement> = [];
   @Input() customTemplate?: TemplateRef<any>;
@@ -133,6 +140,7 @@ export class CommandBarDateFilterComponent implements OnInit, AfterViewInit, Aft
   totalItems: number = 0;
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: CommandBarDateFilterDataSource;
+
   columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'endDate', sortDirection: 'asc'};
   displayedColumns: Array<string> = Object.values(CommandBarDateFilterColumn);
   columns: Array<Column> = [];
@@ -157,14 +165,15 @@ export class CommandBarDateFilterComponent implements OnInit, AfterViewInit, Aft
     private commandBarDateFilterService: CommandBarDateFilterService
   ) {
     this.dataSource = new CommandBarDateFilterDataSource(this.translateService);
-
     this.currentLanguage = this.translateService.currentLang;
   }
 
   ngOnInit(): void {
     this.initializeColumns();
+
     this.maxExportRows = this.data.length;
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (this.table) {
       this.applyFilters();
@@ -176,6 +185,7 @@ export class CommandBarDateFilterComponent implements OnInit, AfterViewInit, Aft
     this.dataSource.sort = this.sort;
     this.pageChange();
   }
+
   ngAfterViewChecked(): void {
     if (this.table) {
       this.table.updateStickyColumnStyles();
@@ -237,14 +247,17 @@ export class CommandBarDateFilterComponent implements OnInit, AfterViewInit, Aft
     if (this.highlightSelectedRow) {
       this.checkboxClicked(row);
     }
+
     if ($event.type === 'contextmenu') {
       $event.preventDefault();
       let mousePositionOnClick = {x: $event.clientX + 'px', y: $event.clientY + 'px'};
       this.rowRightClickEvent.emit({data: row, mousePosition: mousePositionOnClick});
     }
+
     if ($event.type === 'click') {
       this.rowClickEvent.emit({data: row});
     }
+
     return false;
   }
 
@@ -263,6 +276,7 @@ export class CommandBarDateFilterComponent implements OnInit, AfterViewInit, Aft
     if (!this.isMultipleSelectionEnabled) {
       this.selection.clear();
     }
+
     this.selection.toggle(row);
     this.rowSelectionEvent.emit(this.selection.selected);
   }
@@ -285,7 +299,6 @@ export class CommandBarDateFilterComponent implements OnInit, AfterViewInit, Aft
 
     this.tableUpdateFinishedEvent.emit();
   }
-
   removeFilter(filterData: any): void {
     this.filterService.removeFilter(filterData);
     this.paginator.firstPage();
@@ -300,7 +313,7 @@ export class CommandBarDateFilterComponent implements OnInit, AfterViewInit, Aft
   openExportConfirmationDialog() {
     const reduce = this.displayedColumns.filter(col => col === 'checkboxes' || col === 'columnsMenu').length;
 
-    const dialogRef = this.dialog.open(ExportConfirmationDialog, {
+    const dialogRef = this.dialog.open(ExportConfirmationDialogComponent, {
       data: {
         allColumns: this.columns.length,
         displayedColumns: this.displayedColumns.length - reduce,
@@ -318,6 +331,7 @@ export class CommandBarDateFilterComponent implements OnInit, AfterViewInit, Aft
         if (exportAllPages && this.data.length > this.maxExportRows) {
           this.data.length = this.maxExportRows;
         }
+
         this.prepareCsv(this.commandBarDateFilterService.flatten(this.data), exportAllColumns, exportAllPages, this.paginator.pageSize);
       });
   }
@@ -328,6 +342,7 @@ export class CommandBarDateFilterComponent implements OnInit, AfterViewInit, Aft
     }
 
     const columns = exportAllColumns ? this.columns.map(c => c.name) : this.displayedColumns;
+
     const headersToExport = columns.filter(columnName => columnName !== CommandBarDateFilterColumn.COLUMNS_MENU);
 
     const headersCSV = unparse({
@@ -357,9 +372,7 @@ export class CommandBarDateFilterComponent implements OnInit, AfterViewInit, Aft
       ...Object.values(CommandBarDateFilterColumn)
 
         .filter(columnName => columnName !== CommandBarDateFilterColumn['COLUMNS_MENU'])
-        .map(columnName => {
-          return {name: columnName, selected: true};
-        }),
+        .map(columnName => ({name: columnName, selected: true})),
     ];
     this.columMenuComponent.columns.splice(0, this.columMenuComponent.columns.length);
     this.columMenuComponent.columns.push(...this.columns);

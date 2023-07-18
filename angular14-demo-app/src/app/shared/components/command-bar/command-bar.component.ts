@@ -33,10 +33,12 @@ import {MatSort, SortDirection} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 
 import {Clipboard} from '@angular/cdk/clipboard';
-import {MatDialog} from '@angular/material/dialog';
 import {unparse} from 'papaparse';
+
+import {ExportConfirmationDialogComponent} from '../export-confirmation-dialog/export-confirmation-dialog.component';
+
+import {MatDialog} from '@angular/material/dialog';
 import {Movement} from '../../types/movement/movement.types';
-import {ExportConfirmationDialog} from '../export-confirmation-dialog/export-confirmation-dialog.component';
 import {CommandBarDataSource} from './command-bar-datasource';
 
 import {SelectionModel} from '@angular/cdk/collections';
@@ -46,6 +48,7 @@ import {JSSdkLocalStorageService} from '../../services/storage.service';
 import {CommandBarColumnMenuComponent} from './command-bar-column-menu.component';
 
 import {filter} from 'rxjs/operators';
+
 import {CommandBarService} from './command-bar.service';
 
 export interface Column {
@@ -75,7 +78,9 @@ export enum CommandBarColumn {
   encapsulation: ViewEncapsulation.None,
 })
 export class CommandBarComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges {
+  @Input() tableDateFormat = 'short';
   @Input() tableDateTimeFormat = 'short';
+  @Input() tableTimeFormat = 'shortTime';
 
   @Input() data: Array<Movement> = [];
   @Input() customTemplate?: TemplateRef<any>;
@@ -130,6 +135,7 @@ export class CommandBarComponent implements OnInit, AfterViewInit, AfterViewChec
   totalItems: number = 0;
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: CommandBarDataSource;
+
   columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'speedLimitWarning', sortDirection: 'asc'};
   displayedColumns: Array<string> = Object.values(CommandBarColumn);
   columns: Array<Column> = [];
@@ -152,14 +158,15 @@ export class CommandBarComponent implements OnInit, AfterViewInit, AfterViewChec
     private commandBarService: CommandBarService
   ) {
     this.dataSource = new CommandBarDataSource(this.translateService);
-
     this.currentLanguage = this.translateService.currentLang;
   }
 
   ngOnInit(): void {
     this.initializeColumns();
+
     this.maxExportRows = this.data.length;
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (this.table) {
       this.applyFilters();
@@ -171,6 +178,7 @@ export class CommandBarComponent implements OnInit, AfterViewInit, AfterViewChec
     this.dataSource.sort = this.sort;
     this.pageChange();
   }
+
   ngAfterViewChecked(): void {
     if (this.table) {
       this.table.updateStickyColumnStyles();
@@ -232,14 +240,17 @@ export class CommandBarComponent implements OnInit, AfterViewInit, AfterViewChec
     if (this.highlightSelectedRow) {
       this.checkboxClicked(row);
     }
+
     if ($event.type === 'contextmenu') {
       $event.preventDefault();
       let mousePositionOnClick = {x: $event.clientX + 'px', y: $event.clientY + 'px'};
       this.rowRightClickEvent.emit({data: row, mousePosition: mousePositionOnClick});
     }
+
     if ($event.type === 'click') {
       this.rowClickEvent.emit({data: row});
     }
+
     return false;
   }
 
@@ -258,6 +269,7 @@ export class CommandBarComponent implements OnInit, AfterViewInit, AfterViewChec
     if (!this.isMultipleSelectionEnabled) {
       this.selection.clear();
     }
+
     this.selection.toggle(row);
     this.rowSelectionEvent.emit(this.selection.selected);
   }
@@ -279,7 +291,6 @@ export class CommandBarComponent implements OnInit, AfterViewInit, AfterViewChec
 
     this.tableUpdateFinishedEvent.emit();
   }
-
   removeFilter(filterData: any): void {
     this.paginator.firstPage();
 
@@ -293,7 +304,7 @@ export class CommandBarComponent implements OnInit, AfterViewInit, AfterViewChec
   openExportConfirmationDialog() {
     const reduce = this.displayedColumns.filter(col => col === 'checkboxes' || col === 'columnsMenu').length;
 
-    const dialogRef = this.dialog.open(ExportConfirmationDialog, {
+    const dialogRef = this.dialog.open(ExportConfirmationDialogComponent, {
       data: {
         allColumns: this.columns.length,
         displayedColumns: this.displayedColumns.length - reduce,
@@ -311,6 +322,7 @@ export class CommandBarComponent implements OnInit, AfterViewInit, AfterViewChec
         if (exportAllPages && this.data.length > this.maxExportRows) {
           this.data.length = this.maxExportRows;
         }
+
         this.prepareCsv(this.commandBarService.flatten(this.data), exportAllColumns, exportAllPages, this.paginator.pageSize);
       });
   }
@@ -321,6 +333,7 @@ export class CommandBarComponent implements OnInit, AfterViewInit, AfterViewChec
     }
 
     const columns = exportAllColumns ? this.columns.map(c => c.name) : this.displayedColumns;
+
     const headersToExport = columns.filter(columnName => columnName !== CommandBarColumn.COLUMNS_MENU);
 
     const headersCSV = unparse({
@@ -350,9 +363,7 @@ export class CommandBarComponent implements OnInit, AfterViewInit, AfterViewChec
       ...Object.values(CommandBarColumn)
 
         .filter(columnName => columnName !== CommandBarColumn['COLUMNS_MENU'])
-        .map(columnName => {
-          return {name: columnName, selected: true};
-        }),
+        .map(columnName => ({name: columnName, selected: true})),
     ];
     this.columMenuComponent.columns.splice(0, this.columMenuComponent.columns.length);
     this.columMenuComponent.columns.push(...this.columns);

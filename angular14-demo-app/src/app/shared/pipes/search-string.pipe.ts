@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
+/**  **/
 import {Pipe, PipeTransform} from '@angular/core';
 @Pipe({
   name: 'searchString',

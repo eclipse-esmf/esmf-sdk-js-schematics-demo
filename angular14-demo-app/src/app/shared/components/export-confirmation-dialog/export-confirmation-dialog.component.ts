@@ -19,10 +19,10 @@ import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'export-confirmation-dialog',
-  templateUrl: 'export-confirmation-dialog.component.html',
+  templateUrl: './export-confirmation-dialog.component.html',
   styleUrls: ['./export-confirmation-dialog.component.scss'],
 })
-export class ExportConfirmationDialog implements AfterViewInit {
+export class ExportConfirmationDialogComponent implements AfterViewInit {
   @ViewChild('exportAllPages') exportAllPages!: MatCheckbox;
   @ViewChild('exportAllColumns') exportAllColumns!: MatCheckbox;
 
@@ -36,7 +36,7 @@ export class ExportConfirmationDialog implements AfterViewInit {
       displayedColumns: number;
       maxExportRows: number;
     },
-    public dialogRef: MatDialogRef<ExportConfirmationDialog>,
+    public dialogRef: MatDialogRef<ExportConfirmationDialogComponent>,
     private translateService: TranslateService,
     private cdRef: ChangeDetectorRef
   ) {}

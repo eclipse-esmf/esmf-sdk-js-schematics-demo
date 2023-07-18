@@ -12,7 +12,6 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
-import {Clipboard} from '@angular/cdk/clipboard';
 import {
   AfterViewChecked,
   AfterViewInit,
@@ -29,15 +28,20 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
+
+import {CommandBarEnumFilterFilterService} from './command-bar-enum-filter-filter.service';
+
+import {Clipboard} from '@angular/cdk/clipboard';
 import {unparse} from 'papaparse';
+
+import {ExportConfirmationDialogComponent} from '../export-confirmation-dialog/export-confirmation-dialog.component';
+
+import {MatDialog} from '@angular/material/dialog';
 import {Movement} from '../../types/movement/movement.types';
-import {ExportConfirmationDialog} from '../export-confirmation-dialog/export-confirmation-dialog.component';
 import {CommandBarEnumFilterDataSource} from './command-bar-enum-filter-datasource';
-import {CommandBarEnumFilterFilterService} from './command-bar-enum-filter.filter.service';
 
 import {SelectionModel} from '@angular/cdk/collections';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -46,6 +50,7 @@ import {JSSdkLocalStorageService} from '../../services/storage.service';
 import {CommandBarEnumFilterColumnMenuComponent} from './command-bar-enum-filter-column-menu.component';
 
 import {filter} from 'rxjs/operators';
+
 import {CommandBarEnumFilterService} from './command-bar-enum-filter.service';
 
 export interface Column {
@@ -75,7 +80,9 @@ export enum CommandBarEnumFilterColumn {
   encapsulation: ViewEncapsulation.None,
 })
 export class CommandBarEnumFilterComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges {
+  @Input() tableDateFormat = 'short';
   @Input() tableDateTimeFormat = 'short';
+  @Input() tableTimeFormat = 'shortTime';
 
   @Input() data: Array<Movement> = [];
   @Input() customTemplate?: TemplateRef<any>;
@@ -130,6 +137,7 @@ export class CommandBarEnumFilterComponent implements OnInit, AfterViewInit, Aft
   totalItems: number = 0;
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: CommandBarEnumFilterDataSource;
+
   columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'endDate', sortDirection: 'asc'};
   displayedColumns: Array<string> = Object.values(CommandBarEnumFilterColumn);
   columns: Array<Column> = [];
@@ -152,14 +160,15 @@ export class CommandBarEnumFilterComponent implements OnInit, AfterViewInit, Aft
     private commandBarEnumFilterService: CommandBarEnumFilterService
   ) {
     this.dataSource = new CommandBarEnumFilterDataSource(this.translateService);
-
     this.currentLanguage = this.translateService.currentLang;
   }
 
   ngOnInit(): void {
     this.initializeColumns();
+
     this.maxExportRows = this.data.length;
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (this.table) {
       this.applyFilters();
@@ -171,6 +180,7 @@ export class CommandBarEnumFilterComponent implements OnInit, AfterViewInit, Aft
     this.dataSource.sort = this.sort;
     this.pageChange();
   }
+
   ngAfterViewChecked(): void {
     if (this.table) {
       this.table.updateStickyColumnStyles();
@@ -232,14 +242,17 @@ export class CommandBarEnumFilterComponent implements OnInit, AfterViewInit, Aft
     if (this.highlightSelectedRow) {
       this.checkboxClicked(row);
     }
+
     if ($event.type === 'contextmenu') {
       $event.preventDefault();
       let mousePositionOnClick = {x: $event.clientX + 'px', y: $event.clientY + 'px'};
       this.rowRightClickEvent.emit({data: row, mousePosition: mousePositionOnClick});
     }
+
     if ($event.type === 'click') {
       this.rowClickEvent.emit({data: row});
     }
+
     return false;
   }
 
@@ -258,6 +271,7 @@ export class CommandBarEnumFilterComponent implements OnInit, AfterViewInit, Aft
     if (!this.isMultipleSelectionEnabled) {
       this.selection.clear();
     }
+
     this.selection.toggle(row);
     this.rowSelectionEvent.emit(this.selection.selected);
   }
@@ -280,7 +294,6 @@ export class CommandBarEnumFilterComponent implements OnInit, AfterViewInit, Aft
 
     this.tableUpdateFinishedEvent.emit();
   }
-
   removeFilter(filterData: any): void {
     this.filterService.removeFilter(filterData);
     this.paginator.firstPage();
@@ -295,7 +308,7 @@ export class CommandBarEnumFilterComponent implements OnInit, AfterViewInit, Aft
   openExportConfirmationDialog() {
     const reduce = this.displayedColumns.filter(col => col === 'checkboxes' || col === 'columnsMenu').length;
 
-    const dialogRef = this.dialog.open(ExportConfirmationDialog, {
+    const dialogRef = this.dialog.open(ExportConfirmationDialogComponent, {
       data: {
         allColumns: this.columns.length,
         displayedColumns: this.displayedColumns.length - reduce,
@@ -313,6 +326,7 @@ export class CommandBarEnumFilterComponent implements OnInit, AfterViewInit, Aft
         if (exportAllPages && this.data.length > this.maxExportRows) {
           this.data.length = this.maxExportRows;
         }
+
         this.prepareCsv(this.commandBarEnumFilterService.flatten(this.data), exportAllColumns, exportAllPages, this.paginator.pageSize);
       });
   }
@@ -323,6 +337,7 @@ export class CommandBarEnumFilterComponent implements OnInit, AfterViewInit, Aft
     }
 
     const columns = exportAllColumns ? this.columns.map(c => c.name) : this.displayedColumns;
+
     const headersToExport = columns.filter(columnName => columnName !== CommandBarEnumFilterColumn.COLUMNS_MENU);
 
     const headersCSV = unparse({
@@ -352,9 +367,7 @@ export class CommandBarEnumFilterComponent implements OnInit, AfterViewInit, Aft
       ...Object.values(CommandBarEnumFilterColumn)
 
         .filter(columnName => columnName !== CommandBarEnumFilterColumn['COLUMNS_MENU'])
-        .map(columnName => {
-          return {name: columnName, selected: true};
-        }),
+        .map(columnName => ({name: columnName, selected: true})),
     ];
     this.columMenuComponent.columns.splice(0, this.columMenuComponent.columns.length);
     this.columMenuComponent.columns.push(...this.columns);

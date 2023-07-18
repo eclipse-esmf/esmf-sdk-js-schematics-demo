@@ -12,7 +12,6 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
-import {Clipboard} from '@angular/cdk/clipboard';
 import {
   AfterViewChecked,
   AfterViewInit,
@@ -31,34 +30,36 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
+
+import {FilterEnums, VersionSupportFilterService} from './version-support-filter.service';
+
+import {Clipboard} from '@angular/cdk/clipboard';
 import {unparse} from 'papaparse';
+
+import {ExportConfirmationDialogComponent} from '../../export-confirmation-dialog/export-confirmation-dialog.component';
+
+import {MatDialog} from '@angular/material/dialog';
 import {Movement} from '../../../types/movement/v210/movement.types';
-import {ExportConfirmationDialog} from '../../export-confirmation-dialog/export-confirmation-dialog.component';
 import {VersionSupportDataSource} from './version-support-datasource';
-import {FilterEnums, VersionSupportFilterService} from './version-support.filter.service';
 
 import {DateAdapter, MatDateFormats, MAT_DATE_FORMATS} from '@angular/material/core';
 
 import {SelectionModel} from '@angular/cdk/collections';
 import {DomSanitizer} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
-import {Subject} from 'rxjs';
-import {debounceTime, filter, takeUntil} from 'rxjs/operators';
 import {JSSdkLocalStorageService} from '../../../services/storage.service';
 import {VersionSupportColumnMenuComponent} from './version-support-column-menu.component';
-import {VersionSupportConfigMenuComponent} from './version-support-config-menu.component';
-import {VersionSupportService} from './version-support.service';
 
-export interface Column {
-  /** Column name **/
-  name: string;
-  /** State if the column is selected **/
-  selected: boolean;
-}
+import {VersionSupportConfigMenuComponent} from './version-support-config-menu.component';
+
+import {debounceTime, filter, takeUntil} from 'rxjs/operators';
+
+import {Subject} from 'rxjs';
+
+import {VersionSupportService} from './version-support.service';
 
 export interface Config {
   /** Column name **/
@@ -69,6 +70,13 @@ export interface Config {
   selected: boolean;
   /** Color for the highlighted configuration **/
   color?: string;
+}
+
+export interface Column {
+  /** Column name **/
+  name: string;
+  /** State if the column is selected **/
+  selected: boolean;
 }
 
 /**
@@ -94,7 +102,9 @@ export enum VersionSupportColumn {
 export class VersionSupportComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges, OnDestroy {
   @Input() initialSearchString = '';
 
+  @Input() tableDateFormat = 'short';
   @Input() tableDateTimeFormat = 'short';
+  @Input() tableTimeFormat = 'shortTime';
 
   @Input() data: Array<Movement> = [];
   @Input() customTemplate?: TemplateRef<any>;
@@ -117,7 +127,9 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
   @Input() maxNumberCharacters: number = 50;
   @Input() allowedCharacters: string = '';
   @Input() regexValidator: string = '';
+
   @Input() hasAdvancedSearch: boolean = this.filterService.stringColumns.length > 1;
+
   @Input() maxExportRows: number = 0;
 
   @Output() rowClickEvent = new EventEmitter<any>();
@@ -133,7 +145,9 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
   @ViewChild(MatPaginator) private paginator!: MatPaginator;
   @ViewChild(MatTable) private table!: MatTable<Movement>;
   @ViewChild(VersionSupportColumnMenuComponent) private columMenuComponent!: VersionSupportColumnMenuComponent;
+
   @ViewChild(VersionSupportConfigMenuComponent) private configurationComponent!: VersionSupportConfigMenuComponent;
+
   @ViewChild('searchInput') searchInput!: ElementRef;
 
   @HostBinding('attr.style')
@@ -151,10 +165,13 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
   totalItems: number = 0;
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: VersionSupportDataSource;
+
   columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'endDate', sortDirection: 'asc'};
   displayedColumns: Array<string> = Object.values(VersionSupportColumn);
   columns: Array<Column> = [];
+
   configs: Array<Config> = [];
+
   currentLanguage: string;
   filteredData: Array<Movement> = [];
   dragging: boolean = false;
@@ -183,7 +200,6 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     private versionSupportService: VersionSupportService
   ) {
     this.dataSource = new VersionSupportDataSource(this.translateService);
-
     this.currentLanguage = this.translateService.currentLang;
   }
 
@@ -196,23 +212,28 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     });
 
     this.initializeColumns();
+
     this.maxExportRows = this.data.length;
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (this.table) {
       this.applyFilters();
     }
   }
+
   ngOnDestroy(): void {
     this.filterService.searchString.setValue('');
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
+
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.pageChange();
   }
+
   ngAfterViewChecked(): void {
     if (this.table) {
       this.table.updateStickyColumnStyles();
@@ -221,6 +242,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
 
   initializeColumns(): void {
     const configStorage = this.storageService.getItem(this.KEY_LOCAL_STORAGE_VERSION_SUPPORT_V210_CONFIG);
+
     const columnStorage = this.storageService.getItem(this.KEY_LOCAL_STORAGE_VERSION_SUPPORT_V210_COLUMNS);
 
     if (configStorage?.length > 0) {
@@ -271,6 +293,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
 
   pageChange(): void {
     this.applyFilters();
+
     this.selection.clear();
     this.rowSelectionEvent.emit(this.selection.selected);
   }
@@ -287,14 +310,17 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     if (this.highlightSelectedRow) {
       this.checkboxClicked(row);
     }
+
     if ($event.type === 'contextmenu') {
       $event.preventDefault();
       let mousePositionOnClick = {x: $event.clientX + 'px', y: $event.clientY + 'px'};
       this.rowRightClickEvent.emit({data: row, mousePosition: mousePositionOnClick});
     }
+
     if ($event.type === 'click') {
       this.rowClickEvent.emit({data: row});
     }
+
     return false;
   }
 
@@ -313,6 +339,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     if (!this.isMultipleSelectionEnabled) {
       this.selection.clear();
     }
+
     this.selection.toggle(row);
     this.rowSelectionEvent.emit(this.selection.selected);
   }
@@ -334,11 +361,13 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
         this.selection.deselect(u);
       }
     });
+
     this.filteredData.forEach((u, i): void => {
       if (i >= indexOfFirstItemOnNextPage || i <= indexOfLastItemOnPreviousPage) {
         this.selection.deselect(this.filteredData[i]);
       }
     });
+
     this.rowSelectionEvent.emit(this.selection.selected);
   }
 
@@ -351,6 +380,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     if (this.filterService.searchString.errors) {
       return;
     }
+
     this.tableUpdateStartEvent.emit();
     let dataTemp = [...this.data];
     dataTemp = this.filterService.applyEnumFilter(dataTemp);
@@ -358,6 +388,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     this.highlightString = this.filterService.activeFilters
       .filter(elem => elem.type === FilterEnums.Search && elem.filterValue !== undefined)
       .map(elem => elem.filterValue as string);
+
     dataTemp = this.filterService.applyDateFilter(dataTemp);
     this.dataSource.setData(dataTemp);
     this.filteredData = dataTemp;
@@ -367,7 +398,6 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     this.trimSelectionToCurrentPage();
     this.tableUpdateFinishedEvent.emit();
   }
-
   removeFilter(filterData: any): void {
     this.filterService.removeFilter(filterData);
     this.paginator.firstPage();
@@ -382,7 +412,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
   openExportConfirmationDialog() {
     const reduce = this.displayedColumns.filter(col => col === 'checkboxes' || col === 'columnsMenu').length;
 
-    const dialogRef = this.dialog.open(ExportConfirmationDialog, {
+    const dialogRef = this.dialog.open(ExportConfirmationDialogComponent, {
       data: {
         allColumns: this.columns.length,
         displayedColumns: this.displayedColumns.length - reduce,
@@ -400,6 +430,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
         if (exportAllPages && this.data.length > this.maxExportRows) {
           this.data.length = this.maxExportRows;
         }
+
         this.prepareCsv(this.versionSupportService.flatten(this.data), exportAllColumns, exportAllPages, this.paginator.pageSize);
       });
   }
@@ -410,6 +441,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     }
 
     const columns = exportAllColumns ? this.columns.map(c => c.name) : this.displayedColumns;
+
     const headersToExport = columns
       .filter(columnName => columnName !== VersionSupportColumn.COLUMNS_MENU)
       .filter(columnName => columnName !== VersionSupportColumn.CHECKBOX);
@@ -442,18 +474,10 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
         .filter(columnName => columnName !== VersionSupportColumn['CHECKBOX'])
 
         .filter(columnName => columnName !== VersionSupportColumn['COLUMNS_MENU'])
-        .map(columnName => {
-          return {name: columnName, selected: true};
-        }),
+        .map(columnName => ({name: columnName, selected: true})),
     ];
     this.columMenuComponent.columns.splice(0, this.columMenuComponent.columns.length);
     this.columMenuComponent.columns.push(...this.columns);
-  }
-
-  initOpenedConfigurationDialog(): void {
-    this.configurationComponent.keyLocalStorage = this.KEY_LOCAL_STORAGE_VERSION_SUPPORT_V210_CONFIG;
-    this.configurationComponent.configs.splice(0, this.configurationComponent.configs.length);
-    this.configurationComponent.configs.push(...this.configs.map(config => ({...config})));
   }
 
   setConfiguration(configs: Array<Config>): void {
@@ -463,6 +487,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
   shouldHighlight(name: string, letter: string): boolean {
     const highlightLetters = [...new Set(this.highlightString.join().split(''))].join();
     const index = name.toString().indexOf(letter);
+
     return index !== -1 && highlightLetters.includes(name.toString()[index]);
   }
 

@@ -12,24 +12,16 @@
  -->
 
 <div class="js-sdk-component-container">
-  <mat-toolbar data-test="toolbar" class="toolbar">
-    <div *ngIf="isMultipleSelectionEnabled" data-test="toolbar-number-of-items" class="command-bar-number-of-items">
-      {{ selection.selected.length > 0 ? selection.selected.length + ' / ' : '' }}{{ totalItems }}
-    </div>
-
-    <span data-test="spacer" class="spacer"></span>
-
-    <button data-test="refresh-data-button" mat-icon-button aria-label="Refresh table" (click)="applyFilters()">
-      <mat-icon data-test="refresh-data-icon" class="material-icons" [matTooltip]="'tableActions.refreshData' | translate"
-        >autorenew</mat-icon
-      >
-    </button>
-    <button data-test="export-data-button" mat-icon-button aria-label="Download data as CSV" (click)="exportToCsv()">
-      <mat-icon data-test="export-data-icon" class="material-icons" [matTooltip]="'tableActions.exportData' | translate"
-        >file_download</mat-icon
-      >
-    </button>
-  </mat-toolbar>
+  <command-bar
+    [isMultipleSelectionEnabled]="isMultipleSelectionEnabled"
+    [allowedCharacters]="allowedCharacters"
+    [minNumberCharacters]="minNumberCharacters"
+    [maxNumberCharacters]="maxNumberCharacters"
+    [searchHint]="searchHint"
+    (applyFilters)="applyFilters()"
+    (reloadFilter)="reloadFilter()"
+    (exportToCsv)="exportToCsv()"
+  ></command-bar>
 
   <ng-container *ngIf="!!customTemplate && !dataSource.data.length">
     <ng-container *ngTemplateOutlet="loadCustomTemplate()"></ng-container>
@@ -94,6 +86,7 @@
             </button>
           </td>
         </ng-container>
+
         <!-- speedLimitWarning Column -->
         <ng-container data-test="table-column" matColumnDef="speedLimitWarning">
           <th
@@ -129,17 +122,10 @@
             </button>
           </td>
         </ng-container>
+
         <!-- startDate Column -->
         <ng-container data-test="table-column" matColumnDef="startDate">
-          <th
-            data-test="table-header"
-            mat-header-cell
-            *matHeaderCellDef
-            mat-sort-header="startDate"
-            [resizeColumn]="true"
-            [index]="3"
-            (dragging)="dragging = $event"
-          >
+          <th data-test="table-header" mat-header-cell *matHeaderCellDef mat-sort-header="startDate">
             <span
               [matTooltip]="'startDate.description' | translate"
               [matTooltipDisabled]="headerTooltipsOff"
@@ -164,6 +150,7 @@
             </button>
           </td>
         </ng-container>
+
         <!-- endDate Column -->
         <ng-container data-test="table-column" matColumnDef="endDate">
           <th data-test="table-header" mat-header-cell *matHeaderCellDef mat-sort-header="endDate">

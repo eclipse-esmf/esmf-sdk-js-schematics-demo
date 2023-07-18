@@ -12,11 +12,21 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
+import {NgModule} from '@angular/core';
+import {CommandBarSearchComponent} from './command-bar-search.component';
+
+import {CommandBarSearchCommandBarComponent} from './command-bar-search-command-bar.component';
+
+import {CommandBarSearchChipListComponent} from './command-bar-search-chip-list.component';
+
+import {CommandBarSearchConfigMenuComponent} from './command-bar-search-config-menu.component';
+
+import {CommandBarSearchColumnMenuComponent} from './command-bar-search-column-menu.component';
+
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {DatePipe, NgClass, NgFor, NgIf, NgTemplateOutlet} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
-import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatButtonModule} from '@angular/material/button';
@@ -34,12 +44,18 @@ import {MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {AppSharedModule} from 'src/app/shared/app-shared.module';
-import {CommandBarSearchConfigMenuComponent} from 'src/app/shared/components/command-bar-search/command-bar-search-config-menu.component';
-import {CommandBarSearchColumnMenuComponent} from './command-bar-search-column-menu.component';
-import {CommandBarSearchComponent} from './command-bar-search.component';
 
 @NgModule({
-  declarations: [CommandBarSearchComponent, CommandBarSearchColumnMenuComponent, CommandBarSearchConfigMenuComponent],
+  declarations: [
+    CommandBarSearchComponent,
+    CommandBarSearchColumnMenuComponent,
+
+    CommandBarSearchCommandBarComponent,
+
+    CommandBarSearchChipListComponent,
+
+    CommandBarSearchConfigMenuComponent,
+  ],
   imports: [
     AppSharedModule,
     MatTableModule,
@@ -69,6 +85,6 @@ import {CommandBarSearchComponent} from './command-bar-search.component';
     MatMomentDateModule,
   ],
   providers: [],
-  exports: [CommandBarSearchComponent],
+  exports: [CommandBarSearchComponent, CommandBarSearchCommandBarComponent, CommandBarSearchChipListComponent],
 })
 export class CommandBarSearchModule {}

@@ -12,11 +12,19 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
+import {NgModule} from '@angular/core';
+import {CommandBarDateFilterComponent} from './command-bar-date-filter.component';
+
+import {CommandBarDateFilterCommandBarComponent} from './command-bar-date-filter-command-bar.component';
+
+import {CommandBarDateFilterChipListComponent} from './command-bar-date-filter-chip-list.component';
+
+import {CommandBarDateFilterColumnMenuComponent} from './command-bar-date-filter-column-menu.component';
+
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {DatePipe, NgClass, NgFor, NgIf, NgTemplateOutlet} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
-import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatButtonModule} from '@angular/material/button';
@@ -35,11 +43,16 @@ import {MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {AppSharedModule} from 'src/app/shared/app-shared.module';
-import {CommandBarDateFilterColumnMenuComponent} from './command-bar-date-filter-column-menu.component';
-import {CommandBarDateFilterComponent} from './command-bar-date-filter.component';
 
 @NgModule({
-  declarations: [CommandBarDateFilterComponent, CommandBarDateFilterColumnMenuComponent],
+  declarations: [
+    CommandBarDateFilterComponent,
+    CommandBarDateFilterColumnMenuComponent,
+
+    CommandBarDateFilterCommandBarComponent,
+
+    CommandBarDateFilterChipListComponent,
+  ],
   imports: [
     AppSharedModule,
     MatTableModule,
@@ -70,6 +83,6 @@ import {CommandBarDateFilterComponent} from './command-bar-date-filter.component
     MatDatepickerModule,
   ],
   providers: [],
-  exports: [CommandBarDateFilterComponent],
+  exports: [CommandBarDateFilterComponent, CommandBarDateFilterCommandBarComponent, CommandBarDateFilterChipListComponent],
 })
 export class CommandBarDateFilterModule {}

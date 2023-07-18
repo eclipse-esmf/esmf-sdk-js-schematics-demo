@@ -17,6 +17,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Movement} from '../../types/movement/movement.types';
+
 /**
  * Data source for the RemoteData view. This class should
  * encapsulate all logic for fetching and manipulating the displayed

@@ -27,6 +27,7 @@
 
   "customRowActions.preferredName": "Actions",
   "customRowActions.description": "Custom row actions",
+
   "preferredName": "Movement",
   "description": "Aspect for movement information",
 
@@ -48,6 +49,7 @@
     "exportAllPages": "export the maximum of {{maxExportRows}} rows",
     "exportAllColumns": "export all data from all {{allColumns}} columns"
   },
+
   "validation": {
     "invalidInput": "Input can only contain",
     "blankSpace": "Input can only contain blank space between characters",
@@ -55,12 +57,14 @@
     "min_char_no": "Minimum number of characters is",
     "max_char_no": "Maximum number of characters is"
   },
+
   "tableActions": {
     "openColumnsMenu": "Open columns menu",
     "refreshData": "Refresh data",
     "exportData": "Export data",
     "openConfig": "Open configuration"
   },
+
   "scroll": {
     "left": "Scroll left",
     "right": "Scroll right"

@@ -33,10 +33,12 @@ import {MatSort, SortDirection} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 
 import {Clipboard} from '@angular/cdk/clipboard';
-import {MatDialog} from '@angular/material/dialog';
 import {unparse} from 'papaparse';
+
+import {ExportConfirmationDialogComponent} from '../export-confirmation-dialog/export-confirmation-dialog.component';
+
+import {MatDialog} from '@angular/material/dialog';
 import {Movement} from '../../types/movement/movement.types';
-import {ExportConfirmationDialog} from '../export-confirmation-dialog/export-confirmation-dialog.component';
 import {CommandBarActionsDataSource} from './command-bar-actions-datasource';
 
 import {SelectionModel} from '@angular/cdk/collections';
@@ -46,6 +48,7 @@ import {JSSdkLocalStorageService} from '../../services/storage.service';
 import {CommandBarActionsColumnMenuComponent} from './command-bar-actions-column-menu.component';
 
 import {filter} from 'rxjs/operators';
+
 import {CommandBarActionsService} from './command-bar-actions.service';
 
 export interface Column {
@@ -75,7 +78,9 @@ export enum CommandBarActionsColumn {
   encapsulation: ViewEncapsulation.None,
 })
 export class CommandBarActionsComponent implements OnInit, AfterViewInit, AfterViewChecked, OnChanges {
+  @Input() tableDateFormat = 'short';
   @Input() tableDateTimeFormat = 'short';
+  @Input() tableTimeFormat = 'shortTime';
 
   @Input() data: Array<Movement> = [];
   @Input() customTemplate?: TemplateRef<any>;
@@ -132,6 +137,7 @@ export class CommandBarActionsComponent implements OnInit, AfterViewInit, AfterV
   totalItems: number = 0;
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: CommandBarActionsDataSource;
+
   columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'endDate', sortDirection: 'asc'};
   displayedColumns: Array<string> = Object.values(CommandBarActionsColumn);
   columns: Array<Column> = [];
@@ -154,14 +160,15 @@ export class CommandBarActionsComponent implements OnInit, AfterViewInit, AfterV
     private commandBarActionsService: CommandBarActionsService
   ) {
     this.dataSource = new CommandBarActionsDataSource(this.translateService);
-
     this.currentLanguage = this.translateService.currentLang;
   }
 
   ngOnInit(): void {
     this.initializeColumns();
+
     this.maxExportRows = this.data.length;
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (this.table) {
       this.applyFilters();
@@ -173,6 +180,7 @@ export class CommandBarActionsComponent implements OnInit, AfterViewInit, AfterV
     this.dataSource.sort = this.sort;
     this.pageChange();
   }
+
   ngAfterViewChecked(): void {
     if (this.table) {
       this.table.updateStickyColumnStyles();
@@ -234,14 +242,17 @@ export class CommandBarActionsComponent implements OnInit, AfterViewInit, AfterV
     if (this.highlightSelectedRow) {
       this.checkboxClicked(row);
     }
+
     if ($event.type === 'contextmenu') {
       $event.preventDefault();
       let mousePositionOnClick = {x: $event.clientX + 'px', y: $event.clientY + 'px'};
       this.rowRightClickEvent.emit({data: row, mousePosition: mousePositionOnClick});
     }
+
     if ($event.type === 'click') {
       this.rowClickEvent.emit({data: row});
     }
+
     return false;
   }
 
@@ -260,6 +271,7 @@ export class CommandBarActionsComponent implements OnInit, AfterViewInit, AfterV
     if (!this.isMultipleSelectionEnabled) {
       this.selection.clear();
     }
+
     this.selection.toggle(row);
     this.rowSelectionEvent.emit(this.selection.selected);
   }
@@ -286,7 +298,6 @@ export class CommandBarActionsComponent implements OnInit, AfterViewInit, AfterV
 
     this.tableUpdateFinishedEvent.emit();
   }
-
   removeFilter(filterData: any): void {
     this.paginator.firstPage();
 
@@ -300,7 +311,7 @@ export class CommandBarActionsComponent implements OnInit, AfterViewInit, AfterV
   openExportConfirmationDialog() {
     const reduce = this.displayedColumns.filter(col => col === 'checkboxes' || col === 'columnsMenu').length;
 
-    const dialogRef = this.dialog.open(ExportConfirmationDialog, {
+    const dialogRef = this.dialog.open(ExportConfirmationDialogComponent, {
       data: {
         allColumns: this.columns.length,
         displayedColumns: this.displayedColumns.length - reduce,
@@ -318,6 +329,7 @@ export class CommandBarActionsComponent implements OnInit, AfterViewInit, AfterV
         if (exportAllPages && this.data.length > this.maxExportRows) {
           this.data.length = this.maxExportRows;
         }
+
         this.prepareCsv(this.commandBarActionsService.flatten(this.data), exportAllColumns, exportAllPages, this.paginator.pageSize);
       });
   }
@@ -328,6 +340,7 @@ export class CommandBarActionsComponent implements OnInit, AfterViewInit, AfterV
     }
 
     const columns = exportAllColumns ? this.columns.map(c => c.name) : this.displayedColumns;
+
     const headersToExport = columns.filter(columnName => columnName !== CommandBarActionsColumn.COLUMNS_MENU);
 
     const headersCSV = unparse({
@@ -357,9 +370,7 @@ export class CommandBarActionsComponent implements OnInit, AfterViewInit, AfterV
       ...Object.values(CommandBarActionsColumn)
 
         .filter(columnName => columnName !== CommandBarActionsColumn['COLUMNS_MENU'])
-        .map(columnName => {
-          return {name: columnName, selected: true};
-        }),
+        .map(columnName => ({name: columnName, selected: true})),
     ];
     this.columMenuComponent.columns.splice(0, this.columMenuComponent.columns.length);
     this.columMenuComponent.columns.push(...this.columns);

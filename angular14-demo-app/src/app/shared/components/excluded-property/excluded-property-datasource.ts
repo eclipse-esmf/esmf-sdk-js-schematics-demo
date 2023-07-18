@@ -97,6 +97,8 @@ export class ExcludedPropertyDataSource extends DataSource<Movement> {
       switch (this.sort?.active.trim()) {
         case 'speedLimitWarning':
           return this.compare(a.speedLimitWarning.toString(), b.speedLimitWarning.toString(), isSortingAsc);
+        case 'position.x':
+          return this.compare(a.position.x, b.position.x, isSortingAsc);
         case 'startDate':
           return this.compare(a.startDate, b.startDate, isSortingAsc);
         default:
@@ -110,15 +112,14 @@ export class ExcludedPropertyDataSource extends DataSource<Movement> {
     b: string | number | boolean | Date | undefined,
     isSortingAsc: boolean
   ): number {
-    if (a === undefined) {
-      return -1 * (isSortingAsc ? 1 : -1);
+    if (a === undefined || b === undefined) {
+      return (a === undefined ? -1 : 1) * (isSortingAsc ? 1 : -1);
     }
-    if (b === undefined) {
-      return 1 * (isSortingAsc ? 1 : -1);
-    }
-    if (typeof a == 'boolean') {
+
+    if (typeof a === 'boolean') {
       return (a === b ? 0 : a ? -1 : 1) * (isSortingAsc ? 1 : -1);
     }
+
     return (a < b ? -1 : 1) * (isSortingAsc ? 1 : -1);
   }
 }
