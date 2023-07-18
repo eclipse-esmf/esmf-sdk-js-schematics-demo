@@ -16,7 +16,7 @@
     {{ selection.selected.length > 0 ? selection.selected.length + ' / ' : '' }}{{ totalItems }}
   </div>
 
-  <mat-form-field data-test="form-field-select" appearance="fill" floatLabel="never">
+  <mat-form-field data-test="form-field-select" appearance="fill">
     <mat-label data-test="select-label">{{ 'speedLimitWarning.preferredName' | translate }}</mat-label>
     <mat-select data-test="select" [(value)]="filterService.speedLimitWarningSelected" #speedLimitWarningSelect multiple>
       <div class="filter-options-container">

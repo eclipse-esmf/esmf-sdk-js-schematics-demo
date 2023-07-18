@@ -29,9 +29,8 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatPaginator} from "@angular/material/paginator";
 import {MatSort, SortDirection} from '@angular/material/sort';
-import {MatTable} from '@angular/material/table';
 
 import {CommandBarSearchFilterService, FilterEnums} from './command-bar-search-filter.service';
 
@@ -40,7 +39,6 @@ import {unparse} from 'papaparse';
 
 import {ExportConfirmationDialogComponent} from '../export-confirmation-dialog/export-confirmation-dialog.component';
 
-import {MatDialog} from '@angular/material/dialog';
 import {Movement} from '../../types/movement/movement.types';
 import {CommandBarSearchDataSource} from './command-bar-search-datasource';
 
@@ -57,6 +55,8 @@ import {debounceTime, filter, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 
 import {CommandBarSearchService} from './command-bar-search.service';
+import {MatTable} from "@angular/material/table";
+import {MatDialog} from "@angular/material/dialog";
 
 export interface Config {
   /** Column name **/

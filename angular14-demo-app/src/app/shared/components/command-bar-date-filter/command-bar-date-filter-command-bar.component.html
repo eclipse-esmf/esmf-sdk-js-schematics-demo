@@ -16,7 +16,7 @@
     {{ selection.selected.length > 0 ? selection.selected.length + ' / ' : '' }}{{ totalItems }}
   </div>
 
-  <mat-form-field data-test="form-field-date-time" appearance="fill" floatLabel="never">
+  <mat-form-field data-test="form-field-date-time" appearance="fill">
     <mat-label data-test="date-time-label">{{ 'startDate.preferredName' | translate }}</mat-label>
     <mat-date-range-input data-test="date-range-input" [rangePicker]="startDatePicker" [formGroup]="filterService.startDateGroup">
       <input data-test="start-date-input" matStartDate [placeholder]="'date.start' | translate" formControlName="start" />
@@ -39,7 +39,7 @@
     </mat-date-range-picker>
   </mat-form-field>
 
-  <mat-form-field data-test="form-field-date-time" appearance="fill" floatLabel="never">
+  <mat-form-field data-test="form-field-date-time" appearance="fill">
     <mat-label data-test="date-time-label">{{ 'endDate.preferredName' | translate }}</mat-label>
     <mat-date-range-input data-test="date-range-input" [rangePicker]="endDatePicker" [formGroup]="filterService.endDateGroup">
       <input data-test="start-date-input" matStartDate [placeholder]="'date.start' | translate" formControlName="start" />

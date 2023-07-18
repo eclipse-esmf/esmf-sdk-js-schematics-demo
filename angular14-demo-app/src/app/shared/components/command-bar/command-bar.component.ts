@@ -28,7 +28,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatPaginator} from "@angular/material/paginator";
 import {MatSort, SortDirection} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 
@@ -36,7 +36,6 @@ import {Clipboard} from '@angular/cdk/clipboard';
 import {unparse} from 'papaparse';
 
 import {ExportConfirmationDialogComponent} from '../export-confirmation-dialog/export-confirmation-dialog.component';
-
 import {MatDialog} from '@angular/material/dialog';
 import {Movement} from '../../types/movement/movement.types';
 import {CommandBarDataSource} from './command-bar-datasource';

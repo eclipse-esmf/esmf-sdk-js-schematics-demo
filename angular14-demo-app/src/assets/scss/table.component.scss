@@ -21,7 +21,7 @@ $gray-300: #e0e0e0;
   flex-direction: column;
   height: 100%;
 
-  .mat-table-container {
+  .mat-mdc-table-container {
     position: relative;
     height: 90%;
     overflow-y: auto;
@@ -29,7 +29,7 @@ $gray-300: #e0e0e0;
     .full-width-table {
       width: 100%;
 
-      .mat-row:not([data-test='no-data-table-row']):not(.selected-row):hover {
+      .mat-mdc-row:not([data-test='no-data-table-row']):not(.selected-row):hover {
         background: $gray-100;
       }
 
@@ -37,7 +37,7 @@ $gray-300: #e0e0e0;
         background: var(--selected-row-highlight-color, $gray-300);
       }
 
-      .mat-cell {
+      .mat-mdc-cell {
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 100px;
@@ -54,7 +54,7 @@ $gray-300: #e0e0e0;
         }
       }
 
-      .mat-header-cell {
+      .mat-mdc-header-cell {
         position: relative;
 
         &.table-header-number {
@@ -78,7 +78,7 @@ $gray-300: #e0e0e0;
         width: 35px;
         padding-right: 0;
 
-        .mat-table-menu-button {
+        .mat-mdc-table-menu-button {
           height: 40px;
           width: 35px;
         }
@@ -96,13 +96,8 @@ $gray-300: #e0e0e0;
     align-items: center;
     margin-bottom: 20px;
 
-    .mat-form-field {
-      height: 100%;
+    .mat-mdc-form-field {
       padding-top: 10px;
-      margin-right: 8px;
-    }
-
-    .search-input {
       margin-right: 8px;
     }
 
@@ -129,7 +124,10 @@ $gray-300: #e0e0e0;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-
+  /*TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.
+ */
+  /*TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.
+ */
   ::ng-deep .mat-chip-list-wrapper {
     margin: 0;
     display: flex;
@@ -137,7 +135,7 @@ $gray-300: #e0e0e0;
     flex-wrap: nowrap;
     align-items: center;
 
-    .mat-chip {
+    .mat-mdc-chip {
       flex: 0 0 auto;
     }
   }
@@ -194,10 +192,11 @@ $gray-300: #e0e0e0;
     }
   }
 
-  .mat-menu-panel {
+  .mat-mdc-menu-panel {
     max-width: max-content !important;
   }
-
+  /*TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version.
+ */
   .mat-list-item-content {
     flex-direction: row !important;
   }

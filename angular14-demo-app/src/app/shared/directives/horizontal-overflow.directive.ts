@@ -13,16 +13,16 @@
 
 /**  **/
 import {AfterContentInit, Directive, ElementRef, HostListener, Input, NgZone, OnDestroy} from '@angular/core';
-import {MatChipList} from '@angular/material/chips';
 import {Subject} from 'rxjs';
 import {take, takeUntil} from 'rxjs/operators';
+import {MatChipListbox} from "@angular/material/chips";
 
 @Directive({
   selector: '[horizontalOverflow]',
   exportAs: 'horizontalOverflow',
 })
 export class HorizontalOverflowDirective implements AfterContentInit, OnDestroy {
-  @Input('chipsObj') chips!: MatChipList;
+  @Input('chipsObj') chips!: MatChipListbox;
 
   private readonly _destroyed$ = new Subject<void>();
   disableLeftBtn: boolean = true;
@@ -37,7 +37,7 @@ export class HorizontalOverflowDirective implements AfterContentInit, OnDestroy 
   constructor(private element: ElementRef, private zone: NgZone) {}
 
   ngAfterContentInit() {
-    this.chips.chips.changes.pipe(takeUntil(this._destroyed$)).subscribe(() =>
+    this.chips._chips.changes.pipe(takeUntil(this._destroyed$)).subscribe(() =>
       this.zone.onStable
         .asObservable()
         .pipe(take(1))

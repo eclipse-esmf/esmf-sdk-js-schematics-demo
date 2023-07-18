@@ -13,7 +13,7 @@
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {DataSource} from '@angular/cdk/collections';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from '@angular/material/sort';
 import {TranslateService} from '@ngx-translate/core';
 import {BehaviorSubject, Observable} from 'rxjs';

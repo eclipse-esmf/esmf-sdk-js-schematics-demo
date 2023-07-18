@@ -16,7 +16,7 @@
     {{ selection.selected.length > 0 ? selection.selected.length + ' / ' : '' }}{{ totalItems }}
   </div>
 
-  <mat-form-field data-test="search-form-field" appearance="fill" floatLabel="never" class="search-input">
+  <mat-form-field data-test="search-form-field" appearance="fill">
     <mat-label data-test="search-label">{{ 'search' | translate }}</mat-label>
     <input
       #searchInput
@@ -49,7 +49,7 @@
     </button>
   </mat-form-field>
   <ng-container *ngIf="hasAdvancedSearch">
-    <mat-form-field data-test="form-field-select" appearance="fill" floatLabel="never">
+    <mat-form-field data-test="form-field-select" appearance="fill">
       <mat-label data-test="select-label">{{ 'advancedSearch' | translate }}</mat-label>
       <mat-select data-test="select" [formControl]="filterService.selectedStringColumn">
         <mat-option [value]="filterService.advancedSearchAllValue">{{ 'allTextFields' | translate }}</mat-option>

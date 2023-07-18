@@ -13,7 +13,7 @@
 
 <mat-sidenav-container class="sidenav" autosize>
   <mat-sidenav mode="side" opened>
-    <mat-selection-list [multiple]="false">
+    <mat-selection-list hideSingleSelectionIndicator [multiple]="false">
       <mat-list-option data-test="basic-config" selected (click)="changeComponent('base-config')">
         <div class="option">
           <mat-icon>home</mat-icon>

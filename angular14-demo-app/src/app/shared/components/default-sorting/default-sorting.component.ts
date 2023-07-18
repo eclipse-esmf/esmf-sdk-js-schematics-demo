@@ -28,7 +28,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatPaginator} from "@angular/material/paginator";
 import {MatSort, SortDirection} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 
