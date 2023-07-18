@@ -107,14 +107,15 @@ $gray-300: #e0e0e0;
   }
 
   .copy-to-clipboard {
-    position: absolute;
-    right: 0;
-    top: -5px;
     opacity: 0;
     transition: all 0.2s ease-in;
 
     mat-icon {
       font-size: 12px;
+    }
+
+    &:hover {
+      opacity: 1;
     }
   }
 
