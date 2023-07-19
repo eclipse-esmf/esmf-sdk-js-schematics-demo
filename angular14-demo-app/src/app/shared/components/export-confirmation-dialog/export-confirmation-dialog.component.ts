@@ -14,8 +14,13 @@
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {AfterViewInit, ChangeDetectorRef, Component, Inject, ViewChild} from '@angular/core';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {TranslateService} from '@ngx-translate/core';
+
+export enum Action {
+  export= 'export',
+  cancel = 'cancel'
+}
 
 @Component({
   selector: 'export-confirmation-dialog',
@@ -26,19 +31,20 @@ export class ExportConfirmationDialogComponent implements AfterViewInit {
   @ViewChild('exportAllPages') exportAllPages!: MatCheckbox;
   @ViewChild('exportAllColumns') exportAllColumns!: MatCheckbox;
 
+  action = Action;
   dialogDescription = '';
   showAllColumnsBox = true;
 
   constructor(
+    public dialogRef: MatDialogRef<ExportConfirmationDialogComponent>,
+    private translateService: TranslateService,
+    private cdRef: ChangeDetectorRef,
     @Inject(MAT_DIALOG_DATA)
     public data: {
       allColumns: number;
       displayedColumns: number;
       maxExportRows: number;
-    },
-    public dialogRef: MatDialogRef<ExportConfirmationDialogComponent>,
-    private translateService: TranslateService,
-    private cdRef: ChangeDetectorRef
+    }
   ) {}
 
   ngAfterViewInit() {
@@ -49,46 +55,31 @@ export class ExportConfirmationDialogComponent implements AfterViewInit {
   }
 
   setDialogDescription() {
-    const {maxExportRows, allColumns, displayedColumns} = this.data;
-
+    const { maxExportRows, allColumns, displayedColumns } = this.data;
     const isExportAllPagesChecked = this.exportAllPages.checked;
     const isExportAllColumnsChecked = this.exportAllColumns?.checked;
 
-    if (isExportAllPagesChecked && isExportAllColumnsChecked) {
-      this.dialogDescription = this.translateService.instant('exportData.description.caseOne', {
-        maxExportRows,
-        allColumns,
-      });
-    } else if (isExportAllPagesChecked && !isExportAllColumnsChecked) {
-      this.dialogDescription = this.translateService.instant(
-        displayedColumns > 1 ? 'exportData.description.caseTwo.plural' : 'exportData.description.caseTwo.singular',
-        {
-          maxExportRows,
-          displayedColumns,
-        }
-      );
-    } else if (!isExportAllPagesChecked && !isExportAllColumnsChecked) {
-      this.dialogDescription = this.translateService.instant(
-        displayedColumns > 1 ? 'exportData.description.caseThree.plural' : 'exportData.description.caseThree.singular',
-        {
-          displayedColumns,
-        }
-      );
-    } else if (!isExportAllPagesChecked && isExportAllColumnsChecked) {
-      this.dialogDescription = this.translateService.instant('exportData.description.caseFour', {
-        allColumns,
-      });
-    } else {
-      this.dialogDescription = this.translateService.instant('exportData.description.default');
-    }
-  }
+    let translationKey = 'exportData.description.default';
 
-  closeDialog() {
-    this.dialogRef.close();
+    if (isExportAllPagesChecked && isExportAllColumnsChecked) {
+      translationKey = 'exportData.description.caseOne';
+    } else if (isExportAllPagesChecked) {
+      translationKey = displayedColumns > 1 ? 'exportData.description.caseTwo.plural' : 'exportData.description.caseTwo.singular';
+    } else if (!isExportAllColumnsChecked) {
+      translationKey = displayedColumns > 1 ? 'exportData.description.caseThree.plural' : 'exportData.description.caseThree.singular';
+    } else if (isExportAllColumnsChecked) {
+      translationKey = 'exportData.description.caseFour';
+    }
+
+    this.dialogDescription = this.translateService.instant(
+      translationKey,
+      { maxExportRows, allColumns, displayedColumns }
+    );
   }
 
   exportData() {
     this.dialogRef.close({
+      action: Action.export,
       exportAllPages: this.exportAllPages.checked,
       exportAllColumns: this.exportAllColumns?.checked,
     });

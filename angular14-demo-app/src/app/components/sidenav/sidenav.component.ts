@@ -14,6 +14,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Movement, WarningLevel} from '../../shared/types/movement/movement.types';
 import {Movement as Movement210} from '../../shared/types/movement/v210/movement.types';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-sidenav',
@@ -27,7 +28,7 @@ export class SidenavComponent implements OnInit {
   basicMovementTableData: Movement[] = [];
   versionSupportData: Movement210[] = [];
 
-  constructor() {}
+  constructor(private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.initializeData();
@@ -62,15 +63,23 @@ export class SidenavComponent implements OnInit {
 
   copyToClipboard(event: string) {
     console.log(event);
+    this._snackBar.open('Copied to clipboard!', '', {
+      duration: 2000,
+    });
   }
 
   rowClick(event: any): void {
     console.log('row was clicked', event);
+    this._snackBar.open('Row was clicked!', '', {
+      duration: 2000,
+    });
   }
 
   changeComponent(compToView: string) {
     this.currentComponent = compToView;
-
     console.log('comp to view : ', this.currentComponent);
+    this._snackBar.open('Change component!', '', {
+      duration: 2000,
+    });
   }
 }

@@ -14,6 +14,9 @@
 <div class="js-sdk-component-container">
   <command-bar
     [isMultipleSelectionEnabled]="isMultipleSelectionEnabled"
+    [selection]="selection"
+    [totalItems]="totalItems"
+    [searchFocused]="searchFocused"
     [allowedCharacters]="allowedCharacters"
     [minNumberCharacters]="minNumberCharacters"
     [maxNumberCharacters]="maxNumberCharacters"
@@ -47,11 +50,11 @@
         [dataSource]="dataSource"
         [trackBy]="trackBy"
         aria-label="Elements"
-        [matSortDisabled]="dragging"
-      >
+        [matSortDisabled]="dragging">
         <!-- Row shown when there is no matching data that will be provided to the wrapper table. -->
         <tr data-test="no-data-table-row" class="mat-row" *matNoDataRow>
-          <td data-test="no-data-table-cell" class="mat-cell" [colSpan]="displayedColumns.length" *ngIf="!dataSource.data.length">
+          <td data-test="no-data-table-cell" class="mat-cell" [colSpan]="displayedColumns.length"
+              *ngIf="!dataSource.data.length">
             <span data-test="no-data-message">{{ noDataMessage || 'No data' }}</span>
           </td>
         </tr>
@@ -69,6 +72,7 @@
             <mat-checkbox
               data-test="cell-checkbox"
               (click)="$event.stopPropagation()"
+              (mousedown)="$event.preventDefault()"
               (change)="$event ? checkboxClicked(row) : null"
               [checked]="selection.isSelected(row)"
             ></mat-checkbox>
@@ -107,15 +111,11 @@
               [ngTemplateOutletContext]="{value: !(row.moving === null || row.moving === undefined) ? row.moving : '-'}"
             ></ng-container>
 
-            <button
-              data-test="copy-to-clipboard-button"
+            <mat-icon
               *ngIf="!(row.moving === null || row.moving === undefined)"
-              mat-icon-button
-              class="copy-to-clipboard"
               (click)="copyToClipboard(row.moving, $event)"
-            >
-              <mat-icon data-test="copy-to-clipboard-icon" class="material-icons">content_copy</mat-icon>
-            </button>
+              data-test="copy-to-clipboard-icon" class="material-icons copy-to-clipboard">content_copy
+            </mat-icon>
           </td>
         </ng-container>
 
@@ -154,15 +154,11 @@
               }"
             ></ng-container>
 
-            <button
-              data-test="copy-to-clipboard-button"
+            <mat-icon
               *ngIf="!(row.speedLimitWarning === null || row.speedLimitWarning === undefined)"
-              mat-icon-button
-              class="copy-to-clipboard"
               (click)="copyToClipboard(row.speedLimitWarning, $event)"
-            >
-              <mat-icon data-test="copy-to-clipboard-icon" class="material-icons">content_copy</mat-icon>
-            </button>
+              data-test="copy-to-clipboard-icon" class="material-icons copy-to-clipboard">content_copy
+            </mat-icon>
           </td>
         </ng-container>
 
@@ -193,15 +189,12 @@
               }"
             ></ng-container>
 
-            <button
-              data-test="copy-to-clipboard-button"
+
+            <mat-icon
               *ngIf="!(row.startDate === null || row.startDate === undefined)"
-              mat-icon-button
-              class="copy-to-clipboard"
               (click)="copyToClipboard(row.startDate, $event)"
-            >
-              <mat-icon data-test="copy-to-clipboard-icon" class="material-icons">content_copy</mat-icon>
-            </button>
+              data-test="copy-to-clipboard-icon" class="material-icons copy-to-clipboard">content_copy
+            </mat-icon>
           </td>
         </ng-container>
 
@@ -232,20 +225,18 @@
               }"
             ></ng-container>
 
-            <button
-              data-test="copy-to-clipboard-button"
+
+            <mat-icon
               *ngIf="!(row.endDate === null || row.endDate === undefined)"
-              mat-icon-button
-              class="copy-to-clipboard"
               (click)="copyToClipboard(row.endDate, $event)"
-            >
-              <mat-icon data-test="copy-to-clipboard-icon" class="material-icons">content_copy</mat-icon>
-            </button>
+              data-test="copy-to-clipboard-icon" class="material-icons copy-to-clipboard">content_copy
+            </mat-icon>
           </td>
         </ng-container>
 
         <ng-container data-test="columns-menu-button-header" matColumnDef="columnsMenu" stickyEnd>
-          <th style="text-align: right;justify-content: flex-end;"  data-test="columns-menu-button-header" mat-header-cell *matHeaderCellDef>
+          <th style="text-align: right;justify-content: flex-end;" data-test="columns-menu-button-header"
+              mat-header-cell *matHeaderCellDef>
             <button
               data-test="mat-table-menu-button"
               mat-icon-button
@@ -254,12 +245,15 @@
               aria-label="Menu for the table"
               class="mat-table-menu-button"
             >
-              <mat-icon data-test="mat-table-menu-icon" [matTooltip]="'tableActions.openColumnsMenu' | translate" class="material-icons"
-                >settings</mat-icon
+              <mat-icon data-test="mat-table-menu-icon" [matTooltip]="'tableActions.openColumnsMenu' | translate"
+                        class="material-icons"
+              >settings
+              </mat-icon
               >
             </button>
           </th>
-          <td data-test="columns-menu-button-cell" mat-cell *matCellDef="let row" [class.bg-transparent]="!setStickRowActions"></td>
+          <td data-test="columns-menu-button-cell" mat-cell *matCellDef="let row"
+              [class.bg-transparent]="!setStickRowActions"></td>
         </ng-container>
 
         <tr data-test="table-header-row" mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
@@ -275,19 +269,18 @@
       </table>
 
       <mat-menu data-test="column-menu" #columnMenu="matMenu" class="column-menu">
-        <version-support-column-menu #columMenuComponent (columnsChangedEvent)="setDisplayedColumns($event)"></version-support-column-menu>
+        <version-support-column-menu
+          (columnsChangedEvent)="setDisplayedColumns($event)"></version-support-column-menu>
       </mat-menu>
 
-      <mat-menu data-test="column-menu" #configurationMenu="matMenu" class="column-menu">
+      <mat-menu data-test="column-menu" class="column-menu">
         <version-support-config-menu
-          #configurationMenuComponent
           (configChangedEvent)="setConfiguration($event)"
         ></version-support-config-menu>
       </mat-menu>
     </div>
     <mat-paginator
       data-test="paginator"
-      #paginator
       [length]="dataSource.length"
       [pageIndex]="0"
       [pageSize]="pageSize"

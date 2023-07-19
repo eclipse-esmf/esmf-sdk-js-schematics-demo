@@ -40,6 +40,7 @@ import {HeaderComponent} from './components/header/header.component';
 import {SidenavComponent} from './components/sidenav/sidenav.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatListModule} from "@angular/material/list";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent, SidenavComponent],
@@ -52,6 +53,7 @@ import {MatListModule} from "@angular/material/list";
     MatSidenavModule,
     MatSelectModule,
     MatListModule,
+    MatSnackBarModule,
     FormsModule,
     RouterModule,
     BaseConfigModule,

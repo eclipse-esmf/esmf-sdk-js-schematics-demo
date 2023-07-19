@@ -39,13 +39,13 @@ import {FilterEnums, VersionSupportFilterService} from './version-support-filter
 import {Clipboard} from '@angular/cdk/clipboard';
 import {unparse} from 'papaparse';
 
-import {ExportConfirmationDialogComponent} from '../../export-confirmation-dialog/export-confirmation-dialog.component';
+import {Action, ExportConfirmationDialogComponent} from '../../export-confirmation-dialog/export-confirmation-dialog.component';
 
 import {MatDialog} from '@angular/material/dialog';
 import {Movement} from '../../../types/movement/v210/movement.types';
 import {VersionSupportDataSource} from './version-support-datasource';
 
-import {DateAdapter, MatDateFormats, MAT_DATE_FORMATS} from '@angular/material/core';
+import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats} from '@angular/material/core';
 
 import {SelectionModel} from '@angular/cdk/collections';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -60,6 +60,7 @@ import {debounceTime, filter, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 
 import {VersionSupportService} from './version-support.service';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 export interface Config {
   /** Column name **/
@@ -138,7 +139,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
   @Output() tableUpdateStartEvent = new EventEmitter<any>();
   @Output() tableUpdateFinishedEvent = new EventEmitter<any>();
   @Output() copyToClipboardEvent = new EventEmitter<any>();
-  @Output() downloadEvent = new EventEmitter<{error: boolean; success: boolean; inProgress: boolean}>();
+  @Output() downloadEvent = new EventEmitter<{ error: boolean; success: boolean; inProgress: boolean }>();
   @Output() rowSelectionEvent = new EventEmitter<any>();
 
   @ViewChild(MatSort) private sort!: MatSort;
@@ -166,7 +167,10 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: VersionSupportDataSource;
 
-  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'endDate', sortDirection: 'asc'};
+  columnToSort: { sortColumnName: string; sortDirection: SortDirection } = {
+    sortColumnName: 'endDate',
+    sortDirection: 'asc'
+  };
   displayedColumns: Array<string> = Object.values(VersionSupportColumn);
   columns: Array<Column> = [];
 
@@ -248,7 +252,12 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     if (configStorage?.length > 0) {
       configStorage.forEach((config: Config) => this.configs.push(config));
     } else {
-      this.configs.push({name: 'settings.highlight.name', desc: 'settings.highlight.desc', selected: false, color: '#FFFF00'});
+      this.configs.push({
+        name: 'settings.highlight.name',
+        desc: 'settings.highlight.desc',
+        selected: false,
+        color: '#FFFF00'
+      });
     }
 
     if (columnStorage?.length > 0) {
@@ -398,6 +407,7 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     this.trimSelectionToCurrentPage();
     this.tableUpdateFinishedEvent.emit();
   }
+
   removeFilter(filterData: any): void {
     this.filterService.removeFilter(filterData);
     this.paginator.firstPage();
@@ -424,14 +434,16 @@ export class VersionSupportComponent implements OnInit, AfterViewInit, AfterView
     dialogRef
       .afterClosed()
       .pipe(filter(e => !!e))
-      .subscribe((exportEvent: {exportAllPages: boolean; exportAllColumns: boolean}): void => {
-        const {exportAllPages, exportAllColumns} = exportEvent;
+      .subscribe((event: { action: Action, exportAllPages: boolean; exportAllColumns: boolean }): void => {
+        if (event.action === Action.cancel) {
+          return;
+        }
 
-        if (exportAllPages && this.data.length > this.maxExportRows) {
+        if (event.exportAllPages && this.data.length > this.maxExportRows) {
           this.data.length = this.maxExportRows;
         }
 
-        this.prepareCsv(this.versionSupportService.flatten(this.data), exportAllColumns, exportAllPages, this.paginator.pageSize);
+        this.prepareCsv(this.versionSupportService.flatten(this.data), event.exportAllColumns, event.exportAllPages, this.paginator.pageSize);
       });
   }
 

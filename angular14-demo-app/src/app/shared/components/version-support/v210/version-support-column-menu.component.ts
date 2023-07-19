@@ -19,7 +19,7 @@ import {Column} from './version-support.component';
 
 @Component({
   selector: 'version-support-column-menu',
-  styleUrls: ['./version-support.component.scss'],
+  styleUrls: ['./version-support-column-menu.component.scss'],
   templateUrl: './version-support-column-menu.component.html',
 })
 export class VersionSupportColumnMenuComponent {
@@ -56,11 +56,11 @@ export class VersionSupportColumnMenuComponent {
   resetStoredColumns(event?: MouseEvent): void {
     event?.preventDefault();
     event?.stopPropagation();
-    this.columns = [...this.columnsDefault];
+    this.columns = JSON.parse(JSON.stringify(this.columnsDefault));
   }
 
   /**
-   * Store columns locally and update displayed columns afterwards
+   * Store columns locally and update displayed columns afterward
    */
   storeColumns(): void {
     this.closeColumnMenu = true;

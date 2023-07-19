@@ -21,7 +21,7 @@ $gray-300: #e0e0e0;
   flex-direction: column;
   height: 100%;
 
-  .mat-mdc-table-container {
+  .mat-table-container {
     position: relative;
     height: 90%;
     overflow-y: auto;
@@ -97,7 +97,7 @@ $gray-300: #e0e0e0;
     margin-bottom: 20px;
 
     .mat-mdc-form-field {
-      padding-top: 10px;
+      padding-top: 20px;
       margin-right: 8px;
     }
 
@@ -107,12 +107,10 @@ $gray-300: #e0e0e0;
   }
 
   .copy-to-clipboard {
+    cursor: pointer;
+    font-size: 15px;
     opacity: 0;
     transition: all 0.2s ease-in;
-
-    mat-icon {
-      font-size: 12px;
-    }
 
     &:hover {
       opacity: 1;
@@ -125,10 +123,7 @@ $gray-300: #e0e0e0;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  /*TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.
- */
-  /*TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.
- */
+
   ::ng-deep .mat-chip-list-wrapper {
     margin: 0;
     display: flex;
@@ -196,8 +191,7 @@ $gray-300: #e0e0e0;
   .mat-mdc-menu-panel {
     max-width: max-content !important;
   }
-  /*TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version.
- */
+
   .mat-list-item-content {
     flex-direction: row !important;
   }

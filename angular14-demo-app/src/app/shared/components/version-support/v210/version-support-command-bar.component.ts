@@ -28,6 +28,9 @@ import {Config} from './version-support.component';
 })
 export class VersionSupportCommandBarComponent {
   @Input() isMultipleSelectionEnabled = true;
+  @Input() selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
+  @Input() totalItems = 0;
+  @Input() searchFocused = false;
   @Input() allowedCharacters: string = '';
   @Input() minNumberCharacters: number = 2;
   @Input() maxNumberCharacters: number = 50;
@@ -43,10 +46,6 @@ export class VersionSupportCommandBarComponent {
 
   @Output() setConfiguration = new EventEmitter<Array<Config>>();
   @ViewChild(VersionSupportConfigMenuComponent) private configurationComponent!: VersionSupportConfigMenuComponent;
-
-  selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
-  totalItems: number = 0;
-  searchFocused: boolean = false;
 
   constructor(public filterService: VersionSupportFilterService) {}
 
