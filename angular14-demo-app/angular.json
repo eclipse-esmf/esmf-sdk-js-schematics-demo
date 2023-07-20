@@ -131,6 +131,5 @@
         }
       }
     }
-  },
-  "defaultProject": "angular14-demo-app"
+  }
 }
