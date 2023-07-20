@@ -8,9 +8,10 @@
 -   [Getting started](#getting-started)
 -   [License](#license)
 
-## Introduction
+## Introduction / Why are there no releases?
 
 This project serves as a demonstration of the [ESMF Schematics Project](https://github.com/eclipse-esmf/esmf-sdk-js-schematics) in an Angular application.
+Please be aware that this repository will not publish any releases. The purpose is to look at the current state of code and the documentation to understand by example how ESMF SDK-JS-Schematics works.
 
 ## About
 
