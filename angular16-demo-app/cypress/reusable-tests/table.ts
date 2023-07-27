@@ -21,7 +21,7 @@ export function tableTests(includePaginator = true, includeExportDialog = true, 
     });
 
     it('should copy content to clipboard', (): void => {
-      cy.get('[data-test="copy-to-clipboard-button"]').first().invoke('show').click({force: true});
+      cy.get('[data-test="copy-to-clipboard-icon"]').first().invoke('show').click({force: true});
 
       cy.task('getClipboard').then(t => {
         expect(t).to.exist;

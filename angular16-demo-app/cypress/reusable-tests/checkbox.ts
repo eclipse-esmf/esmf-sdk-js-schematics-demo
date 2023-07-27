@@ -23,24 +23,24 @@ export function checkboxTests(): void {
 
     it('should select all rows', (): void => {
       cy.get('[data-test="header-checkbox"]').click();
-      cy.get('[data-test="header-checkbox"]').should('have.class', 'mat-checkbox-checked');
+      cy.get('[data-test="header-checkbox"]').should('have.class', 'mat-mdc-checkbox-checked');
       cy.get('[data-test="cell-checkbox"]').each(checkbox => {
-        cy.wrap(checkbox).should('have.class', 'mat-checkbox-checked');
+        cy.wrap(checkbox).should('have.class', 'mat-mdc-checkbox-checked');
       });
     });
 
     it('should unselect all rows', (): void => {
       cy.get('[data-test="header-checkbox"]').click();
-      cy.get('[data-test="header-checkbox"]').should('not.have.class', 'mat-checkbox-checked');
+      cy.get('[data-test="header-checkbox"]').should('not.have.class', 'mat-mdc-checkbox-checked');
       cy.get('[data-test="cell-checkbox"]').each(checkbox => {
-        cy.wrap(checkbox).should('not.have.class', 'mat-checkbox-checked');
+        cy.wrap(checkbox).should('not.have.class', 'mat-mdc-checkbox-checked');
       });
     });
 
     it('should select one row', (): void => {
       cy.get('[data-test="cell-checkbox"]').first().click();
-      cy.get('[data-test="header-checkbox"]').should('have.class', 'mat-checkbox-indeterminate');
-      cy.get('[data-test="cell-checkbox"]').first().should('have.class', 'mat-checkbox-checked');
+      cy.get('[data-test="header-checkbox"]').should('have.class', 'mat-mdc-checkbox.mat-accent');
+      cy.get('[data-test="cell-checkbox"]').first().should('have.class', 'mat-mdc-checkbox-checked');
       cy.get('[data-test="cell-checkbox"]').first().click();
     });
   });

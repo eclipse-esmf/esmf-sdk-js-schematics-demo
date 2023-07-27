@@ -23,7 +23,8 @@
   "endDate.preferredName": "End Date",
   "endDate.description": "Date, when the last part of the batch was produced",
 
-  "customColumn.test": "test",
+  "customColumn.test": "Custom Column",
+  "test.preferredName": "Custom Column",
 
   "customRowActions.preferredName": "Actions",
   "customRowActions.description": "Custom row actions",
