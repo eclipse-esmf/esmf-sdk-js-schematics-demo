@@ -13,7 +13,7 @@
 
 /**  **/
 import {Component, EventEmitter, Output} from '@angular/core';
-import {FilterEnums, FilterType, CommandBarSearchFilterService} from './command-bar-search-filter.service';
+import {CommandBarSearchFilterService, FilterEnums, FilterType} from './command-bar-search-filter.service';
 
 @Component({
   selector: 'chip-list',

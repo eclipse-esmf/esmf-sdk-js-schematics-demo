@@ -15,8 +15,8 @@
 
 import {TranslateService} from '@ngx-translate/core';
 
-import {AbstractControl, FormControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 import {Injectable} from '@angular/core';
+import {AbstractControl, FormControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 
 import {Movement} from '../../types/movement/movement.types';
 

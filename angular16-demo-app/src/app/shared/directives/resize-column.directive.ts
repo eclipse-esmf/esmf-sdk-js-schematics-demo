@@ -12,8 +12,8 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
-import {Directive, ElementRef, EventEmitter, Inject, Input, OnInit, Output, Renderer2} from '@angular/core';
 import {DOCUMENT} from '@angular/common';
+import {Directive, ElementRef, EventEmitter, Inject, Input, OnInit, Output, Renderer2} from '@angular/core';
 
 @Directive({
   selector: '[resizeColumn]',

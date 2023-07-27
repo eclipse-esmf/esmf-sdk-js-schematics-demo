@@ -13,7 +13,6 @@
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 
-import {AbstractControl, FormControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 import {Injectable} from '@angular/core';
 
 import {Movement, WarningLevel} from '../../types/movement/movement.types';

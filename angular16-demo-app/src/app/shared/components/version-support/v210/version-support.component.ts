@@ -13,23 +13,22 @@
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
+  AfterViewChecked,
   AfterViewInit,
   Component,
-  Input,
-  ViewChild,
-  Output,
+  ElementRef,
   EventEmitter,
-  SimpleChanges,
   HostBinding,
   Inject,
-  OnInit,
-  AfterViewChecked,
-  TemplateRef,
-  ElementRef,
-  ViewEncapsulation,
-  OnDestroy,
+  Input,
   OnChanges,
-  ChangeDetectionStrategy,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
@@ -43,24 +42,24 @@ import {unparse} from 'papaparse';
 import {Action, ExportConfirmationDialogComponent} from '../../export-confirmation-dialog/export-confirmation-dialog.component';
 
 import {MatDialog} from '@angular/material/dialog';
-import {Movement, WarningLevel} from '../../../types/movement/v210/movement.types';
+import {Movement} from '../../../types/movement/v210/movement.types';
 import {VersionSupportDataSource} from './version-support-datasource';
 
 import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats} from '@angular/material/core';
 
-import {DomSanitizer} from '@angular/platform-browser';
 import {SelectionModel} from '@angular/cdk/collections';
+import {DomSanitizer} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 import {JSSdkLocalStorageService} from '../../../services/storage.service';
 import {VersionSupportColumnMenuComponent} from './version-support-column-menu.component';
 
 import {VersionSupportConfigMenuComponent} from './version-support-config-menu.component';
 
-import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
+import {debounceTime, filter, takeUntil} from 'rxjs/operators';
 
 import {Subject} from 'rxjs';
 
-import {VersionSupportService, MovementResponse} from './version-support.service';
+import {VersionSupportService} from './version-support.service';
 
 export interface Config {
   /** Column name **/

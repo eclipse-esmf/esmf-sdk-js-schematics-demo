@@ -13,7 +13,7 @@
 
 /**  **/
 import {Component, EventEmitter, Output} from '@angular/core';
-import {FilterEnums, FilterType, CommandBarDateFilterFilterService} from './command-bar-date-filter-filter.service';
+import {CommandBarDateFilterFilterService, FilterEnums, FilterType} from './command-bar-date-filter-filter.service';
 
 @Component({
   selector: 'chip-list',

@@ -13,28 +13,27 @@
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
+  AfterViewChecked,
   AfterViewInit,
   Component,
-  Input,
-  ViewChild,
-  Output,
+  ElementRef,
   EventEmitter,
-  SimpleChanges,
   HostBinding,
   Inject,
-  OnInit,
-  AfterViewChecked,
-  TemplateRef,
-  ElementRef,
-  ViewEncapsulation,
+  Input,
   OnChanges,
-  ChangeDetectionStrategy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 
-import {FilterEnums, CommandBarDateFilterFilterService} from './command-bar-date-filter-filter.service';
+import {CommandBarDateFilterFilterService} from './command-bar-date-filter-filter.service';
 
 import {Clipboard} from '@angular/cdk/clipboard';
 import {unparse} from 'papaparse';
@@ -47,17 +46,15 @@ import {CommandBarDateFilterDataSource} from './command-bar-date-filter-datasour
 
 import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats} from '@angular/material/core';
 
-import {DomSanitizer} from '@angular/platform-browser';
 import {SelectionModel} from '@angular/cdk/collections';
+import {DomSanitizer} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 import {JSSdkLocalStorageService} from '../../services/storage.service';
 import {CommandBarDateFilterColumnMenuComponent} from './command-bar-date-filter-column-menu.component';
 
-import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
+import {filter} from 'rxjs/operators';
 
-import {Subject} from 'rxjs';
-
-import {CommandBarDateFilterService, MovementResponse} from './command-bar-date-filter.service';
+import {CommandBarDateFilterService} from './command-bar-date-filter.service';
 
 export interface Column {
   /** Column name **/

@@ -13,22 +13,20 @@
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
+  AfterViewChecked,
   AfterViewInit,
   Component,
-  Input,
-  ViewChild,
-  Output,
-  EventEmitter,
-  SimpleChanges,
-  HostBinding,
-  Inject,
-  OnInit,
-  AfterViewChecked,
-  TemplateRef,
   ElementRef,
-  ViewEncapsulation,
+  EventEmitter,
+  HostBinding,
+  Input,
   OnChanges,
-  ChangeDetectionStrategy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
@@ -43,17 +41,15 @@ import {MatDialog} from '@angular/material/dialog';
 import {Movement} from '../../types/movement/movement.types';
 import {CommandBarActionsDataSource} from './command-bar-actions-datasource';
 
-import {DomSanitizer} from '@angular/platform-browser';
 import {SelectionModel} from '@angular/cdk/collections';
+import {DomSanitizer} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 import {JSSdkLocalStorageService} from '../../services/storage.service';
 import {CommandBarActionsColumnMenuComponent} from './command-bar-actions-column-menu.component';
 
-import {filter, takeUntil} from 'rxjs/operators';
+import {filter} from 'rxjs/operators';
 
-import {Subject} from 'rxjs';
-
-import {CommandBarActionsService, MovementResponse} from './command-bar-actions.service';
+import {CommandBarActionsService} from './command-bar-actions.service';
 
 export interface Column {
   /** Column name **/

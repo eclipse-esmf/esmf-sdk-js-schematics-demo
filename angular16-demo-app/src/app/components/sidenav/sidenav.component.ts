@@ -12,9 +12,9 @@
  */
 
 import {Component, OnInit} from '@angular/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {Movement, WarningLevel} from '../../shared/types/movement/movement.types';
 import {Movement as Movement210} from '../../shared/types/movement/v210/movement.types';
-import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-sidenav',

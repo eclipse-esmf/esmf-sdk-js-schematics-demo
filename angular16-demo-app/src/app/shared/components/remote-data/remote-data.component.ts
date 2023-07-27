@@ -13,63 +13,42 @@
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
-  AfterViewInit,
-  Component,
-  Input,
-  ViewChild,
-  Output,
-  EventEmitter,
-  SimpleChanges,
-  HostBinding,
-  Inject,
-  OnInit,
   AfterViewChecked,
-  TemplateRef,
-  ElementRef,
-  ViewEncapsulation,
-  OnDestroy,
+  AfterViewInit,
   ChangeDetectorRef,
-  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 
 import {Clipboard} from '@angular/cdk/clipboard';
-import {unparse} from 'papaparse';
 
 import {MatDialog} from '@angular/material/dialog';
 import {Movement} from '../../types/movement/movement.types';
 import {RemoteDataDataSource} from './remote-data-datasource';
 
-import {DomSanitizer} from '@angular/platform-browser';
 import {SelectionModel} from '@angular/cdk/collections';
+import {DomSanitizer} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 import {JSSdkLocalStorageService} from '../../services/storage.service';
 import {RemoteDataColumnMenuComponent} from './remote-data-column-menu.component';
 
-import {filter, takeUntil} from 'rxjs/operators';
-
 import {Subject} from 'rxjs';
 
+import {AbstractArrayNode, AbstractNode, And, Eq, Limit, Query, QueryStringifier, Sort} from 'rollun-ts-rql';
 import {CustomRemoteDataService} from './custom-remote-data.service';
 import {MovementResponse} from './remote-data.service';
-import {
-  AbstractArrayNode,
-  AbstractLogicalNode,
-  AbstractNode,
-  And,
-  Eq,
-  Ge,
-  In,
-  Le,
-  Like,
-  Limit,
-  Or,
-  Query,
-  QueryStringifier,
-  Sort,
-} from 'rollun-ts-rql';
 
 /**
  * Interface of a CustomRQLFilterExtension which will be used to

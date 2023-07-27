@@ -18,8 +18,8 @@ import {VersionSupportFilterService} from './version-support-filter.service';
 
 import {SelectionModel} from '@angular/cdk/collections';
 
-import {Config} from './version-support.component';
 import {VersionSupportConfigMenuComponent} from './version-support-config-menu.component';
+import {Config} from './version-support.component';
 
 @Component({
   selector: 'command-bar',

@@ -12,10 +12,10 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {RemoteDataService} from './remote-data.service';
+import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import {RemoteDataService} from './remote-data.service';
 
 /**
  * Custom service which extend the original API service for fetching

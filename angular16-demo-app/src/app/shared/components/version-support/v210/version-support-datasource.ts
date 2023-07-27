@@ -15,9 +15,9 @@
 import {DataSource} from '@angular/cdk/collections';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {Observable, BehaviorSubject} from 'rxjs';
-import {Movement} from '../../../types/movement/v210/movement.types';
 import {TranslateService} from '@ngx-translate/core';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Movement} from '../../../types/movement/v210/movement.types';
 
 /**
  * Data source for the VersionSupport view. This class should

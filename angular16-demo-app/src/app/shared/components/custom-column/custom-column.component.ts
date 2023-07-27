@@ -13,45 +13,38 @@
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
+  AfterViewChecked,
   AfterViewInit,
   Component,
-  Input,
-  ViewChild,
-  Output,
-  EventEmitter,
-  SimpleChanges,
-  HostBinding,
-  Inject,
-  OnInit,
-  AfterViewChecked,
-  TemplateRef,
   ElementRef,
-  ViewEncapsulation,
+  EventEmitter,
+  HostBinding,
+  Input,
   OnChanges,
-  ChangeDetectionStrategy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 
 import {Clipboard} from '@angular/cdk/clipboard';
-import {unparse} from 'papaparse';
 
 import {MatDialog} from '@angular/material/dialog';
 import {Movement} from '../../types/movement/movement.types';
 import {CustomColumnDataSource} from './custom-column-datasource';
 
-import {DomSanitizer} from '@angular/platform-browser';
 import {SelectionModel} from '@angular/cdk/collections';
+import {DomSanitizer} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 import {JSSdkLocalStorageService} from '../../services/storage.service';
 import {CustomColumnColumnMenuComponent} from './custom-column-column-menu.component';
 
-import {filter, takeUntil} from 'rxjs/operators';
-
-import {Subject} from 'rxjs';
-
-import {CustomColumnService, MovementResponse} from './custom-column.service';
+import {CustomColumnService} from './custom-column.service';
 
 export interface Column {
   /** Column name **/

@@ -15,9 +15,9 @@
 import {DataSource} from '@angular/cdk/collections';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {Observable, BehaviorSubject} from 'rxjs';
-import {Movement} from '../../types/movement/movement.types';
 import {TranslateService} from '@ngx-translate/core';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Movement} from '../../types/movement/movement.types';
 
 /**
  * Data source for the CommandBarActions view. This class should

@@ -12,22 +12,22 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
+import {NgIf} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
 import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatIconModule} from '@angular/material/icon';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {MatButtonModule} from '@angular/material/button';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatIconModule} from '@angular/material/icon';
-import {FormsModule} from '@angular/forms';
-import {NgIf} from '@angular/common';
 import {ExportConfirmationDialogComponent} from './components/export-confirmation-dialog/export-confirmation-dialog.component';
 import {HorizontalOverflowDirective} from './directives/horizontal-overflow.directive';
 import {ResizeColumnDirective} from './directives/resize-column.directive';
 import {ValidateInputDirective} from './directives/validate-input.directive';
-import {ShowDescriptionPipe} from './pipes/show-description.pipe';
 import {SearchStringPipe} from './pipes/search-string.pipe';
+import {ShowDescriptionPipe} from './pipes/show-description.pipe';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);

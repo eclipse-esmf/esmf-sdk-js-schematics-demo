@@ -19,6 +19,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^16.1.0",
+    "@angular/cdk": "^16.1.0",
     "@angular/common": "^16.1.0",
     "@angular/compiler": "^16.1.0",
     "@angular/core": "^16.1.0",
@@ -47,7 +48,7 @@
     "@angular/cli": "^16.1.0",
     "@angular/compiler-cli": "^16.1.0",
     "@cypress/schematic": "1.6.0",
-    "@esmf/semantic-ui-schematics": "file:../../esmf-sdk-js-schematics",
+    "@esmf/semantic-ui-schematics": "https://github.com/eclipse-esmf/esmf-sdk-js-schematics/releases/download/v2.4.0/esmf-semantic-ui-schematics-2.4.0.tgz",
     "@types/jasmine": "3.10.3",
     "@types/node": "20.4.2",
     "@types/papaparse": "5.3.7",

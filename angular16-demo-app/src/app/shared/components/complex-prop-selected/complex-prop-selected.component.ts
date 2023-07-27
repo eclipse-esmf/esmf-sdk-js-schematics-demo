@@ -13,45 +13,38 @@
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
+  AfterViewChecked,
   AfterViewInit,
   Component,
-  Input,
-  ViewChild,
-  Output,
-  EventEmitter,
-  SimpleChanges,
-  HostBinding,
-  Inject,
-  OnInit,
-  AfterViewChecked,
-  TemplateRef,
   ElementRef,
-  ViewEncapsulation,
+  EventEmitter,
+  HostBinding,
+  Input,
   OnChanges,
-  ChangeDetectionStrategy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 
 import {Clipboard} from '@angular/cdk/clipboard';
-import {unparse} from 'papaparse';
 
 import {MatDialog} from '@angular/material/dialog';
 import {Movement} from '../../types/movement/movement.types';
 import {ComplexPropSelectedDataSource} from './complex-prop-selected-datasource';
 
-import {DomSanitizer} from '@angular/platform-browser';
 import {SelectionModel} from '@angular/cdk/collections';
+import {DomSanitizer} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 import {JSSdkLocalStorageService} from '../../services/storage.service';
 import {ComplexPropSelectedColumnMenuComponent} from './complex-prop-selected-column-menu.component';
 
-import {filter, takeUntil} from 'rxjs/operators';
-
-import {Subject} from 'rxjs';
-
-import {ComplexPropSelectedService, MovementResponse} from './complex-prop-selected.service';
+import {ComplexPropSelectedService} from './complex-prop-selected.service';
 
 export interface Column {
   /** Column name **/

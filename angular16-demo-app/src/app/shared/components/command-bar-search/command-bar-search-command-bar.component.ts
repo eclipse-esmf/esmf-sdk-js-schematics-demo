@@ -18,8 +18,8 @@ import {CommandBarSearchFilterService} from './command-bar-search-filter.service
 
 import {SelectionModel} from '@angular/cdk/collections';
 
-import {Config} from './command-bar-search.component';
 import {CommandBarSearchConfigMenuComponent} from './command-bar-search-config-menu.component';
+import {Config} from './command-bar-search.component';
 
 @Component({
   selector: 'command-bar',

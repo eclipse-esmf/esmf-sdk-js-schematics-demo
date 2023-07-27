@@ -12,10 +12,10 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
-import {Component, EventEmitter, Output} from '@angular/core';
-import {Column} from './excluded-property.component';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {JSSdkLocalStorageService} from '../../services/storage.service';
+import {Column} from './excluded-property.component';
 
 @Component({
   selector: 'excluded-property-column-menu',
@@ -61,7 +61,7 @@ export class ExcludedPropertyColumnMenuComponent {
   }
 
   /**
-   * Store columns locally and update displayed columns afterward
+   * Store columns locally and update displayed columns afterwards
    */
   storeColumns(): void {
     this.closeColumnMenu = true;

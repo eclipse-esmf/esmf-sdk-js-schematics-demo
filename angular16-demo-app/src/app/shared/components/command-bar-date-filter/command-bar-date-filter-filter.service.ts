@@ -15,14 +15,12 @@
 
 import {TranslateService} from '@ngx-translate/core';
 
-import {AbstractControl, FormControl, ValidationErrors, ValidatorFn} from '@angular/forms';
-import {Injectable, Inject} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
+import {FormControl} from '@angular/forms';
 
 import {FormGroup} from '@angular/forms';
 import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats} from '@angular/material/core';
 import moment from 'moment';
-
-import {Movement} from '../../types/movement/movement.types';
 
 export enum FilterEnums {
   Date,

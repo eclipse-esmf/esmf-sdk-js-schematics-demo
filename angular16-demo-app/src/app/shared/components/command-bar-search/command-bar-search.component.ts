@@ -13,29 +13,27 @@
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
+  AfterViewChecked,
   AfterViewInit,
   Component,
-  Input,
-  ViewChild,
-  Output,
-  EventEmitter,
-  SimpleChanges,
-  HostBinding,
-  Inject,
-  OnInit,
-  AfterViewChecked,
-  TemplateRef,
   ElementRef,
-  ViewEncapsulation,
-  OnDestroy,
+  EventEmitter,
+  HostBinding,
+  Input,
   OnChanges,
-  ChangeDetectionStrategy,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 
-import {FilterEnums, CommandBarSearchFilterService} from './command-bar-search-filter.service';
+import {CommandBarSearchFilterService, FilterEnums} from './command-bar-search-filter.service';
 
 import {Clipboard} from '@angular/cdk/clipboard';
 import {unparse} from 'papaparse';
@@ -46,19 +44,19 @@ import {MatDialog} from '@angular/material/dialog';
 import {Movement} from '../../types/movement/movement.types';
 import {CommandBarSearchDataSource} from './command-bar-search-datasource';
 
-import {DomSanitizer} from '@angular/platform-browser';
 import {SelectionModel} from '@angular/cdk/collections';
+import {DomSanitizer} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 import {JSSdkLocalStorageService} from '../../services/storage.service';
 import {CommandBarSearchColumnMenuComponent} from './command-bar-search-column-menu.component';
 
 import {CommandBarSearchConfigMenuComponent} from './command-bar-search-config-menu.component';
 
-import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
+import {debounceTime, filter, takeUntil} from 'rxjs/operators';
 
 import {Subject} from 'rxjs';
 
-import {CommandBarSearchService, MovementResponse} from './command-bar-search.service';
+import {CommandBarSearchService} from './command-bar-search.service';
 
 export interface Config {
   /** Column name **/

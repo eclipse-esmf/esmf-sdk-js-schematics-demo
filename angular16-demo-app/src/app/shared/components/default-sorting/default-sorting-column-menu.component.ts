@@ -12,10 +12,10 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
-import {Component, EventEmitter, Output} from '@angular/core';
-import {Column} from './default-sorting.component';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {JSSdkLocalStorageService} from '../../services/storage.service';
+import {Column} from './default-sorting.component';
 
 @Component({
   selector: 'default-sorting-column-menu',
@@ -61,7 +61,7 @@ export class DefaultSortingColumnMenuComponent {
   }
 
   /**
-   * Store columns locally and update displayed columns afterward
+   * Store columns locally and update displayed columns afterwards
    */
   storeColumns(): void {
     this.closeColumnMenu = true;

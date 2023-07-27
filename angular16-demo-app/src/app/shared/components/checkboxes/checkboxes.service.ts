@@ -13,10 +13,9 @@
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Movement} from '../../types/movement/movement.types';
 import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import {Movement} from '../../types/movement/movement.types';
 
 export interface MovementResponse {
   items: Movement[];

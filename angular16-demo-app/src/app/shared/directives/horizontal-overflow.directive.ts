@@ -13,9 +13,9 @@
 
 /**  **/
 import {AfterContentInit, Directive, ElementRef, HostListener, Input, NgZone, OnDestroy} from '@angular/core';
+import {MatChipListbox} from '@angular/material/chips';
 import {Subject} from 'rxjs';
 import {take, takeUntil} from 'rxjs/operators';
-import {MatChipListbox} from '@angular/material/chips';
 
 @Directive({
   selector: '[horizontalOverflow]',

@@ -13,7 +13,7 @@
 
 /**  **/
 import {Component, EventEmitter, Output} from '@angular/core';
-import {FilterEnums, FilterType, CommandBarEnumFilterFilterService} from './command-bar-enum-filter-filter.service';
+import {CommandBarEnumFilterFilterService, FilterEnums, FilterType} from './command-bar-enum-filter-filter.service';
 
 @Component({
   selector: 'chip-list',

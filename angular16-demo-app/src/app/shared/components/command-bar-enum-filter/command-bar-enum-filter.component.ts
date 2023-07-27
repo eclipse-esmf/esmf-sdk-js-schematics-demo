@@ -13,28 +13,26 @@
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {
+  AfterViewChecked,
   AfterViewInit,
   Component,
-  Input,
-  ViewChild,
-  Output,
-  EventEmitter,
-  SimpleChanges,
-  HostBinding,
-  Inject,
-  OnInit,
-  AfterViewChecked,
-  TemplateRef,
   ElementRef,
-  ViewEncapsulation,
+  EventEmitter,
+  HostBinding,
+  Input,
   OnChanges,
-  ChangeDetectionStrategy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 
-import {FilterEnums, CommandBarEnumFilterFilterService} from './command-bar-enum-filter-filter.service';
+import {CommandBarEnumFilterFilterService} from './command-bar-enum-filter-filter.service';
 
 import {Clipboard} from '@angular/cdk/clipboard';
 import {unparse} from 'papaparse';
@@ -42,20 +40,18 @@ import {unparse} from 'papaparse';
 import {Action, ExportConfirmationDialogComponent} from '../export-confirmation-dialog/export-confirmation-dialog.component';
 
 import {MatDialog} from '@angular/material/dialog';
-import {Movement, WarningLevel} from '../../types/movement/movement.types';
+import {Movement} from '../../types/movement/movement.types';
 import {CommandBarEnumFilterDataSource} from './command-bar-enum-filter-datasource';
 
-import {DomSanitizer} from '@angular/platform-browser';
 import {SelectionModel} from '@angular/cdk/collections';
+import {DomSanitizer} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 import {JSSdkLocalStorageService} from '../../services/storage.service';
 import {CommandBarEnumFilterColumnMenuComponent} from './command-bar-enum-filter-column-menu.component';
 
-import {debounceTime, filter, map, takeUntil} from 'rxjs/operators';
+import {filter} from 'rxjs/operators';
 
-import {Subject} from 'rxjs';
-
-import {CommandBarEnumFilterService, MovementResponse} from './command-bar-enum-filter.service';
+import {CommandBarEnumFilterService} from './command-bar-enum-filter.service';
 
 export interface Column {
   /** Column name **/

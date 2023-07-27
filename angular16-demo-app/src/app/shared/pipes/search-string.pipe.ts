@@ -13,7 +13,6 @@
 
 /**  **/
 import {Pipe, PipeTransform} from '@angular/core';
-import {FormControl} from '@angular/forms';
 @Pipe({
   name: 'searchString',
   pure: true,
