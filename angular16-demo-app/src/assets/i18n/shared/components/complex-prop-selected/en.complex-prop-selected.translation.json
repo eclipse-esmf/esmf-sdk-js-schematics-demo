@@ -1,0 +1,76 @@
+{
+  "moving.preferredName": "Moving",
+  "moving.description": "Flag indicating if the position is changing",
+
+  "speedLimitWarning.preferredName": "Speed Limit Warning",
+  "speedLimitWarning.description": "Indicates if speed limit is adhered to.",
+
+  "position.preferredName": "Position",
+  "position.description": "Indicates a position",
+
+  "position.x.preferredName": "x",
+  "position.x.description": "x coordinate in space",
+
+  "position.y.preferredName": "y",
+  "position.y.description": "y coordinate in space",
+
+  "position.z.preferredName": "z",
+  "position.z.description": "z coordinate in space",
+
+  "startDate.preferredName": "Start Date",
+  "startDate.description": "Date, when the batch was started",
+
+  "endDate.preferredName": "End Date",
+  "endDate.description": "Date, when the last part of the batch was produced",
+
+  "customRowActions.preferredName": "Actions",
+  "customRowActions.description": "Custom row actions",
+
+  "preferredName": "Movement",
+  "description": "Aspect for movement information",
+
+  "exportData": {
+    "title": "Export data",
+    "description": {
+      "caseOne": "Export the maximum of {{maxExportRows}} rows from all {{allColumns}} columns.",
+      "caseTwo": {
+        "singular": "Export the maximum of {{maxExportRows}} rows from the displayed {{displayedColumns}} column.",
+        "plural": "Export the maximum of {{maxExportRows}} rows from the displayed {{displayedColumns}} columns."
+      },
+      "caseThree": {
+        "singular": "Export all data from the selected {{displayedColumns}} column of the current page.",
+        "plural": "Export all data from the selected {{displayedColumns}} columns of the current page."
+      },
+      "caseFour": "Export all data from all {{allColumns}} columns of the current page.",
+      "default": "Export data."
+    },
+    "exportAllPages": "export the maximum of {{maxExportRows}} rows",
+    "exportAllColumns": "export all data from all {{allColumns}} columns"
+  },
+
+  "validation": {
+    "invalidInput": "Input can only contain",
+    "blankSpace": "Input can only contain blank space between characters",
+    "empty_string_columns_array": "You have to select at least one column to search in",
+    "min_char_no": "Minimum number of characters is",
+    "max_char_no": "Maximum number of characters is"
+  },
+
+  "tableActions": {
+    "openColumnsMenu": "Open columns menu",
+    "refreshData": "Refresh data",
+    "exportData": "Export data",
+    "openConfig": "Open configuration"
+  },
+
+  "scroll": {
+    "left": "Scroll left",
+    "right": "Scroll right"
+  },
+
+  "cancel": "Cancel",
+  "apply": "Apply",
+  "restoreDefaults": "Restore Defaults",
+  "columns": "Columns",
+  "export": "Export"
+}

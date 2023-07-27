@@ -1,0 +1,190 @@
+<!--
+  ~ Copyright (c) 2023 Robert Bosch Manufacturing Solutions GmbH
+  ~
+  ~ See the AUTHORS file(s) distributed with this work for
+  ~ additional information regarding authorship.
+  ~
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at https://mozilla.org/MPL/2.0/.
+  ~
+  ~ SPDX-License-Identifier: MPL-2.0
+  -->
+
+<mat-sidenav-container class="sidenav" autosize>
+  <mat-sidenav mode="side" opened>
+    <mat-selection-list hideSingleSelectionIndicator [multiple]="false">
+      <mat-list-option data-test="basic-config" selected (click)="changeComponent('base-config')">
+        <div class="option">
+          <mat-icon>home</mat-icon>
+          <span>Basic Config</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="checkboxes" (click)="changeComponent('checkboxes')">
+        <div class="option">
+          <mat-icon>checklist</mat-icon>
+          <span>Checkboxes Config</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="command-bar" (click)="changeComponent('command-bar')">
+        <div class="option">
+          <mat-icon>table_chart</mat-icon>
+          <span>Command Bar Config</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="command-bar-actions" (click)="changeComponent('command-bar-actions')">
+        <div class="option">
+          <mat-icon>call_to_action</mat-icon>
+          <span>Actions Config</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="command-bar-date-filter" (click)="changeComponent('command-bar-date-filter')">
+        <div class="option">
+          <mat-icon>today</mat-icon>
+          <span>Date Config</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="command-bar-enum" (click)="changeComponent('command-bar-enum-filter')">
+        <div class="option">
+          <mat-icon>list_alt</mat-icon>
+          <span>Enum Config</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="command-bar-search" (click)="changeComponent('command-bar-search')">
+        <div class="option">
+          <mat-icon>search</mat-icon>
+          <span>Search Config</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="complex-prop-selected" (click)="changeComponent('complex-prop-selected')">
+        <div class="option">
+          <mat-icon>grid_on</mat-icon>
+          <span>Complex Prop Selected</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="custom-column" (click)="changeComponent('custom-column')">
+        <div class="option">
+          <mat-icon>dashboard_customize</mat-icon>
+          <span>Custom column</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="default-sorting" (click)="changeComponent('default-sorting')">
+        <div class="option">
+          <mat-icon>sort</mat-icon>
+          <span>Default Sorting</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="excluded-property" (click)="changeComponent('excluded-property')">
+        <div class="option">
+          <mat-icon>not_interested</mat-icon>
+          <span>Excluded Property</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="row-action-button" (click)="changeComponent('row-action-button')">
+        <div class="option">
+          <mat-icon>toc</mat-icon>
+          <span>Row action buttons</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="version-support" (click)="changeComponent('version-support')">
+        <div class="option">
+          <mat-icon>more_horiz</mat-icon>
+          <span>Version support</span>
+        </div>
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <esmf-ui-base-config
+      *ngIf="currentComponent === 'base-config'"
+      [data]="basicMovementTableData"
+      (copyToClipboardEvent)="copyToClipboard($event)"
+      (rowClickEvent)="rowClick($event)"
+    ></esmf-ui-base-config>
+
+    <esmf-ui-checkboxes
+      *ngIf="currentComponent === 'checkboxes'"
+      [data]="basicMovementTableData"
+      (copyToClipboardEvent)="copyToClipboard($event)"
+      (rowClickEvent)="rowClick($event)"
+    ></esmf-ui-checkboxes>
+
+    <esmf-ui-command-bar-actions
+      *ngIf="currentComponent === 'command-bar-actions'"
+      [data]="basicMovementTableData"
+      (copyToClipboardEvent)="copyToClipboard($event)"
+      (rowClickEvent)="rowClick($event)"
+    ></esmf-ui-command-bar-actions>
+
+    <esmf-ui-command-bar
+      *ngIf="currentComponent === 'command-bar'"
+      [data]="basicMovementTableData"
+      (copyToClipboardEvent)="copyToClipboard($event)"
+      (rowClickEvent)="rowClick($event)"
+    ></esmf-ui-command-bar>
+
+    <esmf-ui-command-bar-date-filter
+      *ngIf="currentComponent === 'command-bar-date-filter'"
+      [data]="basicMovementTableData"
+      (copyToClipboardEvent)="copyToClipboard($event)"
+      (rowClickEvent)="rowClick($event)"
+    ></esmf-ui-command-bar-date-filter>
+
+    <esmf-ui-command-bar-enum-filter
+      *ngIf="currentComponent === 'command-bar-enum-filter'"
+      [data]="basicMovementTableData"
+      (copyToClipboardEvent)="copyToClipboard($event)"
+      (rowClickEvent)="rowClick($event)"
+    ></esmf-ui-command-bar-enum-filter>
+
+    <esmf-ui-command-bar-search
+      *ngIf="currentComponent === 'command-bar-search'"
+      [data]="basicMovementTableData"
+      (copyToClipboardEvent)="copyToClipboard($event)"
+      (rowClickEvent)="rowClick($event)"
+    ></esmf-ui-command-bar-search>
+
+    <esmf-ui-complex-prop-selected
+      *ngIf="currentComponent === 'complex-prop-selected'"
+      [data]="basicMovementTableData"
+      (copyToClipboardEvent)="copyToClipboard($event)"
+      (rowClickEvent)="rowClick($event)"
+    ></esmf-ui-complex-prop-selected>
+
+    <esmf-ui-custom-column
+      *ngIf="currentComponent === 'custom-column'"
+      [data]="basicMovementTableData"
+      (copyToClipboardEvent)="copyToClipboard($event)"
+      (rowClickEvent)="rowClick($event)"
+    ></esmf-ui-custom-column>
+
+    <esmf-ui-default-sorting
+      *ngIf="currentComponent === 'default-sorting'"
+      [data]="basicMovementTableData"
+      (copyToClipboardEvent)="copyToClipboard($event)"
+      (rowClickEvent)="rowClick($event)"
+    ></esmf-ui-default-sorting>
+
+    <esmf-ui-excluded-property
+      *ngIf="currentComponent === 'excluded-property'"
+      [data]="basicMovementTableData"
+      (copyToClipboardEvent)="copyToClipboard($event)"
+      (rowClickEvent)="rowClick($event)"
+    ></esmf-ui-excluded-property>
+
+    <esmf-ui-row-action-button
+      *ngIf="currentComponent === 'row-action-button'"
+      [data]="basicMovementTableData"
+      (copyToClipboardEvent)="copyToClipboard($event)"
+      (rowClickEvent)="rowClick($event)"
+    ></esmf-ui-row-action-button>
+
+    <esmf-ui-version-support-v210
+      *ngIf="currentComponent === 'version-support'"
+      [data]="versionSupportData"
+      (copyToClipboardEvent)="copyToClipboard($event)"
+      (rowClickEvent)="rowClick($event)"
+    ></esmf-ui-version-support-v210>
+  </mat-sidenav-content>
+</mat-sidenav-container>
