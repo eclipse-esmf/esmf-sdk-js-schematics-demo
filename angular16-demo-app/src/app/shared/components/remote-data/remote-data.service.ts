@@ -17,6 +17,7 @@ import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {Observable} from 'rxjs';
 import {Movement} from '../../types/movement/movement.types';
+import {environment} from "../../../../environments/environment";
 
 export interface MovementResponse {
   items: Movement[];
@@ -31,13 +32,15 @@ export type MovementPayload<T extends GenericMovementPayload = GenericMovementPa
   query: string;
 };
 
+const baseUrl = (environment as any).baseUrl || '';
+
 @Injectable({
   providedIn: 'root',
 })
 export class RemoteDataService {
   constructor(protected http: HttpClient, private translateService: TranslateService) {
     this.http
-      .get(`assets/i18n/shared/components/remote-data/${this.translateService.currentLang}.remote-data.translation.json`)
+      .get(`${baseUrl}assets/i18n/shared/components/remote-data/${this.translateService.currentLang}.remote-data.translation.json`)
       .subscribe(translations => {
         this.translateService.setTranslation(this.translateService.currentLang, translations, true);
       });

@@ -39,7 +39,7 @@ jobs:
         working-directory: angular16-demo-app
 
       - name: Build demo application
-        run: npm run build -- --deploy-url ./esmf-sdk-js-schematics-demo/
+        run: npm run build:prod -- --deploy-url ./esmf-sdk-js-schematics-demo/
         working-directory: angular16-demo-app
 
       - name: Deploy
