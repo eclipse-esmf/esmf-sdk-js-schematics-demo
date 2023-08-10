@@ -15,8 +15,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import {environment} from '../../../../environments/environment';
 import {Movement} from '../../types/movement/movement.types';
-import {environment} from "../../../../environments/environment";
 
 export interface MovementResponse {
   items: Movement[];

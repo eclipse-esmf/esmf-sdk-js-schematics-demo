@@ -22,6 +22,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {environment} from '../../environments/environment';
 import {ExportConfirmationDialogComponent} from './components/export-confirmation-dialog/export-confirmation-dialog.component';
 import {HorizontalOverflowDirective} from './directives/horizontal-overflow.directive';
 import {ResizeColumnDirective} from './directives/resize-column.directive';
@@ -29,8 +30,10 @@ import {ValidateInputDirective} from './directives/validate-input.directive';
 import {SearchStringPipe} from './pipes/search-string.pipe';
 import {ShowDescriptionPipe} from './pipes/show-description.pipe';
 
+const baseUrl = (environment as any).baseUrl || '';
+
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, `${baseUrl}/assets/i18n/`);
 }
 
 @NgModule({

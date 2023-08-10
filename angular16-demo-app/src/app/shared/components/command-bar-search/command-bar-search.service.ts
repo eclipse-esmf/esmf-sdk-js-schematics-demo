@@ -15,8 +15,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import {environment} from '../../../../environments/environment';
 import {Movement} from '../../types/movement/movement.types';
-import {environment} from "../../../../environments/environment";
 
 export interface MovementResponse {
   items: Movement[];
@@ -39,7 +39,9 @@ const baseUrl = (environment as any).baseUrl || '';
 export class CommandBarSearchService {
   constructor(protected http: HttpClient, private translateService: TranslateService) {
     this.http
-      .get(`${baseUrl}assets/i18n/shared/components/command-bar-search/${this.translateService.currentLang}.command-bar-search.translation.json`)
+      .get(
+        `${baseUrl}/assets/i18n/shared/components/command-bar-search/${this.translateService.currentLang}.command-bar-search.translation.json`
+      )
       .subscribe(translations => {
         this.translateService.setTranslation(this.translateService.currentLang, translations, true);
       });
