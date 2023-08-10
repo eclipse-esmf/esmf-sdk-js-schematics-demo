@@ -13,4 +13,5 @@
 
 export const environment = {
   production: true,
+  baseUrl: 'esmf-sdk-js-schematics-demo',
 };

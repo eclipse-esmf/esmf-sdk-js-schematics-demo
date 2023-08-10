@@ -16,6 +16,7 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {Movement} from '../../../types/movement/v210/movement.types';
+import {environment} from "../../../../../environments/environment";
 
 export interface MovementResponse {
   items: Movement[];
@@ -30,13 +31,15 @@ export type MovementPayload<T extends GenericMovementPayload = GenericMovementPa
   query: string;
 };
 
+const baseUrl = (environment as any).baseUrl || '';
+
 @Injectable({
   providedIn: 'root',
 })
 export class VersionSupportService {
   constructor(protected http: HttpClient, private translateService: TranslateService) {
     this.http
-      .get(`assets/i18n/shared/components/version-support/v210/${this.translateService.currentLang}.version-support.translation.json`)
+      .get(`${baseUrl}assets/i18n/shared/components/version-support/v210/${this.translateService.currentLang}.version-support.translation.json`)
       .subscribe(translations => {
         this.translateService.setTranslation(this.translateService.currentLang, translations, true);
       });
