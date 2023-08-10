@@ -48,7 +48,7 @@ describe('Checkbox', (): void => {
 
   it('should select one row', (): void => {
     cy.get('[data-test="cell-checkbox"]').first().click();
-    cy.get('[data-test="header-checkbox"]').should('have.attr', 'ng-reflect-indeterminate', 'true')
+    cy.get('[data-test="header-checkbox"]').should('have.attr', 'ng-reflect-indeterminate', 'true');
     cy.get('[data-test="cell-checkbox"]').first().should('have.class', 'mat-mdc-checkbox-checked');
     cy.get('[data-test="cell-checkbox"]').first().click();
   });

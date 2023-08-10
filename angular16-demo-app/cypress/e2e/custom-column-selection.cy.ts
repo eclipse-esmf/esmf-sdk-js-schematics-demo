@@ -29,58 +29,64 @@ describe('Command bar with custom column selection and deselection', (): void =>
 
     const columnsToDisplay = cy.get('mat-selection-list mat-list-option [data-test="column-option-preferred-name"]');
 
-    columnsToDisplay.each((prop: JQuery<HTMLElement>, index: number, arr: any) => {
-      cy.wrap(prop).invoke('text')
-        .then((text) => {
-          if (columns.find(c => text === c)) {
-            cy.wrap(prop).click({force: true});
-            cy.get('[data-test="column-menu-apply-button"]').click();
-            tableColumnsProcessed.push(text);
-            cy.get('[data-test="mat-table-menu-button"]').click();
-          }
-        })
-    }).then(() => {
-      cy.get('[data-test="table"]').within(() => {
-        cy.get('[data-test="table-header-text"]').should('not.exist')
+    columnsToDisplay
+      .each((prop: JQuery<HTMLElement>, index: number, arr: any) => {
+        cy.wrap(prop)
+          .invoke('text')
+          .then(text => {
+            if (columns.find(c => text === c)) {
+              cy.wrap(prop).click({force: true});
+              cy.get('[data-test="column-menu-apply-button"]').click();
+              tableColumnsProcessed.push(text);
+              cy.get('[data-test="mat-table-menu-button"]').click();
+            }
+          });
+      })
+      .then(() => {
+        cy.get('[data-test="table"]').within(() => {
+          cy.get('[data-test="table-header-text"]').should('not.exist');
+        });
       });
-    });
   });
 
   it('should reselect all columns and check', (): void => {
     const columnsToDisplay = cy.get('mat-selection-list mat-list-option [data-test="column-option-preferred-name"]');
 
-    columnsToDisplay.each((prop: JQuery<HTMLElement>, index: number, arr: any) => {
-      cy.wrap(prop).invoke('text')
-        .then((text) => {
-          cy.wrap(prop).click({force: true});
-          cy.get('[data-test="column-menu-apply-button"]').click();
-          cy.get('[data-test="mat-table-menu-button"]').click();
-        })
-    }).then(() => {
-
-      cy.get('[data-test="table"]').within(() => {
-        cy.get('[data-test="table-header-text"]').should('have.length', 4);
+    columnsToDisplay
+      .each((prop: JQuery<HTMLElement>, index: number, arr: any) => {
+        cy.wrap(prop)
+          .invoke('text')
+          .then(text => {
+            cy.wrap(prop).click({force: true});
+            cy.get('[data-test="column-menu-apply-button"]').click();
+            cy.get('[data-test="mat-table-menu-button"]').click();
+          });
+      })
+      .then(() => {
+        cy.get('[data-test="table"]').within(() => {
+          cy.get('[data-test="table-header-text"]').should('have.length', 4);
+        });
       });
-    });
   });
 
   it('should deselect all columns and restore default', (): void => {
     const columnsToDisplay = cy.get('mat-selection-list mat-list-option [data-test="column-option-preferred-name"]');
 
     columnsToDisplay.each((prop: JQuery<HTMLElement>, index: number, arr: any) => {
-      cy.wrap(prop).invoke('text')
-        .then((text) => {
+      cy.wrap(prop)
+        .invoke('text')
+        .then(text => {
           if (columns.find(c => text === c)) {
             cy.wrap(prop).click({force: true});
             cy.get('[data-test="column-menu-apply-button"]').click();
             tableColumnsProcessed.push(text);
             cy.get('[data-test="mat-table-menu-button"]').click();
           }
-        })
+        });
     });
 
     cy.get('[data-test="table"]').within(() => {
-      cy.get('[data-test="table-header-text"]').should('not.exist')
+      cy.get('[data-test="table-header-text"]').should('not.exist');
     });
 
     cy.get('[data-test="column-menu-apply-button"]').click({multiple: true});
