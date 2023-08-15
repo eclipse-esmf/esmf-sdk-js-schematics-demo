@@ -1,6 +1,6 @@
 # SDK JS Schematics :: Demo APP ✨
 
-Experience the live demo of our application available [JS Schematics Demo](https://eclipse-esmf.github.io/esmf-sdk-js-schematics-demo/)
+Experience the JS Schematics by trying its [JS Schematics Demo](https://eclipse-esmf.github.io/esmf-sdk-js-schematics-demo/)
 
 Feel free to provide feedback or report any issues you encounter.
 
