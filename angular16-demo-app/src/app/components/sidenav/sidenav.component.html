@@ -96,95 +96,115 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <esmf-ui-base-config
-      *ngIf="currentComponent === 'base-config'"
-      [data]="basicMovementTableData"
-      (copyToClipboardEvent)="copyToClipboard($event)"
-      (rowClickEvent)="rowClick($event)"
-    ></esmf-ui-base-config>
+    <mat-tab-group mat-stretch-tabs>
+      <mat-tab label="Table view">
+        <fieldset>
+          <esmf-ui-base-config-table
+            *ngIf="currentComponent === 'base-config'"
+            [data]="basicMovementTableData">
+          </esmf-ui-base-config-table>
 
-    <esmf-ui-checkboxes
-      *ngIf="currentComponent === 'checkboxes'"
-      [data]="basicMovementTableData"
-      (copyToClipboardEvent)="copyToClipboard($event)"
-      (rowClickEvent)="rowClick($event)"
-    ></esmf-ui-checkboxes>
 
-    <esmf-ui-command-bar-actions
-      *ngIf="currentComponent === 'command-bar-actions'"
-      [data]="basicMovementTableData"
-      (copyToClipboardEvent)="copyToClipboard($event)"
-      (rowClickEvent)="rowClick($event)"
-    ></esmf-ui-command-bar-actions>
+          <esmf-ui-checkboxes-table
+            *ngIf="currentComponent === 'checkboxes'"
+            [data]="basicMovementTableData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-checkboxes-table>
 
-    <esmf-ui-command-bar
-      *ngIf="currentComponent === 'command-bar'"
-      [data]="basicMovementTableData"
-      (copyToClipboardEvent)="copyToClipboard($event)"
-      (rowClickEvent)="rowClick($event)"
-    ></esmf-ui-command-bar>
+          <esmf-ui-command-bar-actions-table
+            *ngIf="currentComponent === 'command-bar-actions'"
+            [data]="basicMovementTableData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-command-bar-actions-table>
 
-    <esmf-ui-command-bar-date-filter
-      *ngIf="currentComponent === 'command-bar-date-filter'"
-      [data]="basicMovementTableData"
-      (copyToClipboardEvent)="copyToClipboard($event)"
-      (rowClickEvent)="rowClick($event)"
-    ></esmf-ui-command-bar-date-filter>
+          <esmf-ui-command-bar-table
+            *ngIf="currentComponent === 'command-bar'"
+            [data]="basicMovementTableData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-command-bar-table>
 
-    <esmf-ui-command-bar-enum-filter
-      *ngIf="currentComponent === 'command-bar-enum-filter'"
-      [data]="basicMovementTableData"
-      (copyToClipboardEvent)="copyToClipboard($event)"
-      (rowClickEvent)="rowClick($event)"
-    ></esmf-ui-command-bar-enum-filter>
+          <esmf-ui-command-bar-date-filter-table
+            *ngIf="currentComponent === 'command-bar-date-filter'"
+            [data]="basicMovementTableData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-command-bar-date-filter-table>
 
-    <esmf-ui-command-bar-search
-      *ngIf="currentComponent === 'command-bar-search'"
-      [data]="basicMovementTableData"
-      (copyToClipboardEvent)="copyToClipboard($event)"
-      (rowClickEvent)="rowClick($event)"
-    ></esmf-ui-command-bar-search>
+          <esmf-ui-command-bar-enum-filter-table
+            *ngIf="currentComponent === 'command-bar-enum-filter'"
+            [data]="basicMovementTableData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-command-bar-enum-filter-table>
 
-    <esmf-ui-complex-prop-selected
-      *ngIf="currentComponent === 'complex-prop-selected'"
-      [data]="basicMovementTableData"
-      (copyToClipboardEvent)="copyToClipboard($event)"
-      (rowClickEvent)="rowClick($event)"
-    ></esmf-ui-complex-prop-selected>
+          <esmf-ui-command-bar-search-table
+            *ngIf="currentComponent === 'command-bar-search'"
+            [data]="basicMovementTableData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-command-bar-search-table>
 
-    <esmf-ui-custom-column
-      *ngIf="currentComponent === 'custom-column'"
-      [data]="basicMovementTableData"
-      (copyToClipboardEvent)="copyToClipboard($event)"
-      (rowClickEvent)="rowClick($event)"
-    ></esmf-ui-custom-column>
+          <esmf-ui-complex-prop-selected-table
+            *ngIf="currentComponent === 'complex-prop-selected'"
+            [data]="basicMovementTableData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-complex-prop-selected-table>
 
-    <esmf-ui-default-sorting
-      *ngIf="currentComponent === 'default-sorting'"
-      [data]="basicMovementTableData"
-      (copyToClipboardEvent)="copyToClipboard($event)"
-      (rowClickEvent)="rowClick($event)"
-    ></esmf-ui-default-sorting>
+          <esmf-ui-custom-column-table
+            *ngIf="currentComponent === 'custom-column'"
+            [data]="basicMovementTableData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-custom-column-table>
 
-    <esmf-ui-excluded-property
-      *ngIf="currentComponent === 'excluded-property'"
-      [data]="basicMovementTableData"
-      (copyToClipboardEvent)="copyToClipboard($event)"
-      (rowClickEvent)="rowClick($event)"
-    ></esmf-ui-excluded-property>
+          <esmf-ui-default-sorting-table
+            *ngIf="currentComponent === 'default-sorting'"
+            [data]="basicMovementTableData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-default-sorting-table>
 
-    <esmf-ui-row-action-button
-      *ngIf="currentComponent === 'row-action-button'"
-      [data]="basicMovementTableData"
-      (copyToClipboardEvent)="copyToClipboard($event)"
-      (rowClickEvent)="rowClick($event)"
-    ></esmf-ui-row-action-button>
+          <esmf-ui-excluded-property-table
+            *ngIf="currentComponent === 'excluded-property'"
+            [data]="basicMovementTableData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-excluded-property-table>
 
-    <esmf-ui-version-support-v210
-      *ngIf="currentComponent === 'version-support'"
-      [data]="versionSupportData"
-      (copyToClipboardEvent)="copyToClipboard($event)"
-      (rowClickEvent)="rowClick($event)"
-    ></esmf-ui-version-support-v210>
+          <esmf-ui-row-action-button-table
+            *ngIf="currentComponent === 'row-action-button'"
+            [data]="basicMovementTableData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-row-action-button-table>
+
+          <esmf-ui-version-support-table-v210
+            *ngIf="currentComponent === 'version-support'"
+            [data]="versionSupportData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-version-support-table-v210>
+        </fieldset>
+      </mat-tab>
+      <mat-tab label="Card view">
+        <fieldset>
+<!--          <esmf-ui-version-support-v210-table-->
+<!--            *ngIf="currentComponent === 'version-support'"-->
+<!--            [data]="versionSupportData">-->
+<!--            <ng-template #cardTemplate let-data let-element="versionSupportCardValues"-->
+<!--                         let-getElementValue="getElementValue"-->
+<!--                         let-translateService="translateService">-->
+<!--              <div class="data-card-element" *ngFor="let elem of element">-->
+<!--                <b>{{ translateService.instant('movement.v210.' + elem + '.preferredName') }}</b>: {{ getElementValue(data, elem) }}-->
+<!--              </div>-->
+<!--            </ng-template>-->
+<!--          </esmf-ui-version-support-v210-table>-->
+        </fieldset>
+      </mat-tab>
+    </mat-tab-group>
   </mat-sidenav-content>
 </mat-sidenav-container>
