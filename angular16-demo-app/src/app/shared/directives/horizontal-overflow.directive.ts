@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/**  **/
+/** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 import {AfterContentInit, Directive, ElementRef, HostListener, Input, NgZone, OnDestroy} from '@angular/core';
 import {MatChipListbox} from '@angular/material/chips';
 import {Subject} from 'rxjs';

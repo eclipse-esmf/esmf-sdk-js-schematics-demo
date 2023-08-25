@@ -25,7 +25,7 @@ export class SidenavComponent implements OnInit {
   currentComponent = 'base-config';
   title = 'angular12-demo-app';
 
-  basicMovementTableData: Movement[] = [];
+  basicMovementData: Movement[] = [];
   versionSupportData: Movement210[] = [];
 
   constructor(private _snackBar: MatSnackBar) {}
@@ -35,7 +35,7 @@ export class SidenavComponent implements OnInit {
   }
 
   initializeData(): void {
-    this.basicMovementTableData = [
+    this.basicMovementData = [
       {
         moving: false,
         speedLimitWarning: WarningLevel.Green,
@@ -58,7 +58,7 @@ export class SidenavComponent implements OnInit {
         endDate: new Date(),
       },
     ];
-    this.versionSupportData = [...this.basicMovementTableData];
+    this.versionSupportData = [...this.basicMovementData];
   }
 
   copyToClipboard(event: string) {
