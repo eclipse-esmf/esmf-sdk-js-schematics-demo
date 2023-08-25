@@ -23,6 +23,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {environment} from '../../environments/environment';
+import {ExportCardDialogComponent} from './components/export-confirmation-dialog/export-card-dialog.component';
 import {ExportConfirmationDialogComponent} from './components/export-confirmation-dialog/export-confirmation-dialog.component';
 import {ExportTableDialogComponent} from './components/export-confirmation-dialog/export-table-dialog.component';
 import {HighlightDirective} from './directives/highlight.directive';
@@ -65,6 +66,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SearchStringPipe,
     ExportTableDialogComponent,
     HighlightDirective,
+    ExportCardDialogComponent,
   ],
   declarations: [
     ExportConfirmationDialogComponent,
@@ -75,6 +77,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SearchStringPipe,
     ExportTableDialogComponent,
     HighlightDirective,
+    ExportCardDialogComponent,
   ],
 })
 export class AppSharedModule {}
