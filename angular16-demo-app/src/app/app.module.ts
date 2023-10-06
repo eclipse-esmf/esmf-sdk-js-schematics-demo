@@ -54,6 +54,7 @@ import { DefaultSortingCardModule } from 'src/app/shared/components/default-sort
 import { ExcludedPropertyCardModule } from 'src/app/shared/components/excluded-property-card/excluded-property-card.module';
 import { VersionSupportCardModule } from 'src/app/shared/components/version-support-card/v210/version-support-card.module';
 import { BaseConfigFormModule } from 'src/app/shared/components/base-config-form/base-config-form.module';
+import { VersionSupportFormModule } from 'src/app/shared/components/version-support-form/v210/version-support-form.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent, SidenavComponent],
@@ -107,7 +108,8 @@ import { BaseConfigFormModule } from 'src/app/shared/components/base-config-form
     DefaultSortingCardModule,
     ExcludedPropertyCardModule,
     VersionSupportCardModule,
-    BaseConfigFormModule
+    BaseConfigFormModule,
+    VersionSupportFormModule
   ],
   providers: [],
   bootstrap: [AppComponent],
