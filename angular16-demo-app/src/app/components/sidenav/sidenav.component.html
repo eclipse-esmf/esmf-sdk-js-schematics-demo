@@ -333,6 +333,7 @@
       <mat-tab label="Form" data-test="form-view">
         <fieldset>
           <esmf-ui-base-config-form *ngIf="currentComponent === 'base-config'"></esmf-ui-base-config-form>
+          <esmf-ui-excluded-property-form *ngIf="currentComponent === 'excluded-property'"></esmf-ui-excluded-property-form>
           <esmf-ui-version-support-form *ngIf="currentComponent === 'version-support'"></esmf-ui-version-support-form>
         </fieldset>
       </mat-tab>

@@ -55,6 +55,7 @@ import { ExcludedPropertyCardModule } from 'src/app/shared/components/excluded-p
 import { VersionSupportCardModule } from 'src/app/shared/components/version-support-card/v210/version-support-card.module';
 import { BaseConfigFormModule } from 'src/app/shared/components/base-config-form/base-config-form.module';
 import { VersionSupportFormModule } from 'src/app/shared/components/version-support-form/v210/version-support-form.module';
+import { ExcludedPropertyFormModule } from 'src/app/shared/components/excluded-property-form/excluded-property-form.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent, SidenavComponent],
@@ -109,7 +110,8 @@ import { VersionSupportFormModule } from 'src/app/shared/components/version-supp
     ExcludedPropertyCardModule,
     VersionSupportCardModule,
     BaseConfigFormModule,
-    VersionSupportFormModule
+    VersionSupportFormModule,
+    ExcludedPropertyFormModule
   ],
   providers: [],
   bootstrap: [AppComponent],
