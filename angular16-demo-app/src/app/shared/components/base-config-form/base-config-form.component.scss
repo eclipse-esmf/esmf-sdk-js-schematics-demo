@@ -1,0 +1,46 @@
+/*!
+ * Copyright (c) 2023 Robert Bosch Manufacturing Solutions GmbH
+ *
+ * See the AUTHORS file(s) distributed with this work for
+ * additional information regarding authorship.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+/** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
+
+::ng-deep .mat-mdc-form-field-text-suffix {
+  padding-left: 5px;
+  color: gray;
+  font-size: smaller;
+}
+
+form.BaseConfig-form {
+  display: flex;
+  flex-flow: column nowrap;
+
+  .form-fields > * {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 1rem 0;
+  }
+
+  .form-actions {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    padding: 1rem 0;
+
+    &.disabled {
+      display: none;
+    }
+
+    button + button {
+      margin-left: 1rem;
+    }
+  }
+}
