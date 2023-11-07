@@ -72,6 +72,7 @@ export class BaseConfigCardComponent implements OnInit, AfterViewInit {
 
   dataToShow: Array<Movement> = [];
   totalItems: number = 0;
+  dataLoadError = false;
 
   baseConfigCardCardValues = Object.values(BaseConfigCardCardValues);
 

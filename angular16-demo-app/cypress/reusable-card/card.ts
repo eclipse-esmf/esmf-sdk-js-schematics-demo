@@ -11,8 +11,8 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import { paginatorTests } from "./paginator.spec";
-import { exportDialogTests } from "./export-dialog.spec";
+import {exportDialogTests} from './export-dialog.spec';
+import {paginatorTests} from './paginator.spec';
 
 export function cardTests(includePaginator = true, includeExportDialog = true, hasRemoteDataCall = false): void {
   describe('Card functionalities', (): void => {

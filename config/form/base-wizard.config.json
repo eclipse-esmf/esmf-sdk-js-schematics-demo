@@ -1,0 +1,15 @@
+{
+  "aspectModelTFiles": [
+    "models/org.eclipse.examples.movement/2.1.0/Movement.ttl"
+  ],
+  "excludedProperties": [],
+  "configFile": "base-wizard.config.json",
+  "complexProps": [],
+  "configFileName": "base",
+  "selectedModelElementUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#Movement",
+  "enableVersionSupport": false,
+  "getOptionalMaterialTheme": true,
+  "viewEncapsulation": "None",
+  "readOnlyForm": false,
+  "overwrite": true
+}

@@ -1,0 +1,31 @@
+<!--
+ * Copyright (c) 2023 Robert Bosch Manufacturing Solutions GmbH
+ *
+ * See the AUTHORS file(s) distributed with this work for
+ * additional information regarding authorship.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ -->
+
+<form [formGroup]="form" class="version-support-form">
+  <section class="form-fields">
+    <esmf-ui-moving formControlName="moving"></esmf-ui-moving>
+
+    <esmf-ui-speed-limit-warning formControlName="speedLimitWarning"></esmf-ui-speed-limit-warning>
+
+    <esmf-ui-position formControlName="position"></esmf-ui-position>
+
+    <esmf-ui-start-date formControlName="startDate"></esmf-ui-start-date>
+
+    <esmf-ui-end-date formControlName="endDate"></esmf-ui-end-date>
+  </section>
+
+  <section class="form-actions" [class.disabled]="form.disabled">
+    <button mat-flat-button (click)="onCancel()">Cancel</button>
+    <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="onSubmit(form)">Submit</button>
+  </section>
+</form>

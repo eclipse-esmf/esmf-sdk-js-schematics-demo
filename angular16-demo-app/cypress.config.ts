@@ -19,6 +19,8 @@ export default defineConfig({
   screenshotsFolder: 'cypress/screenshots',
   fixturesFolder: 'cypress/fixtures',
   chromeWebSecurity: false,
+  viewportWidth: 1920,
+  viewportHeight: 1080,
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.

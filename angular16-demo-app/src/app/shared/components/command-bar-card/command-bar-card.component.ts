@@ -82,6 +82,7 @@ export class CommandBarCardComponent implements OnInit, AfterViewInit {
 
   dataToShow: Array<Movement> = [];
   totalItems: number = 0;
+  dataLoadError = false;
 
   commandBarCardCardValues = Object.values(CommandBarCardCardValues);
 

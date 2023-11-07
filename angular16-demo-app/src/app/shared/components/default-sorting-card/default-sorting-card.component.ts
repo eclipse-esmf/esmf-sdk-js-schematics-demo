@@ -72,6 +72,7 @@ export class DefaultSortingCardComponent implements OnInit, AfterViewInit {
 
   dataToShow: Array<Movement> = [];
   totalItems: number = 0;
+  dataLoadError = false;
 
   defaultSortingCardCardValues = Object.values(DefaultSortingCardCardValues);
 

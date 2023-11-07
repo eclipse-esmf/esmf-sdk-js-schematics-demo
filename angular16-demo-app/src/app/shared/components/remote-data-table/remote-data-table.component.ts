@@ -44,7 +44,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {JSSdkLocalStorageService} from '../../services/storage.service';
 import {RemoteDataTableColumnMenuComponent} from './remote-data-table-column-menu.component';
 
-import {Subject, catchError, finalize, tap} from 'rxjs';
+import { Subject, catchError, finalize, tap, Subscription } from "rxjs";
 
 import {AbstractArrayNode, AbstractNode, And, Eq, Limit, Query, QueryStringifier, Sort} from 'rollun-ts-rql';
 import {SortOptions} from 'rollun-ts-rql/dist/nodes/Sort';
@@ -129,6 +129,7 @@ export class RemoteDataTableComponent implements OnInit, AfterViewInit, AfterVie
   @Input() highlightColor = 'rgba(127, 198, 231, 0.3)';
   @Input() isMultipleSelectionEnabled = true;
   @Input() noDataMessage: string = '';
+  @Input() dataLoadErrorMessage: string = '';
   @Input() visibleRowActionsIcons: number = 3;
   @Input() headerTooltipsOff: boolean = false;
   @Input() setStickRowActions: boolean = true;
@@ -186,8 +187,10 @@ export class RemoteDataTableComponent implements OnInit, AfterViewInit, AfterVie
   closeColumnMenu: boolean = false;
   rqlString: string = '';
   searchFocused: boolean = false;
+  dataLoadError = false;
 
   private readonly ngUnsubscribe = new Subject<void>();
+  private requestSubscription: Subscription = new Subscription()
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -279,7 +282,7 @@ export class RemoteDataTableComponent implements OnInit, AfterViewInit, AfterVie
 
     if ($event.type === 'contextmenu') {
       $event.preventDefault();
-      let mousePositionOnClick = {x: $event.clientX + 'px', y: $event.clientY + 'px'};
+      const mousePositionOnClick = {x: $event.clientX + 'px', y: $event.clientY + 'px'};
       this.rowRightClickEvent.emit({data: row, mousePosition: mousePositionOnClick});
     }
 
@@ -367,10 +370,15 @@ export class RemoteDataTableComponent implements OnInit, AfterViewInit, AfterVie
 
     this.rqlString = rqlStringTemp;
 
-    this.customRemoteDataTableService
+    if (this.requestSubscription && !this.requestSubscription.closed) {
+      this.requestSubscription.unsubscribe();
+    }
+
+    this.requestSubscription = this.customRemoteDataTableService
       .requestData(this.remoteAPI, {query: rqlStringTemp})
       .pipe(
         tap((movementResponse: MovementResponse) => {
+          this.dataLoadError = false;
           this.totalItems =
             movementResponse.totalItems !== null && movementResponse.totalItems !== undefined
               ? movementResponse.totalItems
@@ -384,6 +392,11 @@ export class RemoteDataTableComponent implements OnInit, AfterViewInit, AfterVie
           this.dataSource.paginator = this.paginator;
         }),
         catchError((error: any) => {
+          this.dataLoadError = false;
+
+          const dataToShow = [];
+          this.dataSource.setData([]);
+
           throw new Error(error.message);
         }),
         finalize(() => this.tableUpdateFinishedEvent.emit())

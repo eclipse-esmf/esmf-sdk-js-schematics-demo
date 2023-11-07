@@ -1,0 +1,21 @@
+<!--
+ * Copyright (c) 2023 Robert Bosch Manufacturing Solutions GmbH
+ *
+ * See the AUTHORS file(s) distributed with this work for
+ * additional information regarding authorship.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ -->
+
+<mat-form-field class="form-field">
+  <mat-label>startDate</mat-label>
+  <input matInput [ngxMatDatetimePicker]="startDatepicker" [formControl]="formControl" (ngModelChange)="value = $event" />
+  <ngx-mat-datepicker-toggle matSuffix [for]="startDatepicker"></ngx-mat-datepicker-toggle>
+  <ngx-mat-datetime-picker #startDatepicker [color]="color"></ngx-mat-datetime-picker>
+
+  <mat-error *ngIf="formControl.invalid">{{ errorMessage }}</mat-error>
+</mat-form-field>

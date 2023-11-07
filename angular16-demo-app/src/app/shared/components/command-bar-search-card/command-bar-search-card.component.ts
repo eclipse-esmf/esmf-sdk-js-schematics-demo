@@ -89,6 +89,7 @@ export class CommandBarSearchCardComponent implements OnInit, AfterViewInit, OnD
 
   dataToShow: Array<Movement> = [];
   totalItems: number = 0;
+  dataLoadError = false;
 
   commandBarSearchCardCardValues = Object.values(CommandBarSearchCardCardValues);
 

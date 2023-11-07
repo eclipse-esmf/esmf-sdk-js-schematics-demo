@@ -114,6 +114,7 @@ export class CommandBarSearchTableComponent implements OnInit, AfterViewInit, Af
   @Input() highlightColor = 'rgba(127, 198, 231, 0.3)';
   @Input() isMultipleSelectionEnabled = true;
   @Input() noDataMessage: string = '';
+  @Input() dataLoadErrorMessage: string = '';
   @Input() visibleRowActionsIcons: number = 3;
   @Input() headerTooltipsOff: boolean = false;
   @Input() setStickRowActions: boolean = true;
@@ -175,6 +176,7 @@ export class CommandBarSearchTableComponent implements OnInit, AfterViewInit, Af
   closeColumnMenu: boolean = false;
   rqlString: string = '';
   searchFocused: boolean = false;
+  dataLoadError = false;
 
   highlightString: string[] = [];
 
@@ -296,7 +298,7 @@ export class CommandBarSearchTableComponent implements OnInit, AfterViewInit, Af
 
     if ($event.type === 'contextmenu') {
       $event.preventDefault();
-      let mousePositionOnClick = {x: $event.clientX + 'px', y: $event.clientY + 'px'};
+      const mousePositionOnClick = {x: $event.clientX + 'px', y: $event.clientY + 'px'};
       this.rowRightClickEvent.emit({data: row, mousePosition: mousePositionOnClick});
     }
 

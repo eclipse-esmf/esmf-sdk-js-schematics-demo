@@ -42,7 +42,7 @@ export function paginatorTests(): void {
           list[1].click();
           expect(list[1].className).to.contain('mdc-list-item--selected');
           expect(list[1].className).to.contain('mat-mdc-option-active');
-          cy.get('.mat-mdc-select-min-line').then((element: JQuery): void => {
+          cy.get('[data-test="paginator-card"] .mat-mdc-select-min-line').then((element: JQuery): void => {
             if (element.length === 2) {
               const secondElement = element.eq(1);
               expect(parseFloat(secondElement.text())).to.eq(PaginatorValues.TEN);

@@ -71,6 +71,7 @@ export class ExcludedPropertyCardComponent implements OnInit, AfterViewInit {
 
   dataToShow: Array<Movement> = [];
   totalItems: number = 0;
+  dataLoadError = false;
 
   excludedPropertyCardCardValues = Object.values(ExcludedPropertyCardCardValues);
 

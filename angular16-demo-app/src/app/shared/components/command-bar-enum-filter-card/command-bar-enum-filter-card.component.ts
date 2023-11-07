@@ -82,6 +82,7 @@ export class CommandBarEnumFilterCardComponent implements OnInit, AfterViewInit 
 
   dataToShow: Array<Movement> = [];
   totalItems: number = 0;
+  dataLoadError = false;
 
   commandBarEnumFilterCardCardValues = Object.values(CommandBarEnumFilterCardCardValues);
 

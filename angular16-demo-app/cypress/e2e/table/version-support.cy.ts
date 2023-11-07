@@ -12,8 +12,8 @@
  */
 
 import {checkboxTests} from '../../reusable-tests/checkbox';
-import {tableTests} from '../../reusable-tests/table';
 import {commandBarTests} from '../../reusable-tests/command-bar';
+import {tableTests} from '../../reusable-tests/table';
 
 describe('Version support test', (): void => {
   before((): void => {
