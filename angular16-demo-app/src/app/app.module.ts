@@ -41,21 +41,21 @@ import {AppComponent} from './app.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {HeaderComponent} from './components/header/header.component';
 
+import {BaseConfigCardModule} from 'src/app/shared/components/base-config-card/base-config-card.module';
+import {BaseConfigFormModule} from 'src/app/shared/components/base-config-form/base-config-form.module';
+import {CommandBarActionsCardModule} from 'src/app/shared/components/command-bar-actions-card/command-bar-actions-card.module';
+import {CommandBarCardModule} from 'src/app/shared/components/command-bar-card/command-bar-card.module';
+import {CommandBarDateFilterCardModule} from 'src/app/shared/components/command-bar-date-filter-card/command-bar-date-filter-card.module';
+import {CommandBarEnumFilterCardModule} from 'src/app/shared/components/command-bar-enum-filter-card/command-bar-enum-filter-card.module';
+import {CommandBarSearchCardModule} from 'src/app/shared/components/command-bar-search-card/command-bar-search-card.module';
+import {ComplexPropSelectedCardModule} from 'src/app/shared/components/complex-prop-selected-card/complex-prop-selected-card.module';
+import {DefaultSortingCardModule} from 'src/app/shared/components/default-sorting-card/default-sorting-card.module';
+import {ExcludedPropertyCardModule} from 'src/app/shared/components/excluded-property-card/excluded-property-card.module';
+import {ExcludedPropertyFormModule} from 'src/app/shared/components/excluded-property-form/excluded-property-form.module';
+import {VersionSupportCardModule} from 'src/app/shared/components/version-support-card/v210/version-support-card.module';
+import {VersionSupportFormModule} from 'src/app/shared/components/version-support-form/v210/version-support-form.module';
 import {SidenavComponent} from './components/sidenav/sidenav.component';
 import {CheckboxesTableModule} from './shared/components/checkboxes-table/checkboxes-table.module';
-import { BaseConfigCardModule } from 'src/app/shared/components/base-config-card/base-config-card.module';
-import { CommandBarCardModule } from 'src/app/shared/components/command-bar-card/command-bar-card.module';
-import { CommandBarActionsCardModule } from 'src/app/shared/components/command-bar-actions-card/command-bar-actions-card.module';
-import { CommandBarDateFilterCardModule } from 'src/app/shared/components/command-bar-date-filter-card/command-bar-date-filter-card.module';
-import { CommandBarEnumFilterCardModule } from 'src/app/shared/components/command-bar-enum-filter-card/command-bar-enum-filter-card.module';
-import { CommandBarSearchCardModule } from 'src/app/shared/components/command-bar-search-card/command-bar-search-card.module';
-import { ComplexPropSelectedCardModule } from 'src/app/shared/components/complex-prop-selected-card/complex-prop-selected-card.module';
-import { DefaultSortingCardModule } from 'src/app/shared/components/default-sorting-card/default-sorting-card.module';
-import { ExcludedPropertyCardModule } from 'src/app/shared/components/excluded-property-card/excluded-property-card.module';
-import { VersionSupportCardModule } from 'src/app/shared/components/version-support-card/v210/version-support-card.module';
-import { BaseConfigFormModule } from 'src/app/shared/components/base-config-form/base-config-form.module';
-import { VersionSupportFormModule } from 'src/app/shared/components/version-support-form/v210/version-support-form.module';
-import { ExcludedPropertyFormModule } from 'src/app/shared/components/excluded-property-form/excluded-property-form.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent, SidenavComponent],
@@ -111,7 +111,7 @@ import { ExcludedPropertyFormModule } from 'src/app/shared/components/excluded-p
     VersionSupportCardModule,
     BaseConfigFormModule,
     VersionSupportFormModule,
-    ExcludedPropertyFormModule
+    ExcludedPropertyFormModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

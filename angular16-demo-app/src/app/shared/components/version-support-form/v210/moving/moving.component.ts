@@ -13,12 +13,12 @@
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
 
-import {Attribute, Component, forwardRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {Attribute, Component, forwardRef} from '@angular/core';
 import {FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, Validators} from '@angular/forms';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {MatCheckboxModule} from '@angular/material/checkbox';
 import {FormControlReusable} from '../../../../utils/form-control-reusable';
 
 export const movingFormControl = new FormControl(false, [Validators.required]);

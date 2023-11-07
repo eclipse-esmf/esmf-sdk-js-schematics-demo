@@ -15,29 +15,29 @@
 import {NgModule} from '@angular/core';
 import {ExcludedPropertyFormComponent} from './excluded-property-form.component';
 
+import {NgxMatDatetimePickerModule, NgxMatNativeDateModule} from '@angular-material-components/datetime-picker';
+import {NgClass, NgFor, NgIf} from '@angular/common';
+import {HttpClientModule} from '@angular/common/http';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatNativeDateModule, MatOptionModule} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSelectModule} from '@angular/material/select';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {AppSharedModule} from 'src/app/shared/app-shared.module';
-import {SpeedLimitWarningComponent} from './speed-limit-warning/speed-limit-warning.component';
 import {PositionComponent} from './position/position.component';
+import {SpeedLimitWarningComponent} from './speed-limit-warning/speed-limit-warning.component';
+import {StartDateComponent} from './start-date/start-date.component';
 import {XComponent} from './x/x.component';
 import {YComponent} from './y/y.component';
 import {ZComponent} from './z/z.component';
-import {StartDateComponent} from './start-date/start-date.component';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatButtonModule} from '@angular/material/button';
-import {MatMenuModule} from '@angular/material/menu';
-import {HttpClientModule} from '@angular/common/http';
-import {MatIconModule} from '@angular/material/icon';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {NgIf, NgFor, NgClass} from '@angular/common';
-import {MatDialogModule} from '@angular/material/dialog';
-import {ReactiveFormsModule} from '@angular/forms';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSelectModule} from '@angular/material/select';
-import {MatOptionModule, MatNativeDateModule} from '@angular/material/core';
-import {MatInputModule} from '@angular/material/input';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {NgxMatDatetimePickerModule, NgxMatNativeDateModule} from '@angular-material-components/datetime-picker';
 
 @NgModule({
   declarations: [ExcludedPropertyFormComponent],

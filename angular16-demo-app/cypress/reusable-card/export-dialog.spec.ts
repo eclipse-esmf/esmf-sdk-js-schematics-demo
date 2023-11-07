@@ -19,9 +19,7 @@ export function exportDialogTests(hasRemoteDataCall: boolean): void {
 
     it('should open export dialog', (): void => {
       cy.get('[data-test="export-data-button"]').click();
-      cy.get('[data-test="dialogDescription"]').then(element =>
-        expect(element.text()).to.eq('Export entire datasource.')
-      );
+      cy.get('[data-test="dialogDescription"]').then(element => expect(element.text()).to.eq('Export entire datasource.'));
     });
 
     it('should change cases for exporting', (): void => {

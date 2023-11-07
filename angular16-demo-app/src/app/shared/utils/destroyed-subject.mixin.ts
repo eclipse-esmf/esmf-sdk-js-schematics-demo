@@ -12,8 +12,8 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
-import {Subject} from 'rxjs';
 import {OnDestroy} from '@angular/core';
+import {Subject} from 'rxjs';
 
 export type Constructor<T = object> = new (...args: any[]) => T;
 

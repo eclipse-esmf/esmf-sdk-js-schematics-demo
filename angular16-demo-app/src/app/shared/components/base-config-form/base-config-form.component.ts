@@ -16,11 +16,11 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {Movement} from '../../types/movement/movement.types';
-import {movingFormControl} from './moving/moving.component';
-import {speedLimitWarningFormControl} from './speed-limit-warning/speed-limit-warning.component';
-import {positionFormControl} from './position/position.component';
-import {startDateFormControl} from './start-date/start-date.component';
 import {endDateFormControl} from './end-date/end-date.component';
+import {movingFormControl} from './moving/moving.component';
+import {positionFormControl} from './position/position.component';
+import {speedLimitWarningFormControl} from './speed-limit-warning/speed-limit-warning.component';
+import {startDateFormControl} from './start-date/start-date.component';
 
 export const BaseConfigForm = new FormGroup({
   moving: movingFormControl,

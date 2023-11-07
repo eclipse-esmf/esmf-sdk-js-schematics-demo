@@ -16,8 +16,8 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {Movement} from '../../types/movement/movement.types';
-import {speedLimitWarningFormControl} from './speed-limit-warning/speed-limit-warning.component';
 import {positionFormControl} from './position/position.component';
+import {speedLimitWarningFormControl} from './speed-limit-warning/speed-limit-warning.component';
 import {startDateFormControl} from './start-date/start-date.component';
 
 export const ExcludedPropertyForm = new FormGroup({

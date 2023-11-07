@@ -11,8 +11,8 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-import { cardTests } from "../../reusable-card/card";
-import { commandBarTests } from "../../reusable-card/command-bar";
+import {cardTests} from '../../reusable-card/card';
+import {commandBarTests} from '../../reusable-card/command-bar';
 
 describe('Command bar', (): void => {
   before((): void => {

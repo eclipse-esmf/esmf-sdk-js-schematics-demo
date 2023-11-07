@@ -99,10 +99,7 @@
     <mat-tab-group mat-stretch-tabs>
       <mat-tab label="Table view" data-test="table-view">
         <fieldset>
-          <esmf-ui-base-config-table
-            *ngIf="currentComponent === 'base-config'"
-            [data]="basicMovementData">
-          </esmf-ui-base-config-table>
+          <esmf-ui-base-config-table *ngIf="currentComponent === 'base-config'" [data]="basicMovementData"> </esmf-ui-base-config-table>
 
           <esmf-ui-checkboxes-table
             *ngIf="currentComponent === 'checkboxes'"
@@ -191,140 +188,164 @@
       </mat-tab>
       <mat-tab label="Card view" data-test="card-view">
         <fieldset>
-          <esmf-ui-base-config-card
-            *ngIf="currentComponent === 'base-config'"
-            [data]="basicMovementData">
-            <ng-template #cardTemplate let-data let-element="baseConfigCardCardValues"
-                         let-getElementValue="getElementValue"
-                         let-translateService="translateService">
+          <esmf-ui-base-config-card *ngIf="currentComponent === 'base-config'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="baseConfigCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
               <div class="data-card-element" *ngFor="let elem of element">
-                <b>{{ elem + ".preferredName" | translate }}</b>: {{ getElementValue(data, elem) }}
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
               </div>
             </ng-template>
           </esmf-ui-base-config-card>
 
           <ng-container *ngIf="currentComponent === 'checkboxes'">
-            <div class="note">
-              <strong>Note:</strong> This feature is only available in the table view.
-            </div>
+            <div class="note"><strong>Note:</strong> This feature is only available in the table view.</div>
           </ng-container>
 
-          <esmf-ui-command-bar-actions-card
-            *ngIf="currentComponent === 'command-bar-actions'"
-            [data]="basicMovementData">
-            <ng-template #cardTemplate let-data let-element="commandBarActionsCardCardValues"
-                         let-getElementValue="getElementValue"
-                         let-translateService="translateService">
+          <esmf-ui-command-bar-actions-card *ngIf="currentComponent === 'command-bar-actions'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="commandBarActionsCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
               <div class="data-card-element" *ngFor="let elem of element">
-                <b>{{ elem + ".preferredName" | translate }}</b>: {{ getElementValue(data, elem) }}
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
               </div>
             </ng-template>
           </esmf-ui-command-bar-actions-card>
 
-          <esmf-ui-command-bar-card
-            *ngIf="currentComponent === 'command-bar'"
-            [data]="basicMovementData">
-            <ng-template #cardTemplate let-data let-element="commandBarCardCardValues"
-                         let-getElementValue="getElementValue"
-                         let-translateService="translateService">
+          <esmf-ui-command-bar-card *ngIf="currentComponent === 'command-bar'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="commandBarCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
               <div class="data-card-element" *ngFor="let elem of element">
-                <b>{{ elem + ".preferredName" | translate }}</b>: {{ getElementValue(data, elem) }}
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
               </div>
             </ng-template>
           </esmf-ui-command-bar-card>
 
-          <esmf-ui-command-bar-date-filter-card
-            *ngIf="currentComponent === 'command-bar-date-filter'"
-            [data]="basicMovementData">
-            <ng-template #cardTemplate let-data let-element="commandBarDateFilterCardCardValues"
-                         let-getElementValue="getElementValue"
-                         let-translateService="translateService">
+          <esmf-ui-command-bar-date-filter-card *ngIf="currentComponent === 'command-bar-date-filter'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="commandBarDateFilterCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
               <div class="data-card-element" *ngFor="let elem of element">
-                <b>{{ elem + ".preferredName" | translate }}</b>: {{ getElementValue(data, elem) }}
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
               </div>
             </ng-template>
           </esmf-ui-command-bar-date-filter-card>
 
-          <esmf-ui-command-bar-enum-filter-card
-            *ngIf="currentComponent === 'command-bar-enum-filter'"
-            [data]="basicMovementData">
-            <ng-template #cardTemplate let-data let-element="commandBarEnumFilterCardCardValues"
-                         let-getElementValue="getElementValue"
-                         let-translateService="translateService">
+          <esmf-ui-command-bar-enum-filter-card *ngIf="currentComponent === 'command-bar-enum-filter'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="commandBarEnumFilterCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
               <div class="data-card-element" *ngFor="let elem of element">
-                <b>{{ elem + ".preferredName" | translate }}</b>: {{ getElementValue(data, elem) }}
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
               </div>
             </ng-template>
           </esmf-ui-command-bar-enum-filter-card>
 
-          <esmf-ui-command-bar-search-card
-            *ngIf="currentComponent === 'command-bar-search'"
-            [data]="basicMovementData">
-            <ng-template #cardTemplate let-data let-element="commandBarSearchCardCardValues"
-                         let-getElementValue="getElementValue"
-                         let-translateService="translateService">
+          <esmf-ui-command-bar-search-card *ngIf="currentComponent === 'command-bar-search'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="commandBarSearchCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
               <div class="data-card-element" *ngFor="let elem of element">
-                <b>{{ elem + ".preferredName" | translate }}</b>: {{ getElementValue(data, elem) }}
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
               </div>
             </ng-template>
           </esmf-ui-command-bar-search-card>
 
-          <esmf-ui-complex-prop-selected-card
-            *ngIf="currentComponent === 'complex-prop-selected'"
-            [data]="basicMovementData">
-            <ng-template #cardTemplate let-data let-element="complexPropSelectedCardCardValues"
-                         let-getElementValue="getElementValue"
-                         let-translateService="translateService">
+          <esmf-ui-complex-prop-selected-card *ngIf="currentComponent === 'complex-prop-selected'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="complexPropSelectedCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
               <div class="data-card-element" *ngFor="let elem of element">
-                <b>{{ elem + ".preferredName" | translate }}</b>: {{ getElementValue(data, elem) }}
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
               </div>
             </ng-template>
           </esmf-ui-complex-prop-selected-card>
 
           <ng-container *ngIf="currentComponent === 'custom-column'">
-            <div class="note">
-              <strong>Note:</strong> This feature is only available in the table view.
-            </div>
+            <div class="note"><strong>Note:</strong> This feature is only available in the table view.</div>
           </ng-container>
 
-          <esmf-ui-default-sorting-card
-            *ngIf="currentComponent === 'default-sorting'"
-            [data]="basicMovementData">
-            <ng-template #cardTemplate let-data let-element="defaultSortingCardCardValues"
-                         let-getElementValue="getElementValue"
-                         let-translateService="translateService">
+          <esmf-ui-default-sorting-card *ngIf="currentComponent === 'default-sorting'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="defaultSortingCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
               <div class="data-card-element" *ngFor="let elem of element">
-                <b>{{ elem + ".preferredName" | translate }}</b>: {{ getElementValue(data, elem) }}
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
               </div>
             </ng-template>
           </esmf-ui-default-sorting-card>
 
-          <esmf-ui-excluded-property-card
-            *ngIf="currentComponent === 'excluded-property'"
-            [data]="basicMovementData">
-            <ng-template #cardTemplate let-data let-element="excludedPropertyCardCardValues"
-                         let-getElementValue="getElementValue"
-                         let-translateService="translateService">
+          <esmf-ui-excluded-property-card *ngIf="currentComponent === 'excluded-property'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="excludedPropertyCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
               <div class="data-card-element" *ngFor="let elem of element">
-                <b>{{ elem + ".preferredName" | translate }}</b>: {{ getElementValue(data, elem) }}
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
               </div>
             </ng-template>
           </esmf-ui-excluded-property-card>
 
           <ng-container *ngIf="currentComponent === 'row-action-button'">
-            <div class="note">
-              <strong>Note:</strong> This feature is always available for a card.
-            </div>
+            <div class="note"><strong>Note:</strong> This feature is always available for a card.</div>
           </ng-container>
 
-          <esmf-ui-version-support-card-v210
-            *ngIf="currentComponent === 'version-support'"
-            [data]="versionSupportData">
-            <ng-template #cardTemplate let-data let-element="versionSupportCardCardValues"
-                         let-getElementValue="getElementValue"
-                         let-translateService="translateService">
+          <esmf-ui-version-support-card-v210 *ngIf="currentComponent === 'version-support'" [data]="versionSupportData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="versionSupportCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
               <div class="data-card-element" *ngFor="let elem of element">
-                <b>{{"movement.v210." + elem + ".preferredName" | translate }}</b>: {{ getElementValue(data, elem) }}
+                <b>{{ 'movement.v210.' + elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
               </div>
             </ng-template>
           </esmf-ui-version-support-card-v210>
@@ -335,9 +356,7 @@
           <esmf-ui-base-config-form *ngSwitchCase="'base-config'"></esmf-ui-base-config-form>
           <esmf-ui-excluded-property-form *ngSwitchCase="'excluded-property'"></esmf-ui-excluded-property-form>
           <esmf-ui-version-support-form *ngSwitchCase="'version-support'"></esmf-ui-version-support-form>
-          <div class="note" *ngSwitchDefault>
-            <strong>Note:</strong> This feature is not available for "form" type.
-          </div>
+          <div class="note" *ngSwitchDefault><strong>Note:</strong> This feature is not available for "form" type.</div>
         </fieldset>
       </mat-tab>
     </mat-tab-group>
