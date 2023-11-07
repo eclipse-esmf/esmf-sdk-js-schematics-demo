@@ -42,7 +42,7 @@ export function commandBarTests() {
     });
 
     it('should load the export data button', (): void => {
-      cy.get('[data-test="export-data-button"]').should('be.visible');
+      cy.get('[data-test="export-data-button-table"]').should('be.visible');
     });
   });
 }

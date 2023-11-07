@@ -14,11 +14,11 @@
 export function exportDialogTests(hasRemoteDataCall: boolean): void {
   describe('Export dialog functionalities', (): void => {
     it('should load export dialog', (): void => {
-      cy.get('[data-test="export-data-button"]').should('exist');
+      cy.get('[data-test="export-data-button-card"]').should('exist');
     });
 
     it('should open export dialog', (): void => {
-      cy.get('[data-test="export-data-button"]').click();
+      cy.get('[data-test="export-data-button-card"]').click();
       cy.get('[data-test="dialogDescription"]').then(element => expect(element.text()).to.eq('Export entire datasource.'));
     });
 
