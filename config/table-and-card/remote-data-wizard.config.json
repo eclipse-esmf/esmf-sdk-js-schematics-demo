@@ -10,9 +10,7 @@
       "propsToShow": []
     }
   ],
-  "enabledCommandBarFunctions": [
-    "addSearchBar"
-  ],
+  "enabledCommandBarFunctions": [],
   "selectedModelElementUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#Movement",
   "jsonAccessPath": "",
   "defaultSortingCol": "endDate",
