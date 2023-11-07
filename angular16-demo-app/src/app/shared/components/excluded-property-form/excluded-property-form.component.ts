@@ -20,7 +20,7 @@ import {positionFormControl} from './position/position.component';
 import {speedLimitWarningFormControl} from './speed-limit-warning/speed-limit-warning.component';
 import {startDateFormControl} from './start-date/start-date.component';
 
-export const ExcludedPropertyForm = new FormGroup({
+export const MovementForm = new FormGroup({
   speedLimitWarning: speedLimitWarningFormControl,
   position: positionFormControl,
   startDate: startDateFormControl,
@@ -35,7 +35,7 @@ export class ExcludedPropertyFormComponent {
   @Output() formSubmit: EventEmitter<Movement> = new EventEmitter();
   @Output() formCancel: EventEmitter<void> = new EventEmitter();
 
-  form: FormGroup = ExcludedPropertyForm;
+  form: FormGroup = MovementForm;
 
   onCancel(): void {
     this.formCancel.emit();

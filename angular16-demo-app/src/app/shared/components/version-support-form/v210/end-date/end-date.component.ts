@@ -21,7 +21,7 @@ import {
   NgxMatMomentModule,
 } from '@angular-material-components/moment-adapter';
 import {CommonModule} from '@angular/common';
-import {Attribute, Component, forwardRef, Input} from '@angular/core';
+import {Attribute, Component, Input, forwardRef} from '@angular/core';
 import {FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MAT_DATE_LOCALE, ThemePalette} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
