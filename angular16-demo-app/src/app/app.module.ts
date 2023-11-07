@@ -43,6 +43,7 @@ import {HeaderComponent} from './components/header/header.component';
 
 import {BaseConfigCardModule} from 'src/app/shared/components/base-config-card/base-config-card.module';
 import {BaseConfigFormModule} from 'src/app/shared/components/base-config-form/base-config-form.module';
+import {CheckboxesCardModule} from 'src/app/shared/components/checkboxes-card/checkboxes-card.module';
 import {CommandBarActionsCardModule} from 'src/app/shared/components/command-bar-actions-card/command-bar-actions-card.module';
 import {CommandBarCardModule} from 'src/app/shared/components/command-bar-card/command-bar-card.module';
 import {CommandBarDateFilterCardModule} from 'src/app/shared/components/command-bar-date-filter-card/command-bar-date-filter-card.module';
@@ -112,6 +113,7 @@ import {CheckboxesTableModule} from './shared/components/checkboxes-table/checkb
     BaseConfigFormModule,
     VersionSupportFormModule,
     ExcludedPropertyFormModule,
+    CheckboxesCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

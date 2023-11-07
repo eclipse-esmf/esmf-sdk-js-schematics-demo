@@ -16,7 +16,6 @@ import {
   AfterViewInit,
   Component,
   ContentChild,
-  ElementRef,
   EventEmitter,
   Input,
   OnInit,
@@ -29,19 +28,14 @@ import {TranslateService} from '@ngx-translate/core';
 
 import {Movement} from '../../types/movement/movement.types';
 
-import {CommandBarCardFilterService, SortCard} from './command-bar-card-filter.service';
-
-import {MatDialog} from '@angular/material/dialog';
-import {unparse} from 'papaparse';
-import {filter} from 'rxjs/operators';
-import {Action, ExportCardDialogComponent} from '../export-confirmation-dialog/export-card-dialog.component';
+import {CheckboxesCardFilterService, SortCard} from './checkboxes-card-filter.service';
 
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 
-import {CommandBarCardService} from './command-bar-card.service';
+import {CheckboxesCardService} from './checkboxes-card.service';
 
-export enum CommandBarCardCardValues {
+export enum CheckboxesCardCardValues {
   MOVING = 'moving',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
   START_DATE = 'startDate',
@@ -49,13 +43,13 @@ export enum CommandBarCardCardValues {
 }
 
 @Component({
-  selector: 'esmf-ui-command-bar-card',
-  templateUrl: './command-bar-card.component.html',
-  styleUrls: ['./command-bar-card.component.scss'],
+  selector: 'esmf-ui-checkboxes-card',
+  templateUrl: './checkboxes-card.component.html',
+  styleUrls: ['./checkboxes-card.component.scss'],
 
   encapsulation: ViewEncapsulation.None,
 })
-export class CommandBarCardComponent implements OnInit, AfterViewInit {
+export class CheckboxesCardComponent implements OnInit, AfterViewInit {
   @ContentChild('cardTemplate') cardTemplate!: TemplateRef<any>;
 
   @Input() data: Array<Movement> = [];
@@ -68,11 +62,7 @@ export class CommandBarCardComponent implements OnInit, AfterViewInit {
   @Output() cardUpdateStartEvent = new EventEmitter<any>();
   @Output() cardUpdateFinishedEvent = new EventEmitter<any>();
 
-  @Output() downloadEvent = new EventEmitter<{error: boolean; success: boolean; inProgress: boolean}>();
-
   @Output() detail = new EventEmitter<any>();
-
-  @ViewChild('searchInput') searchInput!: ElementRef;
 
   @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
 
@@ -84,21 +74,19 @@ export class CommandBarCardComponent implements OnInit, AfterViewInit {
   totalItems: number = 0;
   dataLoadError = false;
 
-  commandBarCardCardValues = Object.values(CommandBarCardCardValues);
+  checkboxesCardCardValues = Object.values(CheckboxesCardCardValues);
 
   constructor(
     private translateService: TranslateService,
-    private commandBarCardService: CommandBarCardService,
-    private filterService: CommandBarCardFilterService,
-
-    public dialog: MatDialog
+    private checkboxesCardService: CheckboxesCardService,
+    private filterService: CheckboxesCardFilterService
   ) {
     this.currentLanguage = this.translateService.currentLang;
   }
 
   getContext(data: Movement) {
     return {
-      commandBarCardCardValues: this.commandBarCardCardValues,
+      checkboxesCardCardValues: this.checkboxesCardCardValues,
       $implicit: data,
       getElementValue: this.getElementValue.bind(this),
       translateService: this.translateService,
@@ -118,7 +106,7 @@ export class CommandBarCardComponent implements OnInit, AfterViewInit {
   }
 
   private defaultSorting() {
-    this.filterService.sortedProperty = 'speedLimitWarning';
+    this.filterService.sortedProperty = 'endDate';
 
     this.sorting();
   }
@@ -172,56 +160,6 @@ export class CommandBarCardComponent implements OnInit, AfterViewInit {
     });
 
     this.applyFilters();
-  }
-
-  openExportConfirmationDialog() {
-    const dialogRef = this.dialog
-      .open(ExportCardDialogComponent, {
-        data: {maxExportRows: this.maxExportRows},
-        maxWidth: 478,
-      })
-      .afterClosed()
-      .pipe(filter(e => !!e))
-      .subscribe((event: {action: Action; exportFirstPage: boolean}) => {
-        if (event.action === Action.cancel) {
-          return;
-        }
-
-        const exportData = JSON.parse(JSON.stringify(this.data));
-
-        if (event.exportFirstPage && exportData.length > this.paginator.pageSize) {
-          exportData.length = this.paginator.pageSize;
-        }
-
-        if (!event.exportFirstPage && this.data.length > this.maxExportRows) {
-          exportData.length = this.maxExportRows;
-        }
-
-        this.exportToCsv(exportData);
-      });
-  }
-
-  private exportToCsv(exportData: Array<Movement>) {
-    const headersCSV = unparse({
-      fields: this.commandBarCardCardValues.map(columnName => {
-        const translatedHeader = this.translateService.instant(`movement.${columnName}.preferredName`);
-        return translatedHeader !== `movement.${columnName}.preferredName` ? translatedHeader : columnName;
-      }),
-      data: [],
-    });
-
-    this.downloadCsv(`${headersCSV}${unparse(exportData, {header: false, columns: this.commandBarCardCardValues})}`);
-  }
-
-  private downloadCsv(csvArray: string) {
-    this.downloadEvent.emit({error: false, success: false, inProgress: true});
-    try {
-      this.commandBarCardService.downloadCsv(csvArray);
-
-      this.downloadEvent.emit({error: false, success: true, inProgress: false});
-    } catch (error: any) {
-      this.downloadEvent.emit({error: true, success: false, inProgress: false});
-    }
   }
 
   detailInformation(data: Movement) {

@@ -118,6 +118,7 @@ export class VersionSupportTableComponent implements OnInit, AfterViewInit, Afte
   @Input() highlightColor = 'rgba(127, 198, 231, 0.3)';
   @Input() isMultipleSelectionEnabled = true;
   @Input() noDataMessage: string = '';
+  @Input() dataLoadErrorMessage: string = '';
   @Input() visibleRowActionsIcons: number = 3;
   @Input() headerTooltipsOff: boolean = false;
   @Input() setStickRowActions: boolean = true;
@@ -179,6 +180,7 @@ export class VersionSupportTableComponent implements OnInit, AfterViewInit, Afte
   closeColumnMenu: boolean = false;
   rqlString: string = '';
   searchFocused: boolean = false;
+  dataLoadError = false;
 
   highlightString: string[] = [];
 
@@ -309,7 +311,7 @@ export class VersionSupportTableComponent implements OnInit, AfterViewInit, Afte
 
     if ($event.type === 'contextmenu') {
       $event.preventDefault();
-      let mousePositionOnClick = {x: $event.clientX + 'px', y: $event.clientY + 'px'};
+      const mousePositionOnClick = {x: $event.clientX + 'px', y: $event.clientY + 'px'};
       this.rowRightClickEvent.emit({data: row, mousePosition: mousePositionOnClick});
     }
 

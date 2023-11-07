@@ -89,6 +89,7 @@ export class VersionSupportCardComponent implements OnInit, AfterViewInit, OnDes
 
   dataToShow: Array<Movement> = [];
   totalItems: number = 0;
+  dataLoadError = false;
 
   versionSupportCardCardValues = Object.values(VersionSupportCardCardValues);
 

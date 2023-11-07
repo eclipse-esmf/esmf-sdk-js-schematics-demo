@@ -22,19 +22,19 @@
         data-test="table"
         mat-table
         class="full-width-table"
-        matSortDisableClear="true"
         matSort
+        matSortDisableClear="true"
+        [matSortDisabled]="dragging"
         (matSortChange)="sortData()"
         [matSortActive]="columnToSort.sortColumnName"
         [matSortDirection]="columnToSort.sortDirection"
         [ngClass]="customTableClass"
         [dataSource]="dataSource"
         aria-label="Elements"
-        [matSortDisabled]="dragging"
       >
         <!-- Row shown when there is no matching data that will be provided to the wrapper table. -->
         <tr data-test="no-data-table-row" class="mat-row" *matNoDataRow>
-          <td data-test="no-data-table-cell" class="mat-cell" [colSpan]="displayedColumns.length" *ngIf="!dataSource.data.length">
+          <td *ngIf="!dataSource.data.length" class="mat-cell" [colSpan]="displayedColumns.length" data-test="no-data-table-cell">
             <span data-test="no-data-message">{{ noDataMessage || 'No data' }}</span>
           </td>
         </tr>
@@ -178,6 +178,7 @@
               >
             </button>
           </th>
+
           <td data-test="columns-menu-button-cell" mat-cell *matCellDef="let row" [class.bg-transparent]="!setStickRowActions"></td>
         </ng-container>
 
@@ -197,6 +198,7 @@
         <remote-data-table-column-menu (columnsChangedEvent)="setDisplayedColumns($event)"></remote-data-table-column-menu>
       </mat-menu>
     </div>
+
     <mat-paginator
       data-test="paginator-table"
       [length]="totalItems"
