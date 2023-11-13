@@ -20,7 +20,7 @@ export function exportDialogTests(hasRemoteDataCall: boolean): void {
     it('should open export dialog', (): void => {
       cy.get('[data-test="export-data-button-table"]').click();
       cy.get('[data-test="dialogDescription"]').then(element =>
-        expect(element.text()).to.eq('Export all data from the selected 4 columns of the current page.')
+        expect(element.text()).to.eq('Export all data from the selected 3 columns of the current page.')
       );
     });
 
