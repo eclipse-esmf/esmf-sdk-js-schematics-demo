@@ -1,27 +1,26 @@
 {
-  "moving.preferredName": "Moving",
-  "moving.description": "Flag indicating if the position is changing",
-  "speedLimitWarning.preferredName": "Speed Limit Warning",
-  "speedLimitWarning.description": "Indicates if speed limit is adhered to.",
-  "position.preferredName": "Position",
+  "isMoving.preferredName": "is moving",
+  "isMoving.description": "Flag indicating whether the asset is currently moving",
+  "position.preferredName": "position",
   "position.description": "Indicates a position",
-  "position.x.preferredName": "x",
-  "position.x.description": "x coordinate in space",
-  "position.y.preferredName": "y",
-  "position.y.description": "y coordinate in space",
-  "position.z.preferredName": "z",
-  "position.z.description": "z coordinate in space",
-  "startDate.preferredName": "Start Date",
-  "startDate.description": "Date, when the batch was started",
-  "endDate.preferredName": "End Date",
-  "endDate.description": "Date, when the last part of the batch was produced",
+  "position.latitude.preferredName": "latitude",
+  "position.latitude.description": "latitude coordinate in space (WGS84)",
+  "position.longitude.preferredName": "longitude",
+  "position.longitude.description": "longitude coordinate in space (WGS84)",
+  "position.altitude.preferredName": "altitude",
+  "position.altitude.description": "Elevation above sea level zero",
+  "speed.preferredName": "speed",
+  "speed.description": "speed of vehicle",
+  "speedLimitWarning.preferredName": "speed limit warning",
+  "speedLimitWarning.description": "Indicates if the speed limit is adhered to.",
   "customRowActions.preferredName": "Actions",
   "customRowActions.description": "Custom row actions",
-  "preferredName": "Movement",
+  "preferredName": "movement",
   "description": "Aspect for movement information",
   "exportData": {
     "title": "Export data",
     "description": {
+      "exportOnlyFirstPage": "Export only the first page of data.",
       "caseOne": "Export the maximum of {{maxExportRows}} rows from all {{allColumns}} columns.",
       "caseTwo": {
         "singular": "Export the maximum of {{maxExportRows}} rows from the displayed {{displayedColumns}} column.",
@@ -32,10 +31,11 @@
         "plural": "Export all data from the selected {{displayedColumns}} columns of the current page."
       },
       "caseFour": "Export all data from all {{allColumns}} columns of the current page.",
-      "default": "Export data."
+      "default": "Export entire datasource."
     },
     "exportAllPages": "export the maximum of {{maxExportRows}} rows",
-    "exportAllColumns": "export all data from all {{allColumns}} columns"
+    "exportAllColumns": "export all data from all {{allColumns}} columns",
+    "exportFirstPage": "export the first page of data"
   },
   "validation": {
     "invalidInput": "Input can only contain",
@@ -79,7 +79,6 @@
     "highlight.name": "Highlight",
     "highlight.desc": "The search term will be highlighted"
   },
-  "customColumn.test": "Custom Column",
-  "test.preferredName": "Custom Column",
+  "customColumn.test": "test",
   "schedule.customRowAction": "schedule"
 }

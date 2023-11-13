@@ -1,34 +1,31 @@
 {
-  "moving.preferredName": "Moving",
-  "moving.description": "Flag indicating if the position is changing",
+  "isMoving.preferredName": "is moving",
+  "isMoving.description": "Flag indicating whether the asset is currently moving",
 
-  "speedLimitWarning.preferredName": "Speed Limit Warning",
-  "speedLimitWarning.description": "Indicates if speed limit is adhered to.",
-
-  "position.preferredName": "Position",
+  "position.preferredName": "position",
   "position.description": "Indicates a position",
 
-  "position.x.preferredName": "x",
-  "position.x.description": "x coordinate in space",
+  "position.latitude.preferredName": "latitude",
+  "position.latitude.description": "latitude coordinate in space (WGS84)",
 
-  "position.y.preferredName": "y",
-  "position.y.description": "y coordinate in space",
+  "position.longitude.preferredName": "longitude",
+  "position.longitude.description": "longitude coordinate in space (WGS84)",
 
-  "position.z.preferredName": "z",
-  "position.z.description": "z coordinate in space",
+  "position.altitude.preferredName": "altitude",
+  "position.altitude.description": "Elevation above sea level zero",
 
-  "startDate.preferredName": "Start Date",
-  "startDate.description": "Date, when the batch was started",
+  "speed.preferredName": "speed",
+  "speed.description": "speed of vehicle",
 
-  "endDate.preferredName": "End Date",
-  "endDate.description": "Date, when the last part of the batch was produced",
+  "speedLimitWarning.preferredName": "speed limit warning",
+  "speedLimitWarning.description": "Indicates if the speed limit is adhered to.",
 
   "schedule.customCommandBarAction": "schedule",
 
   "customRowActions.preferredName": "Actions",
   "customRowActions.description": "Custom row actions",
 
-  "preferredName": "Movement",
+  "preferredName": "movement",
   "description": "Aspect for movement information",
 
   "exportData": {
