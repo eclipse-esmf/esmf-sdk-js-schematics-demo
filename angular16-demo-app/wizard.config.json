@@ -1,6 +1,6 @@
 {
-  "aspectModelTFiles": ["models/org.eclipse.examples.movement/2.1.0/Movement.ttl"],
-  "selectedModelElementUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#Movement",
+  "aspectModelTFiles": ["models/org.eclipse.examples/2.1.0/Movement.ttl"],
+  "selectedModelElementUrn": "urn:samm:org.eclipse.examples:2.1.0#Movement",
   "jsonAccessPath": "",
   "chooseLanguageForSearch": "en",
   "customStyleImports": []

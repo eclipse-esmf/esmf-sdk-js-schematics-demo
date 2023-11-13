@@ -15,8 +15,6 @@
 import {SelectionModel} from '@angular/cdk/collections';
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 
-import {CommandBarDateFilterTableFilterService} from './command-bar-date-filter-table-filter.service';
-
 @Component({
   selector: 'command-bar',
   templateUrl: './command-bar-date-filter-table-command-bar.component.html',
@@ -37,7 +35,7 @@ export class CommandBarDateFilterTableCommandBarComponent {
   @Output() reloadFilter = new EventEmitter<void>();
   @Output() exportToCsv = new EventEmitter<void>();
 
-  constructor(public filterService: CommandBarDateFilterTableFilterService) {}
+  constructor() {}
 
   triggerApplyFilters(): void {
     this.applyFilters.emit();

@@ -57,10 +57,9 @@ export interface Column {
  * Enumeration of all available columns which can be shown/hide in the table.
  */
 export enum CustomColumnTableColumn {
-  MOVING = 'moving',
+  IS_MOVING = 'isMoving',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  START_DATE = 'startDate',
-  END_DATE = 'endDate',
   TEST = 'test',
 
   COLUMNS_MENU = 'columnsMenu',
@@ -135,7 +134,7 @@ export class CustomColumnTableComponent implements OnInit, AfterViewInit, AfterV
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: CustomColumnTableDataSource;
 
-  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'endDate', sortDirection: 'asc'};
+  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'speedLimitWarning', sortDirection: 'asc'};
   displayedColumns: Array<string> = Object.values(CustomColumnTableColumn);
   columns: Array<Column> = [];
 

@@ -57,10 +57,9 @@ export interface Column {
  * Enumeration of all available columns which can be shown/hide in the table.
  */
 export enum BaseConfigTableColumn {
-  MOVING = 'moving',
+  IS_MOVING = 'isMoving',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  START_DATE = 'startDate',
-  END_DATE = 'endDate',
 
   COLUMNS_MENU = 'columnsMenu',
 }

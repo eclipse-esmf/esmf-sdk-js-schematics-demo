@@ -13,11 +13,11 @@
 
 <form [formGroup]="form" class="excluded-property-form">
   <section class="form-fields">
-    <esmf-ui-speed-limit-warning formControlName="speedLimitWarning"></esmf-ui-speed-limit-warning>
-
     <esmf-ui-position formControlName="position"></esmf-ui-position>
 
-    <esmf-ui-start-date formControlName="startDate"></esmf-ui-start-date>
+    <esmf-ui-speed formControlName="speed"></esmf-ui-speed>
+
+    <esmf-ui-speed-limit-warning formControlName="speedLimitWarning"></esmf-ui-speed-limit-warning>
   </section>
 
   <section class="form-actions" [class.disabled]="form.disabled">

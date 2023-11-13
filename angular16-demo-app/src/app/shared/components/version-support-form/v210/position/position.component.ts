@@ -17,27 +17,27 @@ import {CommonModule} from '@angular/common';
 import {Attribute, Component, forwardRef} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
 import {FormGroupReusable} from '../../../../utils/form-group-reusable';
-import {XComponent, xFormControl} from '../x/x.component';
-import {YComponent, yFormControl} from '../y/y.component';
-import {ZComponent, zFormControl} from '../z/z.component';
+import {AltitudeComponent, altitudeFormControl} from '../altitude/altitude.component';
+import {LatitudeComponent, latitudeFormControl} from '../latitude/latitude.component';
+import {LongitudeComponent, longitudeFormControl} from '../longitude/longitude.component';
 
 export interface position {
-  x: FormControl<any | null>;
-  y: FormControl<any | null>;
-  z: FormControl<any | null>;
+  latitude: FormControl<any | null>;
+  longitude: FormControl<any | null>;
+  altitude: FormControl<any | null>;
 }
 
 export const positionFormControl = new FormControl<position | null>(null);
 export const positionFormGroup = new FormGroup<position>({
-  x: xFormControl,
-  y: yFormControl,
-  z: zFormControl,
+  latitude: latitudeFormControl,
+  longitude: longitudeFormControl,
+  altitude: altitudeFormControl,
 });
 
 @Component({
   selector: 'esmf-ui-position',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, XComponent, YComponent, ZComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, LatitudeComponent, LongitudeComponent, AltitudeComponent],
   templateUrl: './position.component.html',
   styleUrls: ['./position.component.scss'],
   providers: [

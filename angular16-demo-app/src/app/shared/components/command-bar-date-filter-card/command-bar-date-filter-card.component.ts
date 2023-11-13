@@ -42,10 +42,9 @@ import {MatTableDataSource} from '@angular/material/table';
 import {CommandBarDateFilterCardService} from './command-bar-date-filter-card.service';
 
 export enum CommandBarDateFilterCardCardValues {
-  MOVING = 'moving',
+  IS_MOVING = 'isMoving',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  START_DATE = 'startDate',
-  END_DATE = 'endDate',
 }
 
 @Component({
@@ -118,17 +117,9 @@ export class CommandBarDateFilterCardComponent implements OnInit, AfterViewInit 
   }
 
   private defaultSorting() {
-    this.filterService.sortedProperty = 'endDate';
+    this.filterService.sortedProperty = 'speedLimitWarning';
 
     this.sorting();
-  }
-
-  removeFilter(filterData: any) {
-    this.filterService.removeFilter(filterData);
-
-    this.paginator.firstPage();
-
-    this.applyFilters();
   }
 
   reloadFilter(): void {
@@ -147,8 +138,6 @@ export class CommandBarDateFilterCardComponent implements OnInit, AfterViewInit 
 
   private applyAllFilters(data: any[]): any[] {
     let dataTemp = [...data];
-
-    dataTemp = this.filterService.applyDateFilter(dataTemp);
 
     return dataTemp;
   }

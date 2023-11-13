@@ -23,50 +23,46 @@ export interface MultiLanguageText {
  */
 export interface Movement {
   /**
-   * Flag indicating if the position is changing
+   * Flag indicating whether the asset is currently moving
    */
-  moving: boolean;
-  /**
-   * Indicates if speed limit is adhered to.
-   */
-  speedLimitWarning: WarningLevel;
+  isMoving: boolean;
   /**
    * Indicates a position
    */
   position: SpatialPosition;
   /**
-   * Date, when the batch was started
+   * speed of vehicle
    */
-  startDate: Date;
+  speed: number;
   /**
-   * Date, when the last part of the batch was produced
+   * Indicates if the speed limit is adhered to.
    */
-  endDate: Date;
+  speedLimitWarning: TrafficLight;
+}
+
+/**
+ * Represents latitude, longitude and altitude information in the WGS84 geodetic reference datum
+ */
+export interface SpatialPosition {
+  /**
+   * latitude coordinate in space (WGS84)
+   */
+  latitude: number;
+  /**
+   * longitude coordinate in space (WGS84)
+   */
+  longitude: number;
+  /**
+   * Elevation above sea level zero
+   */
+  altitude?: number;
 }
 
 /**
  * Represents if speed of position change is within specification (green), within tolerance (yellow), or outside specification (red).
  */
-export enum WarningLevel {
+export enum TrafficLight {
   Green = 'green',
   Yellow = 'yellow',
   Red = 'red',
-}
-
-/**
- * Position in space, described along three axis, with the third axis optional, if all positions are in a plane.
- */
-export interface SpatialPosition {
-  /**
-   * x coordinate in space
-   */
-  x: number;
-  /**
-   * y coordinate in space
-   */
-  y: number;
-  /**
-   * z coordinate in space
-   */
-  z: number;
 }

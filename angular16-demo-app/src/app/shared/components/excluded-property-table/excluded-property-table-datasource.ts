@@ -98,12 +98,12 @@ export class ExcludedPropertyTableDataSource extends DataSource<Movement> {
     return data.sort((a: Movement, b: Movement): number => {
       const isSortingAsc = this.sort?.direction === 'asc';
       switch (this.sort?.active.trim()) {
+        case 'position.longitude':
+          return this.compare(a.position.longitude, b.position.longitude, isSortingAsc);
+        case 'speed':
+          return this.compare(a.speed, b.speed, isSortingAsc);
         case 'speedLimitWarning':
           return this.compare(a.speedLimitWarning.toString(), b.speedLimitWarning.toString(), isSortingAsc);
-        case 'position.x':
-          return this.compare(a.position.x, b.position.x, isSortingAsc);
-        case 'startDate':
-          return this.compare(a.startDate, b.startDate, isSortingAsc);
         default:
           return 0;
       }

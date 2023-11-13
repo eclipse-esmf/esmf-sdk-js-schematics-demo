@@ -15,14 +15,10 @@
 
 import {TranslateService} from '@ngx-translate/core';
 
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AbstractControl, FormControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 
-import {FormGroup} from '@angular/forms';
-import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats} from '@angular/material/core';
-import * as moment from 'moment';
-
-import {Movement, WarningLevel} from '../../../types/movement/v210/movement.types';
+import {Movement, TrafficLight} from '../../../types/movement/v210/movement.types';
 
 export enum FilterEnums {
   Date,
@@ -115,27 +111,13 @@ export class VersionSupportCardFilterService {
   readonly advancedSearchAllValue = 'allTextFields';
   selectedStringColumn: FormControl<string | null> = new FormControl(this.advancedSearchAllValue);
 
-  speedLimitWarningSelected: Array<WarningLevel> = [];
-  speedLimitWarningOptions: Array<any> = Object.values(WarningLevel);
-
-  startDateGroup = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl(),
-  });
-  endDateGroup = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl(),
-  });
+  speedLimitWarningSelected: Array<TrafficLight> = [];
+  speedLimitWarningOptions: Array<any> = Object.values(TrafficLight);
 
   sortCard = SortCard.ASCENDING;
   sortedProperty = '';
 
-  constructor(
-    @Inject(MAT_DATE_FORMATS) private dateFormats: MatDateFormats,
-    private dateAdapter: DateAdapter<any>,
-
-    private translateService: TranslateService
-  ) {}
+  constructor(private translateService: TranslateService) {}
 
   searchStringInit(initialValue: string, regexValidator: string, minCharNo: number, maxCharNo: number) {
     this.searchString = new FormControl<string | null>(initialValue, [
@@ -156,18 +138,6 @@ export class VersionSupportCardFilterService {
       case FilterEnums.Enum:
         if (filter.prop === 'speedLimitWarning') {
           this.speedLimitWarningSelected = this.speedLimitWarningSelected.filter(sel => sel !== filter.filterValue);
-        }
-        this.activeFilters = this.activeFilters.filter(af => af.filterValue !== filter.filterValue && af.label !== filter.label);
-        break;
-
-      case FilterEnums.Date:
-        if (filter.prop === 'startDate') {
-          this.startDateGroup.reset();
-          this.startDateGroup.reset();
-        }
-        if (filter.prop === 'endDate') {
-          this.endDateGroup.reset();
-          this.endDateGroup.reset();
         }
         this.activeFilters = this.activeFilters.filter(af => af.filterValue !== filter.filterValue && af.label !== filter.label);
         break;
@@ -269,72 +239,5 @@ export class VersionSupportCardFilterService {
       });
 
     return filteredData;
-  }
-
-  applyDateFilter(data: Array<any>): Array<any> {
-    let filteredData = data;
-
-    if (this.startDateGroup.value.start !== null && this.startDateGroup.value.end !== null) {
-      const startDate = this.createDateAsUTC(new Date(this.startDateGroup.value.start));
-      const beginningOfDay = new Date(this.startDateGroup.value.end).setHours(23, 59, 59, 999);
-      const endDate = this.createDateAsUTC(new Date(beginningOfDay));
-      filteredData = filteredData.filter(
-        item => new Date(endDate) >= new Date(item.startDate) && new Date(item.startDate) >= new Date(startDate)
-      );
-      this.updateActiveFilters('startDate', `startDate: from ${this.getFormattedDate(startDate)} to ${this.getFormattedDate(endDate)}`);
-    } else if (this.startDateGroup.value.end !== null) {
-      const beginningOfDay = new Date(this.startDateGroup.value.end).setHours(23, 59, 59, 999);
-      const endDate = this.createDateAsUTC(new Date(beginningOfDay));
-      filteredData = filteredData.filter(item => new Date(item.startDate) <= new Date(endDate));
-      this.updateActiveFilters('startDate', `startDate: until ${this.getFormattedDate(endDate)}`);
-    } else if (this.startDateGroup.value.start !== null) {
-      const startDate = this.createDateAsUTC(new Date(this.startDateGroup.value.start));
-      filteredData = filteredData.filter(item => new Date(item.startDate) >= new Date(startDate));
-      this.updateActiveFilters('startDate', `startDate: from ${this.getFormattedDate(startDate)}`);
-    }
-    if (this.endDateGroup.value.start !== null && this.endDateGroup.value.end !== null) {
-      const startDate = this.createDateAsUTC(new Date(this.endDateGroup.value.start));
-      const beginningOfDay = new Date(this.endDateGroup.value.end).setHours(23, 59, 59, 999);
-      const endDate = this.createDateAsUTC(new Date(beginningOfDay));
-      filteredData = filteredData.filter(
-        item => new Date(endDate) >= new Date(item.endDate) && new Date(item.endDate) >= new Date(startDate)
-      );
-      this.updateActiveFilters('endDate', `endDate: from ${this.getFormattedDate(startDate)} to ${this.getFormattedDate(endDate)}`);
-    } else if (this.endDateGroup.value.end !== null) {
-      const beginningOfDay = new Date(this.endDateGroup.value.end).setHours(23, 59, 59, 999);
-      const endDate = this.createDateAsUTC(new Date(beginningOfDay));
-      filteredData = filteredData.filter(item => new Date(item.endDate) <= new Date(endDate));
-      this.updateActiveFilters('endDate', `endDate: until ${this.getFormattedDate(endDate)}`);
-    } else if (this.endDateGroup.value.start !== null) {
-      const startDate = this.createDateAsUTC(new Date(this.endDateGroup.value.start));
-      filteredData = filteredData.filter(item => new Date(item.endDate) >= new Date(startDate));
-      this.updateActiveFilters('endDate', `endDate: from ${this.getFormattedDate(startDate)}`);
-    }
-    return filteredData;
-  }
-  updateActiveFilters(prop: string, label: string) {
-    const filter = this.activeFilters.find(af => af.prop === prop);
-    if (!filter) {
-      this.activeFilters.push(<FilterType>{
-        removable: true,
-        type: FilterEnums.Date,
-        label: label,
-        prop: prop,
-      });
-    } else {
-      filter.label = label;
-    }
-  }
-
-  private createDateAsUTC(date: Date) {
-    return new Date(
-      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds())
-    ).toISOString();
-  }
-
-  private getFormattedDate(theDate: string) {
-    return this.dateFormats.display.dateInput !== 'L'
-      ? this.dateAdapter.format(moment(theDate).toDate(), this.dateFormats.display.dateInput)
-      : new Date(theDate).toLocaleDateString(this.translateService.currentLang, {timeZone: 'UTC'});
   }
 }

@@ -13,7 +13,7 @@
 
 import {Component, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {Movement, WarningLevel} from '../../shared/types/movement/movement.types';
+import {Movement, TrafficLight} from '../../shared/types/movement/movement.types';
 import {Movement as Movement210} from '../../shared/types/movement/v210/movement.types';
 
 @Component({
@@ -37,25 +37,22 @@ export class SidenavComponent implements OnInit {
   initializeData(): void {
     this.basicMovementData = [
       {
-        moving: false,
-        speedLimitWarning: WarningLevel.Green,
-        position: {x: 1, y: 2, z: 3},
-        startDate: new Date(),
-        endDate: new Date(),
+        isMoving: false,
+        speedLimitWarning: TrafficLight.Green,
+        position: {longitude: 1, latitude: 2, altitude: 3},
+        speed: 100,
       },
       {
-        moving: false,
-        speedLimitWarning: WarningLevel.Yellow,
-        position: {x: 4, y: 5, z: 6},
-        startDate: new Date(),
-        endDate: new Date(),
+        isMoving: false,
+        speedLimitWarning: TrafficLight.Yellow,
+        position: {longitude: 4, latitude: 5, altitude: 6},
+        speed: 80,
       },
       {
-        moving: true,
-        speedLimitWarning: WarningLevel.Yellow,
-        position: {x: 7, y: 8, z: 9},
-        startDate: new Date(),
-        endDate: new Date(),
+        isMoving: true,
+        speedLimitWarning: TrafficLight.Red,
+        position: {longitude: 7, latitude: 8, altitude: 9},
+        speed: 30,
       },
     ];
     this.versionSupportData = [...this.basicMovementData];

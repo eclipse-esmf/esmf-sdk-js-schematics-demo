@@ -46,10 +46,9 @@ import {MatTableDataSource} from '@angular/material/table';
 import {VersionSupportCardService} from './version-support-card.service';
 
 export enum VersionSupportCardCardValues {
-  MOVING = 'moving',
+  IS_MOVING = 'isMoving',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  START_DATE = 'startDate',
-  END_DATE = 'endDate',
 }
 
 @Component({
@@ -130,7 +129,7 @@ export class VersionSupportCardComponent implements OnInit, AfterViewInit, OnDes
   }
 
   private defaultSorting() {
-    this.filterService.sortedProperty = 'endDate';
+    this.filterService.sortedProperty = 'speedLimitWarning';
 
     this.sorting();
   }
@@ -169,8 +168,6 @@ export class VersionSupportCardComponent implements OnInit, AfterViewInit, OnDes
     dataTemp = this.filterService.applyEnumFilter(dataTemp);
 
     dataTemp = this.filterService.applyStringSearchFilter(dataTemp);
-
-    dataTemp = this.filterService.applyDateFilter(dataTemp);
 
     return dataTemp;
   }

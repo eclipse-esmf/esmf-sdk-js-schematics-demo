@@ -57,10 +57,9 @@ export interface Column {
  * Enumeration of all available columns which can be shown/hide in the table.
  */
 export enum DefaultSortingTableColumn {
-  MOVING = 'moving',
+  IS_MOVING = 'isMoving',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  START_DATE = 'startDate',
-  END_DATE = 'endDate',
 
   COLUMNS_MENU = 'columnsMenu',
 }
@@ -132,7 +131,7 @@ export class DefaultSortingTableComponent implements OnInit, AfterViewInit, Afte
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: DefaultSortingTableDataSource;
 
-  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'moving', sortDirection: 'asc'};
+  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'speedLimitWarning', sortDirection: 'asc'};
   displayedColumns: Array<string> = Object.values(DefaultSortingTableColumn);
   columns: Array<Column> = [];
 

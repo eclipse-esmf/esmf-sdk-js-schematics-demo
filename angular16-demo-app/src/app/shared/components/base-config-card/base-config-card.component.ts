@@ -36,10 +36,9 @@ import {MatTableDataSource} from '@angular/material/table';
 import {BaseConfigCardService} from './base-config-card.service';
 
 export enum BaseConfigCardCardValues {
-  MOVING = 'moving',
+  IS_MOVING = 'isMoving',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  START_DATE = 'startDate',
-  END_DATE = 'endDate',
 }
 
 @Component({

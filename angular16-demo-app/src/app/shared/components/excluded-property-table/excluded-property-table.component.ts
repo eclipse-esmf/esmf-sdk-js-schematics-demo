@@ -57,9 +57,9 @@ export interface Column {
  * Enumeration of all available columns which can be shown/hide in the table.
  */
 export enum ExcludedPropertyTableColumn {
+  POSITION_LONGITUDE = 'position.longitude',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  POSITION_X = 'position.x',
-  START_DATE = 'startDate',
 
   COLUMNS_MENU = 'columnsMenu',
 }
@@ -131,7 +131,7 @@ export class ExcludedPropertyTableComponent implements OnInit, AfterViewInit, Af
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: ExcludedPropertyTableDataSource;
 
-  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'position.x', sortDirection: 'asc'};
+  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'position.longitude', sortDirection: 'asc'};
   displayedColumns: Array<string> = Object.values(ExcludedPropertyTableColumn);
   columns: Array<Column> = [];
 

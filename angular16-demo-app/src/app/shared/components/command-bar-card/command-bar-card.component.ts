@@ -42,10 +42,9 @@ import {MatTableDataSource} from '@angular/material/table';
 import {CommandBarCardService} from './command-bar-card.service';
 
 export enum CommandBarCardCardValues {
-  MOVING = 'moving',
+  IS_MOVING = 'isMoving',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  START_DATE = 'startDate',
-  END_DATE = 'endDate',
 }
 
 @Component({

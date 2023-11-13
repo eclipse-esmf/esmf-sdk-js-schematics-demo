@@ -44,7 +44,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {JSSdkLocalStorageService} from '../../services/storage.service';
 import {RemoteDataTableColumnMenuComponent} from './remote-data-table-column-menu.component';
 
-import { Subject, catchError, finalize, tap, Subscription } from "rxjs";
+import {Subject, Subscription, catchError, finalize, tap} from 'rxjs';
 
 import {AbstractArrayNode, AbstractNode, And, Eq, Limit, Query, QueryStringifier, Sort} from 'rollun-ts-rql';
 import {SortOptions} from 'rollun-ts-rql/dist/nodes/Sort';
@@ -97,10 +97,9 @@ export interface Column {
  * Enumeration of all available columns which can be shown/hide in the table.
  */
 export enum RemoteDataTableColumn {
-  MOVING = 'moving',
+  IS_MOVING = 'isMoving',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  START_DATE = 'startDate',
-  END_DATE = 'endDate',
 
   COLUMNS_MENU = 'columnsMenu',
 }
@@ -176,7 +175,7 @@ export class RemoteDataTableComponent implements OnInit, AfterViewInit, AfterVie
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: RemoteDataTableDataSource;
 
-  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'endDate', sortDirection: 'asc'};
+  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'speedLimitWarning', sortDirection: 'asc'};
   displayedColumns: Array<string> = Object.values(RemoteDataTableColumn);
   columns: Array<Column> = [];
 
@@ -190,7 +189,8 @@ export class RemoteDataTableComponent implements OnInit, AfterViewInit, AfterVie
   dataLoadError = false;
 
   private readonly ngUnsubscribe = new Subject<void>();
-  private requestSubscription: Subscription = new Subscription()
+
+  private requestSubscription: Subscription = new Subscription();
 
   constructor(
     private sanitizer: DomSanitizer,
