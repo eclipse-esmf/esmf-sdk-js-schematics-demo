@@ -17,8 +17,6 @@ import {CommandBarDateFilterTableComponent} from './command-bar-date-filter-tabl
 
 import {CommandBarDateFilterTableCommandBarComponent} from './command-bar-date-filter-table-command-bar.component';
 
-import {CommandBarDateFilterTableChipListComponent} from './command-bar-date-filter-table-chip-list.component';
-
 import {CommandBarDateFilterTableColumnMenuComponent} from './command-bar-date-filter-table-column-menu.component';
 
 import {ClipboardModule} from '@angular/cdk/clipboard';
@@ -28,8 +26,6 @@ import {HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatChipsModule} from '@angular/material/chips';
-import {MatNativeDateModule} from '@angular/material/core';
-import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
@@ -51,8 +47,6 @@ import {AppSharedModule} from 'src/app/shared/app-shared.module';
     CommandBarDateFilterTableColumnMenuComponent,
 
     CommandBarDateFilterTableCommandBarComponent,
-
-    CommandBarDateFilterTableChipListComponent,
   ],
   imports: [
     AppSharedModule,
@@ -72,8 +66,6 @@ import {AppSharedModule} from 'src/app/shared/app-shared.module';
     MatChipsModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatNativeDateModule,
-    MatDatepickerModule,
     MatTableModule,
     MatSortModule,
     ClipboardModule,
@@ -83,6 +75,6 @@ import {AppSharedModule} from 'src/app/shared/app-shared.module';
     DatePipe,
   ],
   providers: [],
-  exports: [CommandBarDateFilterTableComponent, CommandBarDateFilterTableCommandBarComponent, CommandBarDateFilterTableChipListComponent],
+  exports: [CommandBarDateFilterTableComponent, CommandBarDateFilterTableCommandBarComponent],
 })
 export class CommandBarDateFilterTableModule {}

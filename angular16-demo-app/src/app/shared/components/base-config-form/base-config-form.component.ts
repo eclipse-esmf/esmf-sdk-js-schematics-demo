@@ -16,18 +16,16 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {Movement} from '../../types/movement/movement.types';
-import {endDateFormControl} from './end-date/end-date.component';
-import {movingFormControl} from './moving/moving.component';
+import {isMovingFormControl} from './is-moving/is-moving.component';
 import {positionFormControl} from './position/position.component';
 import {speedLimitWarningFormControl} from './speed-limit-warning/speed-limit-warning.component';
-import {startDateFormControl} from './start-date/start-date.component';
+import {speedFormControl} from './speed/speed.component';
 
 export const MovementForm = new FormGroup({
-  moving: movingFormControl,
-  speedLimitWarning: speedLimitWarningFormControl,
+  isMoving: isMovingFormControl,
   position: positionFormControl,
-  startDate: startDateFormControl,
-  endDate: endDateFormControl,
+  speed: speedFormControl,
+  speedLimitWarning: speedLimitWarningFormControl,
 });
 
 @Component({

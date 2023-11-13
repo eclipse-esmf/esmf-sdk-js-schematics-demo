@@ -32,27 +32,25 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {AppSharedModule} from 'src/app/shared/app-shared.module';
-import {EndDateComponent} from './end-date/end-date.component';
-import {MovingComponent} from './moving/moving.component';
+import {AltitudeComponent} from './altitude/altitude.component';
+import {IsMovingComponent} from './is-moving/is-moving.component';
+import {LatitudeComponent} from './latitude/latitude.component';
+import {LongitudeComponent} from './longitude/longitude.component';
 import {PositionComponent} from './position/position.component';
 import {SpeedLimitWarningComponent} from './speed-limit-warning/speed-limit-warning.component';
-import {StartDateComponent} from './start-date/start-date.component';
-import {XComponent} from './x/x.component';
-import {YComponent} from './y/y.component';
-import {ZComponent} from './z/z.component';
+import {SpeedComponent} from './speed/speed.component';
 
 @NgModule({
   declarations: [BaseConfigFormComponent],
   imports: [
     AppSharedModule,
-    MovingComponent,
-    SpeedLimitWarningComponent,
+    IsMovingComponent,
     PositionComponent,
-    XComponent,
-    YComponent,
-    ZComponent,
-    StartDateComponent,
-    EndDateComponent,
+    LatitudeComponent,
+    LongitudeComponent,
+    AltitudeComponent,
+    SpeedComponent,
+    SpeedLimitWarningComponent,
     MatPaginatorModule,
     MatButtonModule,
     MatMenuModule,

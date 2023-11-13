@@ -16,52 +16,6 @@
     {{ selection.selected.length > 0 ? selection.selected.length + ' / ' : '' }}{{ totalItems }}
   </div>
 
-  <mat-form-field data-test="form-field-date-time" appearance="fill">
-    <mat-label data-test="date-time-label">{{ 'startDate.preferredName' | translate }}</mat-label>
-    <mat-date-range-input data-test="date-range-input" [rangePicker]="startDatePicker" [formGroup]="filterService.startDateGroup">
-      <input data-test="start-date-input" matStartDate [placeholder]="'date.start' | translate" formControlName="start" />
-      <input
-        data-test="end-date-input"
-        matEndDate
-        [placeholder]="'date.end' | translate"
-        formControlName="end"
-        (dateChange)="triggerReloadFilter()"
-      />
-    </mat-date-range-input>
-    <mat-datepicker-toggle data-test="datepicker-toggle" matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-    <mat-date-range-picker data-test="date-range-picker" #startDatePicker>
-      <mat-date-range-picker-actions data-test="date-range-picker-actions">
-        <button data-test="date-picker-cancel-button" mat-button matDateRangePickerCancel>{{ 'cancel' | translate }}</button>
-        <button data-test="date-picker-apply-button" mat-raised-button color="primary" matDateRangePickerApply>
-          {{ 'apply' | translate }}
-        </button>
-      </mat-date-range-picker-actions>
-    </mat-date-range-picker>
-  </mat-form-field>
-
-  <mat-form-field data-test="form-field-date-time" appearance="fill">
-    <mat-label data-test="date-time-label">{{ 'endDate.preferredName' | translate }}</mat-label>
-    <mat-date-range-input data-test="date-range-input" [rangePicker]="endDatePicker" [formGroup]="filterService.endDateGroup">
-      <input data-test="start-date-input" matStartDate [placeholder]="'date.start' | translate" formControlName="start" />
-      <input
-        data-test="end-date-input"
-        matEndDate
-        [placeholder]="'date.end' | translate"
-        formControlName="end"
-        (dateChange)="triggerReloadFilter()"
-      />
-    </mat-date-range-input>
-    <mat-datepicker-toggle data-test="datepicker-toggle" matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-    <mat-date-range-picker data-test="date-range-picker" #endDatePicker>
-      <mat-date-range-picker-actions data-test="date-range-picker-actions">
-        <button data-test="date-picker-cancel-button" mat-button matDateRangePickerCancel>{{ 'cancel' | translate }}</button>
-        <button data-test="date-picker-apply-button" mat-raised-button color="primary" matDateRangePickerApply>
-          {{ 'apply' | translate }}
-        </button>
-      </mat-date-range-picker-actions>
-    </mat-date-range-picker>
-  </mat-form-field>
-
   <div class="sorting-content" [matTooltip]="'toolbar.sorted_tooltip' | translate" matTooltipPosition="above" [matMenuTriggerFor]="sortBy">
     <button data-test="sort-data-by-button" mat-icon-button>
       <mat-icon data-test="sort-data-by-icon">sort_by_alpha</mat-icon>

@@ -39,17 +39,81 @@
           </td>
         </tr>
 
-        <!-- speedLimitWarning Column -->
-        <ng-container data-test="table-column" matColumnDef="speedLimitWarning">
+        <!-- position.longitude Column -->
+        <ng-container data-test="table-column" matColumnDef="position.longitude">
           <th
             data-test="table-header"
             mat-header-cell
             *matHeaderCellDef
-            mat-sort-header="speedLimitWarning"
+            mat-sort-header="position.longitude"
+            class="table-header-number"
             [resizeColumn]="true"
             [index]="0"
             (dragging)="dragging = $event"
           >
+            <span
+              [matTooltip]="'position.longitude.description' | translate"
+              [matTooltipDisabled]="headerTooltipsOff"
+              matTooltipPosition="above"
+              data-test="table-header-text"
+            >
+              {{ 'position.longitude.preferredName' | translate }}
+            </span>
+          </th>
+
+          <td data-test="table-cell" mat-cell *matCellDef="let row" class="table-cell-number">
+            {{ !(row.position.longitude === null || row.position.longitude === undefined) ? row.position.longitude : '-' }}
+
+            <mat-icon
+              data-test="copy-to-clipboard-icon"
+              *ngIf="!(row.position.longitude === null || row.position.longitude === undefined)"
+              class="material-icons copy-to-clipboard"
+              (click)="copyToClipboard(row.position.longitude, $event)"
+            >
+              content_copy
+            </mat-icon>
+          </td>
+        </ng-container>
+
+        <!-- speed Column -->
+        <ng-container data-test="table-column" matColumnDef="speed">
+          <th
+            data-test="table-header"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="speed"
+            class="table-header-number"
+            [resizeColumn]="true"
+            [index]="1"
+            (dragging)="dragging = $event"
+          >
+            <span
+              [matTooltip]="'speed.description' | translate"
+              [matTooltipDisabled]="headerTooltipsOff"
+              matTooltipPosition="above"
+              data-test="table-header-text"
+            >
+              {{ 'speed.preferredName' | translate }}
+            </span>
+          </th>
+
+          <td data-test="table-cell" mat-cell *matCellDef="let row" class="table-cell-number">
+            {{ !(row.speed === null || row.speed === undefined) ? row.speed : '-' }}
+
+            <mat-icon
+              data-test="copy-to-clipboard-icon"
+              *ngIf="!(row.speed === null || row.speed === undefined)"
+              class="material-icons copy-to-clipboard"
+              (click)="copyToClipboard(row.speed, $event)"
+            >
+              content_copy
+            </mat-icon>
+          </td>
+        </ng-container>
+
+        <!-- speedLimitWarning Column -->
+        <ng-container data-test="table-column" matColumnDef="speedLimitWarning">
+          <th data-test="table-header" mat-header-cell *matHeaderCellDef mat-sort-header="speedLimitWarning">
             <span
               [matTooltip]="'speedLimitWarning.description' | translate"
               [matTooltipDisabled]="headerTooltipsOff"
@@ -68,69 +132,6 @@
               *ngIf="!(row.speedLimitWarning === null || row.speedLimitWarning === undefined)"
               class="material-icons copy-to-clipboard"
               (click)="copyToClipboard(row.speedLimitWarning, $event)"
-            >
-              content_copy
-            </mat-icon>
-          </td>
-        </ng-container>
-
-        <!-- position.x Column -->
-        <ng-container data-test="table-column" matColumnDef="position.x">
-          <th
-            data-test="table-header"
-            mat-header-cell
-            *matHeaderCellDef
-            mat-sort-header="position.x"
-            class="table-header-number"
-            [resizeColumn]="true"
-            [index]="0"
-            (dragging)="dragging = $event"
-          >
-            <span
-              [matTooltip]="'position.x.description' | translate"
-              [matTooltipDisabled]="headerTooltipsOff"
-              matTooltipPosition="above"
-              data-test="table-header-text"
-            >
-              {{ 'position.x.preferredName' | translate }}
-            </span>
-          </th>
-
-          <td data-test="table-cell" mat-cell *matCellDef="let row" class="table-cell-number">
-            {{ !(row.position.x === null || row.position.x === undefined) ? row.position.x : '-' }}
-
-            <mat-icon
-              data-test="copy-to-clipboard-icon"
-              *ngIf="!(row.position.x === null || row.position.x === undefined)"
-              class="material-icons copy-to-clipboard"
-              (click)="copyToClipboard(row.position.x, $event)"
-            >
-              content_copy
-            </mat-icon>
-          </td>
-        </ng-container>
-
-        <!-- startDate Column -->
-        <ng-container data-test="table-column" matColumnDef="startDate">
-          <th data-test="table-header" mat-header-cell *matHeaderCellDef mat-sort-header="startDate">
-            <span
-              [matTooltip]="'startDate.description' | translate"
-              [matTooltipDisabled]="headerTooltipsOff"
-              matTooltipPosition="above"
-              data-test="table-header-text"
-            >
-              {{ 'startDate.preferredName' | translate }}
-            </span>
-          </th>
-
-          <td data-test="table-cell" mat-cell *matCellDef="let row">
-            {{ !(row.startDate === null || row.startDate === undefined) ? (row.startDate | date : tableDateTimeFormat) : '-' }}
-
-            <mat-icon
-              data-test="copy-to-clipboard-icon"
-              *ngIf="!(row.startDate === null || row.startDate === undefined)"
-              class="material-icons copy-to-clipboard"
-              (click)="copyToClipboard(row.startDate, $event)"
             >
               content_copy
             </mat-icon>

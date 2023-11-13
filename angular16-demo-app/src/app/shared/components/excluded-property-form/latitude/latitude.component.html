@@ -1,0 +1,22 @@
+<!--
+ * Copyright (c) 2023 Robert Bosch Manufacturing Solutions GmbH
+ *
+ * See the AUTHORS file(s) distributed with this work for
+ * additional information regarding authorship.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ -->
+
+<mat-form-field class="form-field">
+  <mat-label>latitude</mat-label>
+  <input type="number" matInput placeholder="" [formControl]="formControl" (ngModelChange)="value = $event" />
+  <span matTextSuffix>unit:degreeUnitOfAngle</span>
+
+  <mat-hint align="start">exampleValue: 9.1781</mat-hint>
+
+  <mat-error *ngIf="formControl.invalid">{{ errorMessage }}</mat-error>
+</mat-form-field>

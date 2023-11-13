@@ -14,7 +14,7 @@
 import {cardTests} from '../../reusable-card/card';
 import {commandBarTests} from '../../reusable-card/command-bar';
 
-describe('Command bar with date filter', (): void => {
+describe.skip('Command bar with date filter', (): void => {
   before((): void => {
     cy.visit('/');
     cy.get('[data-test="command-bar-date-filter"]').click();

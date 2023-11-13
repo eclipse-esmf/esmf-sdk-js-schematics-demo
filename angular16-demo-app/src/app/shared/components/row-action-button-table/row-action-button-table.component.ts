@@ -57,10 +57,9 @@ export interface Column {
  * Enumeration of all available columns which can be shown/hide in the table.
  */
 export enum RowActionButtonTableColumn {
-  MOVING = 'moving',
+  IS_MOVING = 'isMoving',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  START_DATE = 'startDate',
-  END_DATE = 'endDate',
 
   CUSTOM_ROW_ACTIONS = 'customRowActions',
   COLUMNS_MENU = 'columnsMenu',
@@ -136,7 +135,7 @@ export class RowActionButtonTableComponent implements OnInit, AfterViewInit, Aft
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: RowActionButtonTableDataSource;
 
-  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'endDate', sortDirection: 'asc'};
+  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'speedLimitWarning', sortDirection: 'asc'};
   displayedColumns: Array<string> = Object.values(RowActionButtonTableColumn);
   columns: Array<Column> = [];
 

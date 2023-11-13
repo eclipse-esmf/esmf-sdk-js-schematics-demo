@@ -15,7 +15,7 @@
 
 import {Injectable} from '@angular/core';
 
-import {Movement, WarningLevel} from '../../types/movement/movement.types';
+import {Movement, TrafficLight} from '../../types/movement/movement.types';
 
 export enum FilterEnums {
   Date,
@@ -46,8 +46,8 @@ export class CommandBarEnumFilterCardFilterService {
   /** Array of active filters */
   activeFilters: FilterType[] = [];
 
-  speedLimitWarningSelected: Array<WarningLevel> = [];
-  speedLimitWarningOptions: Array<any> = Object.values(WarningLevel);
+  speedLimitWarningSelected: Array<TrafficLight> = [];
+  speedLimitWarningOptions: Array<any> = Object.values(TrafficLight);
 
   sortCard = SortCard.ASCENDING;
   sortedProperty = '';

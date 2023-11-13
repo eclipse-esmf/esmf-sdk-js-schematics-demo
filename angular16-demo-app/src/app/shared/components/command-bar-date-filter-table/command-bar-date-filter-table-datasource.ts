@@ -98,14 +98,12 @@ export class CommandBarDateFilterTableDataSource extends DataSource<Movement> {
     return data.sort((a: Movement, b: Movement): number => {
       const isSortingAsc = this.sort?.direction === 'asc';
       switch (this.sort?.active.trim()) {
-        case 'moving':
-          return this.compare(a.moving, b.moving, isSortingAsc);
+        case 'isMoving':
+          return this.compare(a.isMoving, b.isMoving, isSortingAsc);
+        case 'speed':
+          return this.compare(a.speed, b.speed, isSortingAsc);
         case 'speedLimitWarning':
           return this.compare(a.speedLimitWarning.toString(), b.speedLimitWarning.toString(), isSortingAsc);
-        case 'startDate':
-          return this.compare(a.startDate, b.startDate, isSortingAsc);
-        case 'endDate':
-          return this.compare(a.endDate, b.endDate, isSortingAsc);
         default:
           return 0;
       }

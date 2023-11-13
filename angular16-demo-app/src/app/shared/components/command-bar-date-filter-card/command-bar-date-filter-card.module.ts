@@ -19,16 +19,12 @@ import {TranslateModule} from '@ngx-translate/core';
 
 import {CommandBarDateFilterCardCommandBarComponent} from './command-bar-date-filter-card-command-bar.component';
 
-import {CommandBarDateFilterCardChipListComponent} from './command-bar-date-filter-card-chip-list.component';
-
 import {NgClass, NgFor, NgForOf, NgIf, NgTemplateOutlet, SlicePipe} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
-import {MatNativeDateModule} from '@angular/material/core';
-import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
@@ -41,7 +37,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {AppSharedModule} from 'src/app/shared/app-shared.module';
 
 @NgModule({
-  declarations: [CommandBarDateFilterCardComponent, CommandBarDateFilterCardCommandBarComponent, CommandBarDateFilterCardChipListComponent],
+  declarations: [CommandBarDateFilterCardComponent, CommandBarDateFilterCardCommandBarComponent],
   imports: [
     AppSharedModule,
     MatPaginatorModule,
@@ -60,22 +56,12 @@ import {AppSharedModule} from 'src/app/shared/app-shared.module';
     MatChipsModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatNativeDateModule,
-    MatDatepickerModule,
     MatCardModule,
     NgForOf,
     NgTemplateOutlet,
     SlicePipe,
   ],
   providers: [],
-  exports: [
-    CommandBarDateFilterCardComponent,
-
-    CommandBarDateFilterCardCommandBarComponent,
-
-    CommandBarDateFilterCardChipListComponent,
-
-    TranslateModule,
-  ],
+  exports: [CommandBarDateFilterCardComponent, CommandBarDateFilterCardCommandBarComponent, TranslateModule],
 })
 export class CommandBarDateFilterCardModule {}

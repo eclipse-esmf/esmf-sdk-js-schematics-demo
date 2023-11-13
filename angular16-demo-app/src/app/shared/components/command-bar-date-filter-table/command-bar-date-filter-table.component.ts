@@ -19,7 +19,6 @@ import {
   ElementRef,
   EventEmitter,
   HostBinding,
-  Inject,
   Input,
   OnChanges,
   OnInit,
@@ -33,8 +32,6 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, SortDirection} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 
-import {CommandBarDateFilterTableFilterService} from './command-bar-date-filter-table-filter.service';
-
 import {Clipboard} from '@angular/cdk/clipboard';
 
 import {unparse} from 'papaparse';
@@ -43,8 +40,6 @@ import {Action, ExportTableDialogComponent} from '../export-confirmation-dialog/
 import {MatDialog} from '@angular/material/dialog';
 import {Movement} from '../../types/movement/movement.types';
 import {CommandBarDateFilterTableDataSource} from './command-bar-date-filter-table-datasource';
-
-import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats} from '@angular/material/core';
 
 import {SelectionModel} from '@angular/cdk/collections';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -67,10 +62,9 @@ export interface Column {
  * Enumeration of all available columns which can be shown/hide in the table.
  */
 export enum CommandBarDateFilterTableColumn {
-  MOVING = 'moving',
+  IS_MOVING = 'isMoving',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  START_DATE = 'startDate',
-  END_DATE = 'endDate',
 
   COLUMNS_MENU = 'columnsMenu',
 }
@@ -142,7 +136,7 @@ export class CommandBarDateFilterTableComponent implements OnInit, AfterViewInit
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: CommandBarDateFilterTableDataSource;
 
-  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'endDate', sortDirection: 'asc'};
+  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'speedLimitWarning', sortDirection: 'asc'};
   displayedColumns: Array<string> = Object.values(CommandBarDateFilterTableColumn);
   columns: Array<Column> = [];
 
@@ -161,9 +155,7 @@ export class CommandBarDateFilterTableComponent implements OnInit, AfterViewInit
     public dialog: MatDialog,
     private clipboard: Clipboard,
     private storageService: JSSdkLocalStorageService,
-    public filterService: CommandBarDateFilterTableFilterService,
-    private dateAdapter: DateAdapter<any>,
-    @Inject(MAT_DATE_FORMATS) private dateFormats: MatDateFormats,
+
     private commandBarDateFilterTableService: CommandBarDateFilterTableService
   ) {
     this.dataSource = new CommandBarDateFilterTableDataSource(this.translateService);
@@ -282,14 +274,6 @@ export class CommandBarDateFilterTableComponent implements OnInit, AfterViewInit
     this.rowSelectionEvent.emit(this.selection.selected);
   }
 
-  removeFilter(filterData: any) {
-    this.filterService.removeFilter(filterData);
-
-    this.paginator.firstPage();
-
-    this.applyFilters();
-  }
-
   reloadFilter(): void {
     this.paginator.firstPage();
     this.applyFilters();
@@ -310,8 +294,6 @@ export class CommandBarDateFilterTableComponent implements OnInit, AfterViewInit
 
   private applyAllFilters(data: any[]): any[] {
     let dataTemp = [...data];
-
-    dataTemp = this.filterService.applyDateFilter(dataTemp);
 
     return dataTemp;
   }

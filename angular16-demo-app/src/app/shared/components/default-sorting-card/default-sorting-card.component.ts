@@ -36,10 +36,9 @@ import {MatTableDataSource} from '@angular/material/table';
 import {DefaultSortingCardService} from './default-sorting-card.service';
 
 export enum DefaultSortingCardCardValues {
-  MOVING = 'moving',
+  IS_MOVING = 'isMoving',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  START_DATE = 'startDate',
-  END_DATE = 'endDate',
 }
 
 @Component({
@@ -106,7 +105,7 @@ export class DefaultSortingCardComponent implements OnInit, AfterViewInit {
   }
 
   private defaultSorting() {
-    this.filterService.sortedProperty = 'moving';
+    this.filterService.sortedProperty = 'speedLimitWarning';
 
     this.sorting();
   }

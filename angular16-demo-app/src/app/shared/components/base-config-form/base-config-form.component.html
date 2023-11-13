@@ -13,15 +13,13 @@
 
 <form [formGroup]="form" class="base-config-form">
   <section class="form-fields">
-    <esmf-ui-moving formControlName="moving"></esmf-ui-moving>
-
-    <esmf-ui-speed-limit-warning formControlName="speedLimitWarning"></esmf-ui-speed-limit-warning>
+    <esmf-ui-is-moving formControlName="isMoving"></esmf-ui-is-moving>
 
     <esmf-ui-position formControlName="position"></esmf-ui-position>
 
-    <esmf-ui-start-date formControlName="startDate"></esmf-ui-start-date>
+    <esmf-ui-speed formControlName="speed"></esmf-ui-speed>
 
-    <esmf-ui-end-date formControlName="endDate"></esmf-ui-end-date>
+    <esmf-ui-speed-limit-warning formControlName="speedLimitWarning"></esmf-ui-speed-limit-warning>
   </section>
 
   <section class="form-actions" [class.disabled]="form.disabled">

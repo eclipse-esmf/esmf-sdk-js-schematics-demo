@@ -1,6 +1,6 @@
 {
   "aspectModelTFiles": [
-    "models/org.eclipse.examples.movement/2.1.0/Movement.ttl"
+    "models/org.eclipse.examples/2.1.0/Movement.ttl"
   ],
   "excludedProperties": [],
   "configFile": "wizard.config.json",
@@ -10,7 +10,7 @@
       "propsToShow": []
     }
   ],
-  "selectedModelElementUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#Movement",
+  "selectedModelElementUrn": "urn:samm:org.eclipse.examples:2.1.0#Movement",
   "jsonAccessPath": "",
   "defaultSortingCol": "speedLimitWarning",
   "customColumns": [],

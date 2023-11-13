@@ -19,7 +19,6 @@ import {
   ElementRef,
   EventEmitter,
   HostBinding,
-  Inject,
   Input,
   OnChanges,
   OnDestroy,
@@ -44,8 +43,6 @@ import {Action, ExportTableDialogComponent} from '../../export-confirmation-dial
 import {MatDialog} from '@angular/material/dialog';
 import {Movement} from '../../../types/movement/v210/movement.types';
 import {VersionSupportTableDataSource} from './version-support-table-datasource';
-
-import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats} from '@angular/material/core';
 
 import {SelectionModel} from '@angular/cdk/collections';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -84,10 +81,9 @@ export interface Column {
  */
 export enum VersionSupportTableColumn {
   CHECKBOX = 'checkboxes',
-  MOVING = 'moving',
+  IS_MOVING = 'isMoving',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  START_DATE = 'startDate',
-  END_DATE = 'endDate',
 
   COLUMNS_MENU = 'columnsMenu',
 }
@@ -167,7 +163,7 @@ export class VersionSupportTableComponent implements OnInit, AfterViewInit, Afte
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: VersionSupportTableDataSource;
 
-  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'endDate', sortDirection: 'asc'};
+  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'speedLimitWarning', sortDirection: 'asc'};
   displayedColumns: Array<string> = Object.values(VersionSupportTableColumn);
   columns: Array<Column> = [];
 
@@ -197,8 +193,6 @@ export class VersionSupportTableComponent implements OnInit, AfterViewInit, Afte
     private clipboard: Clipboard,
     private storageService: JSSdkLocalStorageService,
     public filterService: VersionSupportTableFilterService,
-    private dateAdapter: DateAdapter<any>,
-    @Inject(MAT_DATE_FORMATS) private dateFormats: MatDateFormats,
     private versionSupportTableService: VersionSupportTableService
   ) {
     this.dataSource = new VersionSupportTableDataSource(this.translateService);
@@ -412,8 +406,6 @@ export class VersionSupportTableComponent implements OnInit, AfterViewInit, Afte
     this.highlightString = this.filterService.activeFilters
       .filter(elem => elem.type === FilterEnums.Search && elem.filterValue !== undefined)
       .map(elem => elem.filterValue as string);
-
-    dataTemp = this.filterService.applyDateFilter(dataTemp);
 
     return dataTemp;
   }

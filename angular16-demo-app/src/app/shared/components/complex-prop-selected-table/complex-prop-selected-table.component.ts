@@ -57,11 +57,10 @@ export interface Column {
  * Enumeration of all available columns which can be shown/hide in the table.
  */
 export enum ComplexPropSelectedTableColumn {
-  MOVING = 'moving',
+  IS_MOVING = 'isMoving',
+  POSITION_LATITUDE = 'position.latitude',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  POSITION_X = 'position.x',
-  START_DATE = 'startDate',
-  END_DATE = 'endDate',
 
   COLUMNS_MENU = 'columnsMenu',
 }
@@ -133,7 +132,7 @@ export class ComplexPropSelectedTableComponent implements OnInit, AfterViewInit,
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: ComplexPropSelectedTableDataSource;
 
-  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'endDate', sortDirection: 'asc'};
+  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'speedLimitWarning', sortDirection: 'asc'};
   displayedColumns: Array<string> = Object.values(ComplexPropSelectedTableColumn);
   columns: Array<Column> = [];
 

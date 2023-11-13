@@ -18,7 +18,7 @@ describe('Command bar with custom column selection and deselection', (): void =>
     cy.get('[data-test="custom-column"]').click();
   });
 
-  const columns = ['Moving', 'Speed Limit Warning', 'Start Date', 'End Date', 'Custom Column'];
+  const columns = ['is moving', 'speed', 'speed limit warning', 'test.preferredName'];
 
   let tableColumnsProcessed: string[] = [];
 
@@ -64,7 +64,8 @@ describe('Command bar with custom column selection and deselection', (): void =>
       })
       .then(() => {
         cy.get('[data-test="table"]').within(() => {
-          cy.get('[data-test="table-header-text"]').should('have.length', 4);
+          cy.get('[data-test="table-header-text"]').should('have.length', 3);
+          cy.get('[data-test="custom-column-header"]').should('have.length', 1);
         });
       });
   });
@@ -94,7 +95,8 @@ describe('Command bar with custom column selection and deselection', (): void =>
     cy.get('[data-test="restore-to-defaults-button"]').click();
     cy.get('[data-test="column-menu-apply-button"]').click();
     cy.get('[data-test="table"]').within(() => {
-      cy.get('[data-test="table-header-text"]').should('have.length', 4);
+      cy.get('[data-test="table-header-text"]').should('have.length', 3);
+      cy.get('[data-test="custom-column-header"]').should('have.length', 1);
     });
   });
 });

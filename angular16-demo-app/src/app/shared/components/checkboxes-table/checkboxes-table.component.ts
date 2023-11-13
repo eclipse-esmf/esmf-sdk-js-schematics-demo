@@ -58,10 +58,9 @@ export interface Column {
  */
 export enum CheckboxesTableColumn {
   CHECKBOX = 'checkboxes',
-  MOVING = 'moving',
+  IS_MOVING = 'isMoving',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  START_DATE = 'startDate',
-  END_DATE = 'endDate',
 
   COLUMNS_MENU = 'columnsMenu',
 }
@@ -133,7 +132,7 @@ export class CheckboxesTableComponent implements OnInit, AfterViewInit, AfterVie
   selection = new SelectionModel<any>(this.isMultipleSelectionEnabled, []);
   dataSource: CheckboxesTableDataSource;
 
-  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'endDate', sortDirection: 'asc'};
+  columnToSort: {sortColumnName: string; sortDirection: SortDirection} = {sortColumnName: 'speedLimitWarning', sortDirection: 'asc'};
   displayedColumns: Array<string> = Object.values(CheckboxesTableColumn);
   columns: Array<Column> = [];
 

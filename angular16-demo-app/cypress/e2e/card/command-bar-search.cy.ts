@@ -31,7 +31,7 @@ describe('Command bar with search filter', (): void => {
 
   it('should update card-data based on speed limit warning', (): void => {
     cy.get('[data-test="search-form-field-card"]').type('yellow{enter}');
-    cy.get('.data-card-header').should('have.length', 2);
+    cy.get('.data-card-header').should('have.length', 1);
     cy.focused().clear();
 
     cy.get('[data-test="mat-chip-remove"]').click();

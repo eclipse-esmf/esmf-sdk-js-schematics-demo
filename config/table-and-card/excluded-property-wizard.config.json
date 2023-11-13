@@ -1,19 +1,15 @@
 {
   "aspectModelTFiles": [
-    "models\\org.eclipse.examples.movement\\2.1.0\\Movement.ttl"
+    "models\\org.eclipse.examples\\2.1.0\\Movement.ttl"
   ],
   "excludedProperties": [
     {
       "prop": "",
-      "propToExcludeAspectModelUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#moving"
+      "propToExcludeAspectModelUrn": "urn:samm:org.eclipse.examples:2.1.0#isMoving"
     },
     {
       "prop": "position",
-      "propToExcludeAspectModelUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#y"
-    },
-    {
-      "prop": "",
-      "propToExcludeAspectModelUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#endDate"
+      "propToExcludeAspectModelUrn": "urn:samm:org.eclipse.examples:2.1.0#latitude"
     }
   ],
   "configFile": "wizard.config.json",
@@ -22,20 +18,20 @@
       "prop": "position",
       "propsToShow": [
         {
-          "name": "x",
-          "aspectModelUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#x"
+          "name": "latitude",
+          "aspectModelUrn": "urn:samm:org.eclipse.examples:2.1.0#latitude"
         },
         {
           "name": "y",
-          "aspectModelUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#y"
+          "aspectModelUrn": "urn:samm:org.eclipse.examples:2.1.0#longitude"
         }
       ]
     }
   ],
   "enabledCommandBarFunctions": [],
-  "selectedModelElementUrn": "urn:samm:org.eclipse.examples.movement:2.1.0#Movement",
+  "selectedModelElementUrn": "urn:samm:org.eclipse.examples:2.1.0#Movement",
   "jsonAccessPath": "",
-  "defaultSortingCol": "position.x",
+  "defaultSortingCol": "position.longitude",
   "customColumns": [],
   "addRowCheckboxes": false,
   "customRowActions": [],

@@ -36,11 +36,10 @@ import {MatTableDataSource} from '@angular/material/table';
 import {ComplexPropSelectedCardService} from './complex-prop-selected-card.service';
 
 export enum ComplexPropSelectedCardCardValues {
-  MOVING = 'moving',
+  IS_MOVING = 'isMoving',
+  POSITION_LATITUDE = 'position.latitude',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  POSITION_X = 'position.x',
-  START_DATE = 'startDate',
-  END_DATE = 'endDate',
 }
 
 @Component({
@@ -107,7 +106,7 @@ export class ComplexPropSelectedCardComponent implements OnInit, AfterViewInit {
   }
 
   private defaultSorting() {
-    this.filterService.sortedProperty = 'endDate';
+    this.filterService.sortedProperty = 'speedLimitWarning';
 
     this.sorting();
   }

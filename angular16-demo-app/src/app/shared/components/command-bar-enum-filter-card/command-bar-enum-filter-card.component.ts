@@ -42,10 +42,9 @@ import {MatTableDataSource} from '@angular/material/table';
 import {CommandBarEnumFilterCardService} from './command-bar-enum-filter-card.service';
 
 export enum CommandBarEnumFilterCardCardValues {
-  MOVING = 'moving',
+  IS_MOVING = 'isMoving',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  START_DATE = 'startDate',
-  END_DATE = 'endDate',
 }
 
 @Component({
@@ -118,7 +117,7 @@ export class CommandBarEnumFilterCardComponent implements OnInit, AfterViewInit 
   }
 
   private defaultSorting() {
-    this.filterService.sortedProperty = 'endDate';
+    this.filterService.sortedProperty = 'speedLimitWarning';
 
     this.sorting();
   }

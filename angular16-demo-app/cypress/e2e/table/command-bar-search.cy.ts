@@ -31,7 +31,7 @@ describe('Command bar with search filter', (): void => {
 
   it('should update table-data based on speed limit warning', (): void => {
     cy.get('[data-test="search-form-field-table"]').type('yellow{enter}');
-    cy.get('[data-test="table"]').find('[data-test="table-row"]').should('have.length', 2);
+    cy.get('[data-test="table"]').find('[data-test="table-row"]').should('have.length', 1);
     cy.focused().clear();
 
     cy.get('[data-test="mat-chip-remove"]').click();

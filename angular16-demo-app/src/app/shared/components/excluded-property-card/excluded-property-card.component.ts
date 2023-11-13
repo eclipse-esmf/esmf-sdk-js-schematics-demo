@@ -36,9 +36,9 @@ import {MatTableDataSource} from '@angular/material/table';
 import {ExcludedPropertyCardService} from './excluded-property-card.service';
 
 export enum ExcludedPropertyCardCardValues {
+  POSITION_LONGITUDE = 'position.longitude',
+  SPEED = 'speed',
   SPEED_LIMIT_WARNING = 'speedLimitWarning',
-  POSITION_X = 'position.x',
-  START_DATE = 'startDate',
 }
 
 @Component({
@@ -105,7 +105,7 @@ export class ExcludedPropertyCardComponent implements OnInit, AfterViewInit {
   }
 
   private defaultSorting() {
-    this.filterService.sortedProperty = 'position.x';
+    this.filterService.sortedProperty = 'position.longitude';
 
     this.sorting();
   }
