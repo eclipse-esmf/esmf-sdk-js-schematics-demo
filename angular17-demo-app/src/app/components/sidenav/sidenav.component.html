@@ -1,0 +1,365 @@
+<!--
+ * Copyright (c) 2024 Robert Bosch Manufacturing Solutions GmbH
+ *
+ * See the AUTHORS file(s) distributed with this work for
+ * additional information regarding authorship.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ -->
+
+<mat-sidenav-container class="sidenav" autosize>
+  <mat-sidenav mode="side" opened>
+    <mat-selection-list hideSingleSelectionIndicator [multiple]="false">
+      <mat-list-option data-test="basic-config" selected (click)="changeComponent('base-config')">
+        <div class="option">
+          <mat-icon>home</mat-icon>
+          <span>Basic Config</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="checkboxes" (click)="changeComponent('checkboxes')">
+        <div class="option">
+          <mat-icon>checklist</mat-icon>
+          <span>Checkboxes Config</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="command-bar" (click)="changeComponent('command-bar')">
+        <div class="option">
+          <mat-icon>table_chart</mat-icon>
+          <span>Command Bar Config</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="command-bar-actions" (click)="changeComponent('command-bar-actions')">
+        <div class="option">
+          <mat-icon>call_to_action</mat-icon>
+          <span>Actions Config</span>
+        </div>
+      </mat-list-option>
+      <!-- Currently not available -->
+      <!--      <mat-list-option data-test="command-bar-date-filter" (click)="changeComponent('command-bar-date-filter')">-->
+      <!--        <div class="option">-->
+      <!--          <mat-icon>today</mat-icon>-->
+      <!--          <span>Date Config</span>-->
+      <!--        </div>-->
+      <!--      </mat-list-option>-->
+      <mat-list-option data-test="command-bar-enum" (click)="changeComponent('command-bar-enum-filter')">
+        <div class="option">
+          <mat-icon>list_alt</mat-icon>
+          <span>Enum Config</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="command-bar-search" (click)="changeComponent('command-bar-search')">
+        <div class="option">
+          <mat-icon>search</mat-icon>
+          <span>Search Config</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="complex-prop-selected" (click)="changeComponent('complex-prop-selected')">
+        <div class="option">
+          <mat-icon>grid_on</mat-icon>
+          <span>Complex Prop Selected</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="custom-column" (click)="changeComponent('custom-column')">
+        <div class="option">
+          <mat-icon>dashboard_customize</mat-icon>
+          <span>Custom column</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="default-sorting" (click)="changeComponent('default-sorting')">
+        <div class="option">
+          <mat-icon>sort</mat-icon>
+          <span>Default Sorting</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="excluded-property" (click)="changeComponent('excluded-property')">
+        <div class="option">
+          <mat-icon>not_interested</mat-icon>
+          <span>Excluded Property</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="row-action-button" (click)="changeComponent('row-action-button')">
+        <div class="option">
+          <mat-icon>toc</mat-icon>
+          <span>Row action buttons</span>
+        </div>
+      </mat-list-option>
+      <mat-list-option data-test="version-support" (click)="changeComponent('version-support')">
+        <div class="option">
+          <mat-icon>more_horiz</mat-icon>
+          <span>Version support</span>
+        </div>
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-tab-group mat-stretch-tabs>
+      <mat-tab label="Table view" data-test="table-view">
+        <fieldset>
+          <esmf-ui-base-config-table *ngIf="currentComponent === 'base-config'" [data]="basicMovementData"> </esmf-ui-base-config-table>
+
+          <esmf-ui-checkboxes-table
+            *ngIf="currentComponent === 'checkboxes'"
+            [data]="basicMovementData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-checkboxes-table>
+
+          <esmf-ui-command-bar-actions-table
+            *ngIf="currentComponent === 'command-bar-actions'"
+            [data]="basicMovementData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-command-bar-actions-table>
+
+          <esmf-ui-command-bar-table
+            *ngIf="currentComponent === 'command-bar'"
+            [data]="basicMovementData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-command-bar-table>
+
+          <esmf-ui-command-bar-date-filter-table
+            *ngIf="currentComponent === 'command-bar-date-filter'"
+            [data]="basicMovementData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-command-bar-date-filter-table>
+
+          <esmf-ui-command-bar-enum-filter-table
+            *ngIf="currentComponent === 'command-bar-enum-filter'"
+            [data]="basicMovementData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-command-bar-enum-filter-table>
+
+          <esmf-ui-command-bar-search-table
+            *ngIf="currentComponent === 'command-bar-search'"
+            [data]="basicMovementData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-command-bar-search-table>
+
+          <esmf-ui-complex-prop-selected-table
+            *ngIf="currentComponent === 'complex-prop-selected'"
+            [data]="basicMovementData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-complex-prop-selected-table>
+
+          <esmf-ui-custom-column-table
+            *ngIf="currentComponent === 'custom-column'"
+            [data]="basicMovementData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-custom-column-table>
+
+          <esmf-ui-default-sorting-table
+            *ngIf="currentComponent === 'default-sorting'"
+            [data]="basicMovementData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-default-sorting-table>
+
+          <esmf-ui-excluded-property-table
+            *ngIf="currentComponent === 'excluded-property'"
+            [data]="basicMovementData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-excluded-property-table>
+
+          <esmf-ui-row-action-button-table
+            *ngIf="currentComponent === 'row-action-button'"
+            [data]="basicMovementData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-row-action-button-table>
+
+          <esmf-ui-version-support-table-v210
+            *ngIf="currentComponent === 'version-support'"
+            [data]="versionSupportData"
+            (copyToClipboardEvent)="copyToClipboard($event)"
+            (rowClickEvent)="rowClick($event)"
+          ></esmf-ui-version-support-table-v210>
+        </fieldset>
+      </mat-tab>
+      <mat-tab label="Card view" data-test="card-view">
+        <fieldset>
+          <esmf-ui-base-config-card *ngIf="currentComponent === 'base-config'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="baseConfigCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
+              <div class="data-card-element" *ngFor="let elem of element">
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
+              </div>
+            </ng-template>
+          </esmf-ui-base-config-card>
+
+          <ng-container *ngIf="currentComponent === 'checkboxes'">
+            <div class="note"><strong>Note:</strong> This feature is only available in the table view.</div>
+          </ng-container>
+
+          <esmf-ui-command-bar-actions-card *ngIf="currentComponent === 'command-bar-actions'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="commandBarActionsCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
+              <div class="data-card-element" *ngFor="let elem of element">
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
+              </div>
+            </ng-template>
+          </esmf-ui-command-bar-actions-card>
+
+          <esmf-ui-command-bar-card *ngIf="currentComponent === 'command-bar'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="commandBarCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
+              <div class="data-card-element" *ngFor="let elem of element">
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
+              </div>
+            </ng-template>
+          </esmf-ui-command-bar-card>
+
+          <esmf-ui-command-bar-date-filter-card *ngIf="currentComponent === 'command-bar-date-filter'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="commandBarDateFilterCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
+              <div class="data-card-element" *ngFor="let elem of element">
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
+              </div>
+            </ng-template>
+          </esmf-ui-command-bar-date-filter-card>
+
+          <esmf-ui-command-bar-enum-filter-card *ngIf="currentComponent === 'command-bar-enum-filter'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="commandBarEnumFilterCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
+              <div class="data-card-element" *ngFor="let elem of element">
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
+              </div>
+            </ng-template>
+          </esmf-ui-command-bar-enum-filter-card>
+
+          <esmf-ui-command-bar-search-card *ngIf="currentComponent === 'command-bar-search'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="commandBarSearchCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
+              <div class="data-card-element" *ngFor="let elem of element">
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
+              </div>
+            </ng-template>
+          </esmf-ui-command-bar-search-card>
+
+          <esmf-ui-complex-prop-selected-card *ngIf="currentComponent === 'complex-prop-selected'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="complexPropSelectedCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
+              <div class="data-card-element" *ngFor="let elem of element">
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
+              </div>
+            </ng-template>
+          </esmf-ui-complex-prop-selected-card>
+
+          <ng-container *ngIf="currentComponent === 'custom-column'">
+            <div class="note"><strong>Note:</strong> This feature is only available in the table view.</div>
+          </ng-container>
+
+          <esmf-ui-default-sorting-card *ngIf="currentComponent === 'default-sorting'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="defaultSortingCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
+              <div class="data-card-element" *ngFor="let elem of element">
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
+              </div>
+            </ng-template>
+          </esmf-ui-default-sorting-card>
+
+          <esmf-ui-excluded-property-card *ngIf="currentComponent === 'excluded-property'" [data]="basicMovementData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="excludedPropertyCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
+              <div class="data-card-element" *ngFor="let elem of element">
+                <b>{{ elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
+              </div>
+            </ng-template>
+          </esmf-ui-excluded-property-card>
+
+          <ng-container *ngIf="currentComponent === 'row-action-button'">
+            <div class="note"><strong>Note:</strong> This feature is always available for a card.</div>
+          </ng-container>
+
+          <esmf-ui-version-support-card-v210 *ngIf="currentComponent === 'version-support'" [data]="versionSupportData">
+            <ng-template
+              #cardTemplate
+              let-data
+              let-element="versionSupportCardCardValues"
+              let-getElementValue="getElementValue"
+              let-translateService="translateService"
+            >
+              <div class="data-card-element" *ngFor="let elem of element">
+                <b>{{ 'movement.v210.' + elem + '.preferredName' | translate }}</b
+                >: {{ getElementValue(data, elem) }}
+              </div>
+            </ng-template>
+          </esmf-ui-version-support-card-v210>
+        </fieldset>
+      </mat-tab>
+      <mat-tab label="Form" data-test="form-view">
+        <fieldset [ngSwitch]="currentComponent">
+          <esmf-ui-base-config-form *ngSwitchCase="'base-config'"></esmf-ui-base-config-form>
+          <esmf-ui-excluded-property-form *ngSwitchCase="'excluded-property'"></esmf-ui-excluded-property-form>
+          <esmf-ui-version-support-form *ngSwitchCase="'version-support'"></esmf-ui-version-support-form>
+          <div class="note" *ngSwitchDefault><strong>Note:</strong> This feature is not available for "form" type.</div>
+        </fieldset>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-sidenav-content>
+</mat-sidenav-container>

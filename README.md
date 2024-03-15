@@ -30,7 +30,7 @@ The ESMF Schematics project is leveraged here to generate a variety of tables in
 git clone https://github.com/eclipse-esmf/esmf-sdk-js-schematics-demo.git
 ```
 
-To launch the demo application and execute the e2e tests, please refer to the detailed guide available in the [Angular 16 DEMO App](/angular16-demo-app/README.md).
+To launch the demo application and execute the e2e tests, please refer to the detailed guide available in the [Angular 17 DEMO App](/angular17-demo-app/README.md).
 
 ## License
 

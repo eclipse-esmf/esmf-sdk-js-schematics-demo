@@ -1,0 +1,24 @@
+<!--
+ * Copyright (c) 2024 Robert Bosch Manufacturing Solutions GmbH
+ *
+ * See the AUTHORS file(s) distributed with this work for
+ * additional information regarding authorship.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ -->
+
+<mat-form-field class="form-field">
+  <mat-label>speed</mat-label>
+  <input type="text" matInput placeholder="" [formControl]="formControl" data-test="speed-number" (ngModelChange)="value = $event" />
+  <span matTextSuffix>unit:kilometrePerHour</span>
+
+  <mat-error *ngIf="formControl.invalid">
+    <ng-container *ngIf="error as err">
+      {{ err.translationKey | transloco : err.translationParams }}
+    </ng-container>
+  </mat-error>
+</mat-form-field>
