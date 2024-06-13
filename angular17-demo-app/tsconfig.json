@@ -18,10 +18,17 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "es2020",
-    "lib": ["es2018", "dom"],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
     "paths": {
-      "path": ["node_modules/path-browserify"],
-      "crypto": ["node_modules/crypto-js"]
+      "path": [
+        "node_modules/path-browserify"
+      ],
+      "crypto": [
+        "node_modules/crypto-js"
+      ]
     },
     "useDefineForClassFields": false
   },

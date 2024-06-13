@@ -26,12 +26,25 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss", "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss",
+              "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
             "scripts": [],
-            "allowedCommonJsDependencies": ["rollun-ts-rql", "crypto", "moment", "papaparse"],
+            "allowedCommonJsDependencies": [
+              "rollun-ts-rql",
+              "crypto",
+              "moment",
+              "papaparse"
+            ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/assets/scss"]
+              "includePaths": [
+                "src/assets/scss"
+              ]
             }
           },
           "configurations": {
@@ -93,8 +106,13 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": []
           }
         },
