@@ -32,18 +32,18 @@ jobs:
           node-version: '20'
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
-          working-directory: angular17-demo-app
+          working-directory: angular18-demo-app
 
       - name: Install node modules (Dev)
         run: npm install
-        working-directory: angular17-demo-app
+        working-directory: angular18-demo-app
 
       - name: Build demo application
         run: npm run build:prod -- --deploy-url ./esmf-sdk-js-schematics-demo/
-        working-directory: angular17-demo-app
+        working-directory: angular18-demo-app
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.0.0
         with:
           branch: gh-pages
-          folder: angular17-demo-app/dist/angular17-demo-app
+          folder: angular18-demo-app/dist/angular18-demo-app
