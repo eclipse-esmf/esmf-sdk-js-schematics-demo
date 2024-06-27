@@ -20,7 +20,7 @@ import {TranslocoModule} from '@ngneat/transloco';
 import {CommandBarActionsCardCommandBarComponent} from './command-bar-actions-card-command-bar.component';
 
 import {NgClass, NgFor, NgForOf, NgIf, NgTemplateOutlet, SlicePipe} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
@@ -36,32 +36,25 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {AppSharedModule} from '../../app-shared.module';
 
-@NgModule({
-  declarations: [CommandBarActionsCardComponent, CommandBarActionsCardCommandBarComponent],
-  imports: [
-    AppSharedModule,
-    MatPaginatorModule,
-    MatButtonModule,
-    MatMenuModule,
-    HttpClientModule,
-    MatIconModule,
-    MatTooltipModule,
-    NgIf,
-    NgFor,
-    NgClass,
-    MatDialogModule,
-    MatToolbarModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatChipsModule,
-    ReactiveFormsModule,
-    MatSelectModule,
-    MatCardModule,
-    NgForOf,
-    NgTemplateOutlet,
-    SlicePipe,
-  ],
-  providers: [],
-  exports: [CommandBarActionsCardComponent, CommandBarActionsCardCommandBarComponent, TranslocoModule],
-})
+@NgModule({ declarations: [CommandBarActionsCardComponent, CommandBarActionsCardCommandBarComponent],
+    exports: [CommandBarActionsCardComponent, CommandBarActionsCardCommandBarComponent, TranslocoModule], imports: [AppSharedModule,
+        MatPaginatorModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatIconModule,
+        MatTooltipModule,
+        NgIf,
+        NgFor,
+        NgClass,
+        MatDialogModule,
+        MatToolbarModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatChipsModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        MatCardModule,
+        NgForOf,
+        NgTemplateOutlet,
+        SlicePipe], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class CommandBarActionsCardModule {}

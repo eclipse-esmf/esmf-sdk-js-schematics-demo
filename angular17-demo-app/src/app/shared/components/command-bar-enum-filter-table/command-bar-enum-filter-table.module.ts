@@ -24,7 +24,7 @@ import {CommandBarEnumFilterTableColumnMenuComponent} from './command-bar-enum-f
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {DatePipe, NgClass, NgFor, NgIf, NgTemplateOutlet} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatChipsModule} from '@angular/material/chips';
@@ -43,44 +43,34 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {AppSharedModule} from '../../app-shared.module';
 
-@NgModule({
-  declarations: [
-    CommandBarEnumFilterTableComponent,
-
-    CommandBarEnumFilterTableColumnMenuComponent,
-
-    CommandBarEnumFilterTableCommandBarComponent,
-
-    CommandBarEnumFilterTableChipListComponent,
-  ],
-  imports: [
-    AppSharedModule,
-    MatPaginatorModule,
-    MatButtonModule,
-    MatMenuModule,
-    HttpClientModule,
-    MatIconModule,
-    MatTooltipModule,
-    NgIf,
-    NgFor,
-    NgClass,
-    MatDialogModule,
-    MatToolbarModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatChipsModule,
-    ReactiveFormsModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatTableModule,
-    MatSortModule,
-    ClipboardModule,
-    MatListModule,
-    DragDropModule,
-    NgTemplateOutlet,
-    DatePipe,
-  ],
-  providers: [],
-  exports: [CommandBarEnumFilterTableComponent, CommandBarEnumFilterTableCommandBarComponent, CommandBarEnumFilterTableChipListComponent],
-})
+@NgModule({ declarations: [
+        CommandBarEnumFilterTableComponent,
+        CommandBarEnumFilterTableColumnMenuComponent,
+        CommandBarEnumFilterTableCommandBarComponent,
+        CommandBarEnumFilterTableChipListComponent,
+    ],
+    exports: [CommandBarEnumFilterTableComponent, CommandBarEnumFilterTableCommandBarComponent, CommandBarEnumFilterTableChipListComponent], imports: [AppSharedModule,
+        MatPaginatorModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatIconModule,
+        MatTooltipModule,
+        NgIf,
+        NgFor,
+        NgClass,
+        MatDialogModule,
+        MatToolbarModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatChipsModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatTableModule,
+        MatSortModule,
+        ClipboardModule,
+        MatListModule,
+        DragDropModule,
+        NgTemplateOutlet,
+        DatePipe], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class CommandBarEnumFilterTableModule {}

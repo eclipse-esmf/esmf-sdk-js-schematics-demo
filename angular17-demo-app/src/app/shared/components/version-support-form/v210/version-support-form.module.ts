@@ -16,7 +16,7 @@ import {NgModule} from '@angular/core';
 import {VersionSupportFormComponent} from './version-support-form.component';
 
 import {NgClass, NgFor, NgIf} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -39,37 +39,30 @@ import {PositionComponent} from './position/position.component';
 import {SpeedLimitWarningComponent} from './speed-limit-warning/speed-limit-warning.component';
 import {SpeedComponent} from './speed/speed.component';
 
-@NgModule({
-  declarations: [VersionSupportFormComponent],
-  imports: [
-    AppSharedModule,
-    IsMovingComponent,
-    PositionComponent,
-    LatitudeComponent,
-    LongitudeComponent,
-    AltitudeComponent,
-    SpeedComponent,
-    SpeedLimitWarningComponent,
-    MatPaginatorModule,
-    MatButtonModule,
-    MatMenuModule,
-    HttpClientModule,
-    MatIconModule,
-    MatTooltipModule,
-    NgIf,
-    NgFor,
-    NgClass,
-    MatDialogModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatCheckboxModule,
-    MatNativeDateModule,
-  ],
-  providers: [],
-  exports: [VersionSupportFormComponent],
-})
+@NgModule({ declarations: [VersionSupportFormComponent],
+    exports: [VersionSupportFormComponent], imports: [AppSharedModule,
+        IsMovingComponent,
+        PositionComponent,
+        LatitudeComponent,
+        LongitudeComponent,
+        AltitudeComponent,
+        SpeedComponent,
+        SpeedLimitWarningComponent,
+        MatPaginatorModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatIconModule,
+        MatTooltipModule,
+        NgIf,
+        NgFor,
+        NgClass,
+        MatDialogModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatCheckboxModule,
+        MatNativeDateModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class VersionSupportFormModule {}

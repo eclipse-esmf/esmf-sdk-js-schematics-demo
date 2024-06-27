@@ -22,7 +22,7 @@ import {CommandBarSearchCardCommandBarComponent} from './command-bar-search-card
 import {CommandBarSearchCardChipListComponent} from './command-bar-search-card-chip-list.component';
 
 import {NgClass, NgFor, NgForOf, NgIf, NgTemplateOutlet, SlicePipe} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
@@ -38,32 +38,25 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {AppSharedModule} from '../../app-shared.module';
 
-@NgModule({
-  declarations: [CommandBarSearchCardComponent, CommandBarSearchCardCommandBarComponent, CommandBarSearchCardChipListComponent],
-  imports: [
-    AppSharedModule,
-    MatPaginatorModule,
-    MatButtonModule,
-    MatMenuModule,
-    HttpClientModule,
-    MatIconModule,
-    MatTooltipModule,
-    NgIf,
-    NgFor,
-    NgClass,
-    MatDialogModule,
-    MatToolbarModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatChipsModule,
-    ReactiveFormsModule,
-    MatSelectModule,
-    MatCardModule,
-    NgForOf,
-    NgTemplateOutlet,
-    SlicePipe,
-  ],
-  providers: [],
-  exports: [CommandBarSearchCardComponent, CommandBarSearchCardCommandBarComponent, CommandBarSearchCardChipListComponent, TranslocoModule],
-})
+@NgModule({ declarations: [CommandBarSearchCardComponent, CommandBarSearchCardCommandBarComponent, CommandBarSearchCardChipListComponent],
+    exports: [CommandBarSearchCardComponent, CommandBarSearchCardCommandBarComponent, CommandBarSearchCardChipListComponent, TranslocoModule], imports: [AppSharedModule,
+        MatPaginatorModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatIconModule,
+        MatTooltipModule,
+        NgIf,
+        NgFor,
+        NgClass,
+        MatDialogModule,
+        MatToolbarModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatChipsModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        MatCardModule,
+        NgForOf,
+        NgTemplateOutlet,
+        SlicePipe], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class CommandBarSearchCardModule {}

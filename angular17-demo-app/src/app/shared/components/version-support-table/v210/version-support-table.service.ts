@@ -12,7 +12,7 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import {Movement} from '../../../types/movement/v210/movement.types';
 

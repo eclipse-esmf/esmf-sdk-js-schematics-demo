@@ -26,7 +26,7 @@ import {CommandBarSearchTableColumnMenuComponent} from './command-bar-search-tab
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {DatePipe, NgClass, NgFor, NgIf, NgTemplateOutlet} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatChipsModule} from '@angular/material/chips';
@@ -44,45 +44,34 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {AppSharedModule} from '../../app-shared.module';
 
-@NgModule({
-  declarations: [
-    CommandBarSearchTableComponent,
-
-    CommandBarSearchTableColumnMenuComponent,
-
-    CommandBarSearchTableCommandBarComponent,
-
-    CommandBarSearchTableChipListComponent,
-
-    CommandBarSearchTableConfigMenuComponent,
-  ],
-  imports: [
-    AppSharedModule,
-    MatPaginatorModule,
-    MatButtonModule,
-    MatMenuModule,
-    HttpClientModule,
-    MatIconModule,
-    MatTooltipModule,
-    NgIf,
-    NgFor,
-    NgClass,
-    MatDialogModule,
-    MatToolbarModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatChipsModule,
-    ReactiveFormsModule,
-    MatSelectModule,
-    MatTableModule,
-    MatSortModule,
-    ClipboardModule,
-    MatListModule,
-    DragDropModule,
-    NgTemplateOutlet,
-    DatePipe,
-  ],
-  providers: [],
-  exports: [CommandBarSearchTableComponent, CommandBarSearchTableCommandBarComponent, CommandBarSearchTableChipListComponent],
-})
+@NgModule({ declarations: [
+        CommandBarSearchTableComponent,
+        CommandBarSearchTableColumnMenuComponent,
+        CommandBarSearchTableCommandBarComponent,
+        CommandBarSearchTableChipListComponent,
+        CommandBarSearchTableConfigMenuComponent,
+    ],
+    exports: [CommandBarSearchTableComponent, CommandBarSearchTableCommandBarComponent, CommandBarSearchTableChipListComponent], imports: [AppSharedModule,
+        MatPaginatorModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatIconModule,
+        MatTooltipModule,
+        NgIf,
+        NgFor,
+        NgClass,
+        MatDialogModule,
+        MatToolbarModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatChipsModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        MatTableModule,
+        MatSortModule,
+        ClipboardModule,
+        MatListModule,
+        DragDropModule,
+        NgTemplateOutlet,
+        DatePipe], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class CommandBarSearchTableModule {}

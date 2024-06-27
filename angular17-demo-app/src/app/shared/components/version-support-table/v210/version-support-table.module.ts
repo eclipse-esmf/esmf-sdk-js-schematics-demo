@@ -26,7 +26,7 @@ import {VersionSupportTableColumnMenuComponent} from './version-support-table-co
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {DatePipe, NgClass, NgFor, NgIf, NgTemplateOutlet} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -46,47 +46,36 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {AppSharedModule} from '../../../app-shared.module';
 
-@NgModule({
-  declarations: [
-    VersionSupportTableComponent,
-
-    VersionSupportTableColumnMenuComponent,
-
-    VersionSupportTableCommandBarComponent,
-
-    VersionSupportTableChipListComponent,
-
-    VersionSupportTableConfigMenuComponent,
-  ],
-  imports: [
-    AppSharedModule,
-    MatPaginatorModule,
-    MatButtonModule,
-    MatMenuModule,
-    HttpClientModule,
-    MatIconModule,
-    MatTooltipModule,
-    NgIf,
-    NgFor,
-    NgClass,
-    MatDialogModule,
-    MatToolbarModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatChipsModule,
-    ReactiveFormsModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatTableModule,
-    MatSortModule,
-    ClipboardModule,
-    MatListModule,
-    DragDropModule,
-    NgTemplateOutlet,
-    DatePipe,
-    MatCheckboxModule,
-  ],
-  providers: [],
-  exports: [VersionSupportTableComponent, VersionSupportTableCommandBarComponent, VersionSupportTableChipListComponent],
-})
+@NgModule({ declarations: [
+        VersionSupportTableComponent,
+        VersionSupportTableColumnMenuComponent,
+        VersionSupportTableCommandBarComponent,
+        VersionSupportTableChipListComponent,
+        VersionSupportTableConfigMenuComponent,
+    ],
+    exports: [VersionSupportTableComponent, VersionSupportTableCommandBarComponent, VersionSupportTableChipListComponent], imports: [AppSharedModule,
+        MatPaginatorModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatIconModule,
+        MatTooltipModule,
+        NgIf,
+        NgFor,
+        NgClass,
+        MatDialogModule,
+        MatToolbarModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatChipsModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatTableModule,
+        MatSortModule,
+        ClipboardModule,
+        MatListModule,
+        DragDropModule,
+        NgTemplateOutlet,
+        DatePipe,
+        MatCheckboxModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class VersionSupportTableModule {}

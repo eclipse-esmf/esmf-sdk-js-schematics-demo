@@ -18,7 +18,7 @@ import {BaseConfigCardComponent} from './base-config-card.component';
 import {TranslocoModule} from '@ngneat/transloco';
 
 import {NgClass, NgFor, NgForOf, NgIf, NgTemplateOutlet, SlicePipe} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -28,26 +28,19 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {AppSharedModule} from '../../app-shared.module';
 
-@NgModule({
-  declarations: [BaseConfigCardComponent],
-  imports: [
-    AppSharedModule,
-    MatPaginatorModule,
-    MatButtonModule,
-    MatMenuModule,
-    HttpClientModule,
-    MatIconModule,
-    MatTooltipModule,
-    NgIf,
-    NgFor,
-    NgClass,
-    MatDialogModule,
-    MatCardModule,
-    NgForOf,
-    NgTemplateOutlet,
-    SlicePipe,
-  ],
-  providers: [],
-  exports: [BaseConfigCardComponent, TranslocoModule],
-})
+@NgModule({ declarations: [BaseConfigCardComponent],
+    exports: [BaseConfigCardComponent, TranslocoModule], imports: [AppSharedModule,
+        MatPaginatorModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatIconModule,
+        MatTooltipModule,
+        NgIf,
+        NgFor,
+        NgClass,
+        MatDialogModule,
+        MatCardModule,
+        NgForOf,
+        NgTemplateOutlet,
+        SlicePipe], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class BaseConfigCardModule {}

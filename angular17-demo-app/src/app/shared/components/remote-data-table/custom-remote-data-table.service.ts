@@ -12,7 +12,7 @@
  */
 
 /** Generated from ESMF JS SDK Angular Schematics - PLEASE DO NOT CHANGE IT **/
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {TranslocoService} from '@ngneat/transloco';
 import {RemoteDataTableService} from './remote-data-table.service';

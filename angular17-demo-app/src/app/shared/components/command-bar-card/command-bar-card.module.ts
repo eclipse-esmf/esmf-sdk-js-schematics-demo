@@ -20,7 +20,7 @@ import {TranslocoModule} from '@ngneat/transloco';
 import {CommandBarCardCommandBarComponent} from './command-bar-card-command-bar.component';
 
 import {NgClass, NgFor, NgForOf, NgIf, NgTemplateOutlet, SlicePipe} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
@@ -36,32 +36,25 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {AppSharedModule} from '../../app-shared.module';
 
-@NgModule({
-  declarations: [CommandBarCardComponent, CommandBarCardCommandBarComponent],
-  imports: [
-    AppSharedModule,
-    MatPaginatorModule,
-    MatButtonModule,
-    MatMenuModule,
-    HttpClientModule,
-    MatIconModule,
-    MatTooltipModule,
-    NgIf,
-    NgFor,
-    NgClass,
-    MatDialogModule,
-    MatToolbarModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatChipsModule,
-    ReactiveFormsModule,
-    MatSelectModule,
-    MatCardModule,
-    NgForOf,
-    NgTemplateOutlet,
-    SlicePipe,
-  ],
-  providers: [],
-  exports: [CommandBarCardComponent, CommandBarCardCommandBarComponent, TranslocoModule],
-})
+@NgModule({ declarations: [CommandBarCardComponent, CommandBarCardCommandBarComponent],
+    exports: [CommandBarCardComponent, CommandBarCardCommandBarComponent, TranslocoModule], imports: [AppSharedModule,
+        MatPaginatorModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatIconModule,
+        MatTooltipModule,
+        NgIf,
+        NgFor,
+        NgClass,
+        MatDialogModule,
+        MatToolbarModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatChipsModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        MatCardModule,
+        NgForOf,
+        NgTemplateOutlet,
+        SlicePipe], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class CommandBarCardModule {}

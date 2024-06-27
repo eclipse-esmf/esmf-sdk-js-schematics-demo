@@ -20,7 +20,7 @@ import {DefaultSortingTableColumnMenuComponent} from './default-sorting-table-co
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {DatePipe, NgClass, NgFor, NgIf, NgTemplateOutlet} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
@@ -32,29 +32,22 @@ import {MatTableModule} from '@angular/material/table';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {AppSharedModule} from '../../app-shared.module';
 
-@NgModule({
-  declarations: [DefaultSortingTableComponent, DefaultSortingTableColumnMenuComponent],
-  imports: [
-    AppSharedModule,
-    MatPaginatorModule,
-    MatButtonModule,
-    MatMenuModule,
-    HttpClientModule,
-    MatIconModule,
-    MatTooltipModule,
-    NgIf,
-    NgFor,
-    NgClass,
-    MatDialogModule,
-    MatTableModule,
-    MatSortModule,
-    ClipboardModule,
-    MatListModule,
-    DragDropModule,
-    NgTemplateOutlet,
-    DatePipe,
-  ],
-  providers: [],
-  exports: [DefaultSortingTableComponent],
-})
+@NgModule({ declarations: [DefaultSortingTableComponent, DefaultSortingTableColumnMenuComponent],
+    exports: [DefaultSortingTableComponent], imports: [AppSharedModule,
+        MatPaginatorModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatIconModule,
+        MatTooltipModule,
+        NgIf,
+        NgFor,
+        NgClass,
+        MatDialogModule,
+        MatTableModule,
+        MatSortModule,
+        ClipboardModule,
+        MatListModule,
+        DragDropModule,
+        NgTemplateOutlet,
+        DatePipe], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class DefaultSortingTableModule {}
