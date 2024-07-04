@@ -14,4 +14,4 @@
 
 . "$(dirname "$0")/_/husky.sh"
 
-cd angular17-demo-app && npm run prettier:format
+cd angular18-demo-app && npm run prettier:format

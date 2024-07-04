@@ -1,0 +1,109 @@
+<!--
+ * Copyright (c) 2024 Robert Bosch Manufacturing Solutions GmbH
+ *
+ * See the AUTHORS file(s) distributed with this work for
+ * additional information regarding authorship.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ -->
+
+<mat-toolbar data-test="toolbar" class="toolbar" #componentsContainer>
+  <div *ngIf="isMultipleSelectionEnabled" data-test="toolbar-number-of-items" class="command-bar-number-of-items">
+    {{ selection.selected.length > 0 ? selection.selected.length + ' / ' : '' }}{{ totalItems }}
+  </div>
+
+  <div class="sorting-content" [matTooltip]="'toolbar.sorted_tooltip' | transloco" matTooltipPosition="above" [matMenuTriggerFor]="sortBy">
+    <button data-test="sort-data-by-button" mat-icon-button>
+      <mat-icon data-test="sort-data-by-icon">sort_by_alpha</mat-icon>
+    </button>
+    <span>{{ 'toolbar.sort_by' | transloco }} {{ filterService.sortedProperty }}</span>
+  </div>
+
+  <div class="sorting-content" [matTooltip]="'toolbar.sort_dir_tooltip' | transloco" matTooltipPosition="above" (click)="setSortingDir()">
+    <button data-test="sort-data-button" mat-icon-button>
+      <mat-icon
+        data-test="sort-data-icon"
+        fontIcon="{{ filterService.sortCard === SortCard.ASCENDING ? 'arrow_upward' : 'arrow_downward' }}"
+      ></mat-icon>
+    </button>
+    <span>{{ filterService.sortCard === SortCard.ASCENDING ? ('toolbar.sort_asc' | transloco) : ('toolbar.sort_desc' | transloco) }}</span>
+  </div>
+
+  <span data-test="spacer" class="spacer"></span>
+
+  <button
+    data-test="toolbar-custom-action-button"
+    data-resp="custom-action-schedule"
+    *ngIf="!isInCollapsedMenu('custom-action-schedule')"
+    mat-icon-button
+    #toolbarComp
+    (click)="executeCustomCommandBarAction('schedule')"
+    attr.aria-label="{{ 'schedule.customCommandBarAction' | transloco }}"
+  >
+    <mat-icon
+      data-test="toolbar-custom-action-icon"
+      matTooltip="{{ 'schedule.customCommandBarAction' | transloco }}"
+      aria-hidden="false"
+      class="material-icons"
+    >
+      schedule
+    </mat-icon>
+  </button>
+
+  <button
+    data-test="refresh-data-button-card"
+    mat-icon-button
+    data-resp="refresh-data-button"
+    *ngIf="!isInCollapsedMenu('refresh-data-button')"
+    #toolbarComp
+    aria-label="Refresh table"
+    (click)="triggerReloadFilter()"
+    [matTooltip]="'tableActions.refreshData' | transloco"
+  >
+    <mat-icon data-test="refresh-data-icon" class="material-icons">autorenew</mat-icon>
+  </button>
+
+  <button
+    data-test="export-data-button-card"
+    mat-icon-button
+    data-resp="export-data-button"
+    *ngIf="!isInCollapsedMenu('export-data-button')"
+    #toolbarComp
+    aria-label="Download data as CSV"
+    (click)="triggerExportToCsv()"
+    [matTooltip]="'tableActions.exportData' | transloco"
+  >
+    <mat-icon data-test="export-data-icon" class="material-icons">file_download</mat-icon>
+  </button>
+
+  <button mat-icon-button [matMenuTriggerFor]="collapsedMenu" *ngIf="hiddenComponents.length > 0">
+    <mat-icon class="material-icons">more_vert</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-menu #sortBy="matMenu">
+  <button mat-menu-item *ngFor="let value of commandBarActionsCardCardValues" (click)="setSortingProperty(value)">
+    {{ value }}
+  </button>
+</mat-menu>
+
+<mat-menu #collapsedMenu="matMenu">
+  <div mat-menu-item *ngIf="isInCollapsedMenu('refresh-data-button')" (click)="triggerReloadFilter()">
+    <mat-icon data-test="refresh-data-icon-collapsed" class="material-icons">autorenew</mat-icon>
+    <span>Refresh</span>
+  </div>
+
+  <div
+    mat-menu-item
+    *ngIf="isInCollapsedMenu('export-data-button')"
+    (click)="triggerExportToCsv()"
+    data-test="export-data-button-card-collapsed"
+  >
+    <mat-icon data-test="export-data-icon-collapsed" class="material-icons">file_download</mat-icon>
+    <span>Download</span>
+  </div>
+</mat-menu>
