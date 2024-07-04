@@ -47,7 +47,7 @@ export function commandBarTests() {
     function checkAndClickMenuTrigger() {
       cy.get('body').then(($body) => {
         if ($body.find('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').length) {
-          cy.get('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').click();
+          cy.get('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').eq(0).click();
           cy.get('[data-test="refresh-data-icon-collapsed"]').should('exist');
         } else {
           cy.get('[data-test="refresh-data-button-card"]').scrollIntoView().should('be.visible');
