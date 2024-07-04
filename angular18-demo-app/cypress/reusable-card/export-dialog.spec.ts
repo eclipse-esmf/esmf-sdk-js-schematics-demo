@@ -14,11 +14,11 @@
 export function exportDialogTests(hasRemoteDataCall: boolean): void {
   describe('Export dialog functionalities', (): void => {
     it('should load export dialog', (): void => {
-      cy.get('[data-test="export-data-button-card"]').should('exist');
+      checkAndClickMenuTrigger();
     });
 
     it('should open export dialog', (): void => {
-      cy.get('[data-test="export-data-button-card"]').click();
+      checkAndClickExport()
       cy.get('[data-test="dialogDescription"]').then(element => expect(element.text()).to.eq('Export entire datasource.'));
     });
 
@@ -35,5 +35,26 @@ export function exportDialogTests(hasRemoteDataCall: boolean): void {
         cy.get('[data-test="closeDialog"]').click();
       }
     });
+  });
+}
+
+function checkAndClickMenuTrigger() {
+  cy.get('body').then(($body) => {
+    if ($body.find('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').length) {
+      cy.get('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').click();
+      cy.get('[data-test="export-data-button-card-collapsed"]').should('exist');
+    } else {
+      cy.get('[data-test="export-data-button-card"]').should('exist');
+    }
+  });
+}
+
+function checkAndClickExport() {
+  cy.get('body').then(($body) => {
+    if ($body.find('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').length) {
+      cy.get('[data-test="export-data-button-card-collapsed"]').click();
+    } else {
+      cy.get('[data-test="export-data-button-card"]').should('exist');
+    }
   });
 }

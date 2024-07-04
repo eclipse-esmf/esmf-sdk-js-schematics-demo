@@ -33,15 +33,47 @@ export function commandBarTests() {
     });
 
     it('should load the refresh data button', (): void => {
-      cy.get('[data-test="refresh-data-button-card"]').scrollIntoView().should('be.visible');
+      checkAndClickMenuTrigger();
     });
 
     it('should refresh the card', (): void => {
-      cy.get('[data-test="refresh-data-button-card"]').scrollIntoView().click();
+      checkAndClickMenuClick();
     });
 
     it('should load the export data button', (): void => {
-      cy.get('[data-test="export-data-button-card"]').should('be.visible');
+      checkAndClickExportMenuTrigger();
     });
+
+    function checkAndClickMenuTrigger() {
+      cy.get('body').then(($body) => {
+        if ($body.find('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').length) {
+          cy.get('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').click();
+          cy.get('[data-test="refresh-data-icon-collapsed"]').should('exist');
+        } else {
+          cy.get('[data-test="refresh-data-button-card"]').scrollIntoView().should('be.visible');
+        }
+      });
+    }
+
+    function checkAndClickMenuClick() {
+      cy.get('body').then(($body) => {
+        if ($body.find('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').length) {
+          cy.get('[data-test="refresh-data-icon-collapsed"]').click();
+        } else {
+          cy.get('[data-test="refresh-data-button-card"]').scrollIntoView().click();
+        }
+      });
+    }
+
+    function checkAndClickExportMenuTrigger() {
+      cy.get('body').then(($body) => {
+        if ($body.find('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').length) {
+          cy.get('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').click();
+          cy.get('[data-test="export-data-button-card-collapsed"]').should('exist');
+        } else {
+          cy.get('[data-test="export-data-button-card"]').should('exist');
+        }
+      });
+    }
   });
 }

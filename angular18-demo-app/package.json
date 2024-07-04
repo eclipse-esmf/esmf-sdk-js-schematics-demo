@@ -58,7 +58,7 @@
     "@types/node": "20.14.9",
     "@types/papaparse": "5.3.14",
     "clipboardy": "2.3.0",
-    "cypress": "^10.11.0",
+    "cypress": "^13.13.0",
     "fs-extra": "^11.2.0",
     "glob": "^10.4.2",
     "husky": "^8.0.0",
