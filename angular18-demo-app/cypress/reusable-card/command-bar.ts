@@ -45,7 +45,7 @@ export function commandBarTests() {
     });
 
     function checkAndClickMenuTrigger() {
-      cy.get('body').then(($body) => {
+      cy.get('body').then($body => {
         if ($body.find('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').length) {
           cy.get('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').eq(0).click();
           cy.get('[data-test="refresh-data-icon-collapsed"]').should('exist');
@@ -56,7 +56,7 @@ export function commandBarTests() {
     }
 
     function checkAndClickMenuClick() {
-      cy.get('body').then(($body) => {
+      cy.get('body').then($body => {
         if ($body.find('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').length) {
           cy.get('[data-test="refresh-data-icon-collapsed"]').click();
         } else {
@@ -66,7 +66,7 @@ export function commandBarTests() {
     }
 
     function checkAndClickExportMenuTrigger() {
-      cy.get('body').then(($body) => {
+      cy.get('body').then($body => {
         if ($body.find('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').length) {
           cy.get('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').click();
           cy.get('[data-test="export-data-button-card-collapsed"]').should('exist');

@@ -18,7 +18,7 @@ export function exportDialogTests(hasRemoteDataCall: boolean): void {
     });
 
     it('should open export dialog', (): void => {
-      checkAndClickExport()
+      checkAndClickExport();
       cy.get('[data-test="dialogDescription"]').then(element => expect(element.text()).to.eq('Export entire datasource.'));
     });
 
@@ -39,7 +39,7 @@ export function exportDialogTests(hasRemoteDataCall: boolean): void {
 }
 
 function checkAndClickMenuTrigger() {
-  cy.get('body').then(($body) => {
+  cy.get('body').then($body => {
     if ($body.find('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').length) {
       cy.get('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').click();
       cy.get('[data-test="export-data-button-card-collapsed"]').should('exist');
@@ -50,7 +50,7 @@ function checkAndClickMenuTrigger() {
 }
 
 function checkAndClickExport() {
-  cy.get('body').then(($body) => {
+  cy.get('body').then($body => {
     if ($body.find('.mat-mdc-menu-trigger.mdc-icon-button > .mat-icon').length) {
       cy.get('[data-test="export-data-button-card-collapsed"]').click();
     } else {
